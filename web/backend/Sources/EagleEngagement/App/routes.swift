@@ -22,10 +22,18 @@ let employeesController = EmployeesController()
 
 func routes(_ app: Application) throws {
     
+    func serveIndex(_ req: Request) async throws -> View {
+        return try await req.view.render("index.html")
+    }
+    
     app.get { req in
-        return "It works!"
+        return try await serveIndex(req)
     }
 
+    app.get("*") { req in
+        return try await serveIndex(req)
+    }
+    
     // Find an employee with the specified ID
     try employeesController.getEmployeeById(app)
 
