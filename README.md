@@ -11,6 +11,7 @@ This will increase student engagement in school activities and make understandin
 | ----------- | ----------- |
 | [LayneY](https://github.com/LayneY) | Product Manager |
 | [brett-k-cs](https://github.com/brett-k-cs) | Project Manager |
+| [Logan-Rohlfs](https://github.com/Logan-Rohlfs) | Release Manager |
 
 ## How to Run / Compile:
 ### Vapor:
