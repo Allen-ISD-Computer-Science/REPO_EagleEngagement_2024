@@ -9,7 +9,7 @@ This will increase student engagement in school activities and make understandin
 
 | Git User    |     Role    |
 | ----------- | ----------- |
-| [LayneY](https://github.com/LayneY) | Product Manager |
+| [LayneY](https://github.com/LayneY) | Product Manager | [Digital Portfolio](https://codermerlin.academy/users/layne-yarbrough/Digital Portfolio/index.html) |
 | [brett-k-cs](https://github.com/brett-k-cs) | Project Manager |
 | [Logan-Rohlfs](https://github.com/Logan-Rohlfs) | Release Manager |
 
