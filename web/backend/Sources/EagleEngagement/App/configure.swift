@@ -24,14 +24,29 @@ func configure(_ app: Application) throws {
     // UNCOMMENT-PUBLIC to serve files from /Public folder
     app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
 
+    let mysqlHost = Environment.get("MYSQL_HOSTNAME") ?? "db";
+    let mysqlPortStr = Environment.get("MYSQL_PORT") ?? "3306";
+    guard let mysqlPort = Int(mysqlPortStr) else {
+        fatalError("Failed to determine MYSQL_PORT from environment (NaN)");
+    }
+    guard let mysqlUser = Environment.get("MYSQL_USERNAME") else {
+        fatalError("Failed to determine MYSQL_USERNAME from environment");
+    }
+    guard let mysqlPass = Environment.get("MYSQL_PASSWORD") else {
+        fatalError("Failed to determine MYSQL_PASSWORD from environment");
+    }
+    guard let mysqlDBName = Environment.get("MYSQL_DATABASE") else {
+        fatalError("Failed to determine MYSQL_DATABASE from environment");
+    }
+    
     var tls = TLSConfiguration.makeClientConfiguration()
     tls.certificateVerification = .none
     app.databases.use(.mysql(
-                        hostname: "db",
-                        port: MySQLConfiguration.ianaPortNumber,
-                        username: "employees_user",
-                        password: "tAn?*4YKX3,xk?PH",
-                        database: "employees",
+                        hostname: mysqlHost,
+                        port: mysqlPort,
+                        username: mysqlUser,
+                        password: mysqlPass,
+                        database: mysqlDBName,
                         tlsConfiguration: tls
                       ), as: .mysql)
 

@@ -8,5 +8,7 @@ then
     exit 1
 fi
 
+source .env
+
 # Run
 makeSwift --mode=run "$@"
