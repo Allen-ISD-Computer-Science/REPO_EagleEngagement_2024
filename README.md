@@ -7,10 +7,11 @@ This will increase student engagement in school activities and make understandin
 
 ## Developers:
 
-| Git User    |     Role    |
-| ----------- | ----------- |
-| [LayneY](https://github.com/LayneY) | Product Manager |
-| [brett-k-cs](https://github.com/brett-k-cs) | Project Manager |
+| Git User    |     Role    | Digital Portfolio |
+| ----------- | ----------- | ----------------- |
+| [LayneY](https://github.com/LayneY) | Product Manager | [Digital Portfolio](https://codermerlin.academy/users/layne-yarbrough/Digital%20Portfolio/index.html) |
+| [brett-k-cs](https://github.com/brett-k-cs) | Project Manager | [Digital Portfolio](https://codermerlin.academy/users/brett-kaplan/Digital%20Portfolio/index.html) |
+| [Logan-Rohlfs](https://github.com/Logan-Rohlfs) | Release Manager | [Digital Portfolio](https://codermerlin.academy/users/logan-rohlfs/Digital%20Portfolio/index.html) |
 
 ## How to Run / Compile:
 ### Vapor:
