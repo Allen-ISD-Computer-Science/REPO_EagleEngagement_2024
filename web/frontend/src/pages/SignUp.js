@@ -45,7 +45,7 @@ function SignInPage(props) {
           Create
         </button>
         <div className="text-center text-2xl self-center mt-11 leading-20 max-md:text-xl max-md:mt-10">
-          <span>Already Have an Account? <a className="underline" href="/login">Click</a></span>
+            <span>Already Have an Account? <a className="underline" href={process.env.PUBLIC_URL + "/login"}>Click</a></span>
         </div>
       </span>
     </div>

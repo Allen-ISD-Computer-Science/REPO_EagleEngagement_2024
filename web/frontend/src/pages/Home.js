@@ -32,8 +32,8 @@ function HomePage(props) {
               <div className="flex flex-col items-stretch w-[33%] ml-5 max-md:w-full max-md:ml-0">
                 <div className="text-white text-center text-2xl font-bold uppercase w-[100%] max-md:mt-10">
                   <a
-                    href="/download"
-                    className="transition-colors hover:text-blue-500"
+                      href={process.env.PUBLIC_URL + "/download"}
+                      className="transition-colors hover:text-blue-500"
                   >Student Download
                   </a>
                 </div>
@@ -41,7 +41,7 @@ function HomePage(props) {
               <div className="flex flex-col items-stretch w-[33%] ml-5 max-md:w-full max-md:ml-0">
                 <div className="text-white text-2xl font-bold uppercase text-center max-md:mt-10">
                   <a
-                    href="/login"
+                      href={process.env.PUBLIC_URL + "/login"}
                     className="transition-colors hover:text-blue-500"
                   >Faculty Login
                   </a>

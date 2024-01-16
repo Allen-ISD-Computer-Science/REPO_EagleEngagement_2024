@@ -30,7 +30,11 @@ func routes(_ app: Application) throws {
         return try await serveIndex(req)
     }
 
-    app.get("*") { req in
+    app.get("login") { req in
+        return try await serveIndex(req)
+    }
+
+    app.get("signup") { req in
         return try await serveIndex(req)
     }
     
