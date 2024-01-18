@@ -1,3 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <resources>
-    <string name="app_name">EagleEngagement</string>
+    <string name="app_name">layney_s_application1</string>
+    <string name="loading">Loading…</string>
+    <string name="no_internet_connection">No internet connection!</string>
+<string name="lbl_steam_b100">STEAM B100</string>
+  <string name="lbl_dec">Dec</string>
+  <string name="lbl_50th_2">50th / 2%</string>
+  <string name="lbl_0_applied">0 Applied</string>
+  <string name="lbl_1_dec">1
+Dec</string>
+  <string name="lbl_points">Points</string>
+  <string name="lbl_21">21</string>
+  <string name="lbl_ranking2">Ranking
+</string>
+  <string name="msg_location_steam">Location: STEAM B100</string>
+  <string name="msg_additional_evid">Additional Evidence (Optional)</string>
+  <string name="lbl_new_password">New Password</string>
+  <string name="lbl_create_account">Create Account</string>
+  <string name="lbl_times">Times:
+</string>
+  <string name="lbl_123456">123456</string>
+  <string name="msg_come_out_friday">Come out Friday night to see our Allen Eagles take on the North Crowley Wildcats. The game starts at {Start} and will last until {End}. Hope to see you there!</string>
+  <string name="lbl_follow">Follow</string>
+  <string name="msg_send_current_lo">Send Current Location as Evidence</string>
+  <string name="lbl_dec_8th_4_pm">Dec. 8th @ 4 PM</string>
+  <string name="lbl_12">+1</string>
+  <string name="lbl_10">10</string>
+  <string name="lbl_friday">Friday
+</string>
+  <string name="msg_times_tues_thu">Times:
+Tues/Thur 5-8PM
+Sat 10AM-3PM</string>
+  <string name="lbl_sign_up">Sign Up</string>
+  <string name="lbl_male">Male</string>
+  <string name="msg_cs_forum_provid">CS Forum provides general computer science information and hosts many sub-organizations such as CyberSecurity.</string>
+  <string name="lbl_eagle_stadium">Eagle Stadium
+</string>
+  <string name="lbl_engagement">= ENGAGEMENT =</string>
+  <string name="msg_forgot_password">Forgot Password?</string>
+  <string name="lbl_grade2">Grade</string>
+  <string name="lbl_location">Location: </string>
+  <string name="lbl_257385">257385</string>
+  <string name="lbl_ranking_grade">Ranking
+(Grade)</string>
+  <string name="lbl_cs_forum">CS Forum</string>
+  <string name="lbl_read_more">Read More</string>
+  <string name="lbl_allen_hs_pac">Allen HS PAC</string>
+  <string name="lbl_eagle">EAGLE</string>
+  <string name="lbl">************</string>
+  <string name="lbl_submit">Submit</string>
+  <string name="lbl_rewards">Rewards</string>
+  <string name="lbl_6_00_9_00_pm">6:00-9:00 PM</string>
+  <string name="lbl_grade">(Grade)</string>
+  <string name="msg_gregory_burnham">Gregory Burnham
+Graham Gadd</string>
+  <string name="lbl_support">Support</string>
+  <string name="msg_password_recove">Password Recovery</string>
+  <string name="lbl_clubs">Clubs</string>
+  <string name="msg_make_sure_you_m">Make sure you meet the requirements for exam exemptions.
+Attendance:
+3 Absences + 90
+2 Absences + 80
+Fines:
+No Fines
+All Equipment Check In
+Discipline:
+No AEP
+No ISS/OSS
+No Tier II/III Honor Code violations</string>
+  <string name="msg_eagle_stadium_1">Eagle Stadium
+155 Rivercrest Dr, Allen TX 75002</string>
+  <string name="lbl_senior">Senior</string>
+  <string name="lbl_event">Event*</string>
+  <string name="lbl_dec_1st_8_pm">Dec. 1st @ 8 PM</string>
+  <string name="lbl_20th_1">20th / 1%</string>
+  <string name="lbl_1">1
+</string>
+  <string name="lbl_student_id">Student ID</string>
+  <string name="lbl_gender">Gender</string>
+  <string name="msg_insert_reason_h">Insert Reason Here</string>
+  <string name="lbl_5">5</string>
+  <string name="msg_155_rivercrest">155 Rivercrest Dr, Allen TX 75002</string>
+  <string name="lbl_request">Request</string>
+  <string name="lbl_400">400</string>
+  <string name="msg_sponsor_gregor">Sponsor:
+Gregory Burnham
+Graham Gadd</string>
+  <string name="lbl_login">Login</string>
+  <string name="lbl_eagle_robotics">Eagle Robotics</string>
+  <string name="msg_reason_for_miss">Reason for Missed Points*</string>
+  <string name="lbl_check_in">Check-In</string>
+  <string name="msg_eagle_robotics">Eagle Robotics participates in B.E.S.T. and FRC robotics competitions. We have programming, building, and business opportunities.</string>
+  <string name="lbl_point_request">Point Request</string>
+  <string name="msg_tues_thur_5_8pm">Tues/Thur 5-8PM
+Sat 10AM-3PM</string>
+  <string name="msg_jewelry_class_s">Jewelry Class Showcase</string>
+  <string name="lbl_events">Events</string>
+  <string name="lbl_house">House</string>
+  <string name="lbl_password">Password</string>
+  <string name="lbl_eagle_stadium2">Eagle Stadium</string>
+  <string name="lbl_or">OR</string>
+  <string name="lbl_upload_image">Upload Image</string>
+  <string name="lbl_sponsor">Sponsor:
+</string>
+  <string name="msg_allen_v_north">Allen v. North Crowley</string>
+  <string name="msg_friday_6_00_9_0">Friday
+6:00-9:00 PM</string>
+  <string name="lbl_point_history">Point History</string>
+  <string name="lbl_event_check_in">Event Check-In</string>
+  <string name="lbl_enter_evidence">Enter Evidence</string>
+  <string name="lbl_ranking">Ranking</string>
+  <string name="msg_fall_exam_exemp">Fall Exam Exemptions - 50pts</string>
 </resources>
