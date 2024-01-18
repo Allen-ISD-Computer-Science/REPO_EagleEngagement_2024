@@ -18,8 +18,6 @@ import Vapor
 import Fluent
 import FluentMySQLDriver
 
-let employeesController = EmployeesController()
-
 func routes(_ app: Application) throws {
     
     func serveIndex(_ req: Request) async throws -> View {
@@ -37,16 +35,20 @@ func routes(_ app: Application) throws {
     app.get("signup") { req in
         return try await serveIndex(req)
     }
-    
-    // Find an employee with the specified ID
-    try employeesController.getEmployeeById(app)
 
-    /// This API endpoint provides a list of all employees
-    /// Paging is supported
-    /// Endpoint URI: /employees
-    app.get("employees") { req -> Page<Employee>  in
-        let employees = try await Employee.query(on: req.db)
-          .paginate(for: req)
-        return employees
+    let sessionRoutes = app.grouped(User.sessionAuthenticator())
+    let protectedRoutes = sessionRoutes.grouped(UserAuthenticator())
+
+    protectedRoutes.post("login") { req in
+        guard let user = req.auth.get(User.self) else {
+            throw Abort(.unauthorized)
+        }
+        req.session.authenticate(user)
+        return req.redirect(to: "/dashboard")
+
+    }
+    
+    protectedRoutes.get("dashboard") { req in
+        return try await serveIndex(req)        
     }
 }

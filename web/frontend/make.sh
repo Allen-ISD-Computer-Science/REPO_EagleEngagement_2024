@@ -1,3 +1,5 @@
+cd "$(dirname "$0")"
+
 # Some limits will need to be increased in order to successfully build:
 ulimit -n 8192
 ulimit -u 256

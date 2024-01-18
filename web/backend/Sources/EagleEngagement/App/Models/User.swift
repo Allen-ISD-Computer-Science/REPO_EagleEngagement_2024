@@ -26,6 +26,11 @@ final public class User: Model, Content {
     @Field(key: "name")
     public var name: String
 
+    // Hash of the User's Password
+    @Field(key: "passwordHash")
+    public var passwordHash: String
+
+
     @Enum(key: "type")
     public var userType: UserType
 
