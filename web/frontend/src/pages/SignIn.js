@@ -52,7 +52,7 @@ function SignInPage(props) {
       console.log(res);
 
       if (res.status === 200) {
-        toast.success("Successfully logged in.", {
+        toast.success("Successfully logged in. Redirecting...", {
           position: "top-right",
           autoClose: 2000,
           closeOnClick: true,
@@ -61,7 +61,7 @@ function SignInPage(props) {
         });
         setTimeout(() => {
           window.location.href = process.env.PUBLIC_URL + "/dashboard";
-        }, 250);
+        }, 2000);
       } else {
         toast.error(res.status === 401 ? "Invalid Credentials." : res.statusText, {
           position: "top-right",

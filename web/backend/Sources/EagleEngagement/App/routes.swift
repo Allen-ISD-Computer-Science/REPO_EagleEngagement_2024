@@ -28,6 +28,10 @@ func routes(_ app: Application) throws {
         return try await serveIndex(req)
     }
 
+    app.get("dev") { req in
+        return try Bcrypt.hash("eagleTeacher24^");
+    }
+
     app.get("login") { req in
         return try await serveIndex(req)
     }
@@ -44,8 +48,7 @@ func routes(_ app: Application) throws {
             throw Abort(.unauthorized)
         }
         req.session.authenticate(user)
-        return req.redirect(to: "/dashboard")
-
+        return [success: true, msg: "authenticated"];
     }
     
     protectedRoutes.get("dashboard") { req in
