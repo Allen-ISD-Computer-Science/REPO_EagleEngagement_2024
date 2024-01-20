@@ -25,7 +25,7 @@
                 android:layout_marginEnd="@dimen/_10pxh"
                 android:layout_marginStart="@dimen/_10pxh"
                 android:layout_marginTop="@dimen/_12pxv"
-                android:layout_width="wrap_content" android:orientation="horizontal">
+                android:layout_width="match_parent" android:orientation="horizontal">
                 <ImageButton
                     android:background="@drawable/rectangle_gradient_s_indigo_900_bf_c_indigo_900_f9_e_indigo_900_d8_radius_37"
                     android:id="@+id/btnVector"
@@ -42,7 +42,7 @@
                     android:layout_marginBottom="@dimen/_38pxv"
                     android:layout_marginStart="@dimen/_168pxh"
                     android:layout_weight="0.35"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:paddingBottom="@dimen/_3pxv"
                     android:paddingEnd="@dimen/_4pxh"
                     android:paddingStart="@dimen/_4pxh"
@@ -55,7 +55,7 @@
         <View android:background="@color/white_A700"
             android:id="@+id/lineDividerLine"
             android:layout_height="@dimen/_1pxv"
-            android:layout_marginTop="@dimen/_1pxv" android:layout_width="@dimen/_306pxh"/>
+            android:layout_marginTop="@dimen/_1pxv" android:layout_width="match_parent"/>
         <LinearLayout android:gravity="start"
             android:id="@+id/linearColumneventdetails"
             android:layout_height="wrap_content"
