@@ -36,4 +36,12 @@ final public class User: Model, Content {
 
     // Creates a new, empty User.
     public init() { }
+
+    // Creates a User from params
+    public init(email: String, name: String, passwordHash: String, type: UserType) {
+        self.email = email;
+        self.name = name;
+        self.passwordHash = passwordHash;
+        self.userType = type;
+    }
 }

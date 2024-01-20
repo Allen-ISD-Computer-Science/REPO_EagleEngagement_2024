@@ -18,18 +18,6 @@ import Vapor
 import Fluent
 import FluentMySQLDriver
 
-final class Msg : Codable {
-    let success: Bool;
-    let msg: String;
-
-    init (success: Bool, msg: String) {
-        self.success = success;
-        self.msg = msg;
-    }
-}
-extension Msg: Content {}
-
-
 func routes(_ app: Application) throws {
     
     func serveIndex(_ req: Request) async throws -> View {
