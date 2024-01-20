@@ -24,7 +24,7 @@ func configure(_ app: Application) throws {
     // UNCOMMENT-PUBLIC to serve files from /Public folder
     app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
     app.middleware.use(app.sessions.middleware)
-      
+    
     let mysqlHost = Environment.get("MYSQL_HOSTNAME") ?? "db";
     let mysqlPortStr = Environment.get("MYSQL_PORT") ?? "3306";
     guard let mysqlPort = Int(mysqlPortStr) else {

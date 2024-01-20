@@ -18,6 +18,18 @@ import Vapor
 import Fluent
 import FluentMySQLDriver
 
+final class Msg : Codable {
+    let success: Bool;
+    let msg: String;
+
+    init (success: Bool, msg: String) {
+        self.success = success;
+        self.msg = msg;
+    }
+}
+extension Msg: Content {}
+
+
 func routes(_ app: Application) throws {
     
     func serveIndex(_ req: Request) async throws -> View {
@@ -28,28 +40,25 @@ func routes(_ app: Application) throws {
         return try await serveIndex(req)
     }
 
-    app.get("dev") { req in
-        return try Bcrypt.hash("eagleTeacher24^");
+    let sessionRoutes = app.grouped([User.sessionAuthenticator(), UserAuthenticator()])
+
+    sessionRoutes.get("login") { req in
+        return try await serveIndex(req);
     }
 
-    app.get("login") { req in
+    sessionRoutes.get("signup") { req in                
         return try await serveIndex(req)
     }
-
-    app.get("signup") { req in
-        return try await serveIndex(req)
-    }
-
-    let sessionRoutes = app.grouped(User.sessionAuthenticator())
-    let protectedRoutes = sessionRoutes.grouped(UserAuthenticator())
-
-    protectedRoutes.post("login") { req in
+    
+    sessionRoutes.post("login") { req -> Msg in
         guard let user = req.auth.get(User.self) else {
             throw Abort(.unauthorized)
         }
         req.session.authenticate(user)
-        return [success: true, msg: "authenticated"];
+        return Msg(success: true, msg: "authenticated");
     }
+
+    let protectedRoutes = sessionRoutes.grouped(User.redirectMiddleware(path: "login")); 
     
     protectedRoutes.get("dashboard") { req in
         return try await serveIndex(req)        
