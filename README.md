@@ -27,9 +27,16 @@ build
 ```
 
 ### Android
-```sh
-cd android
-```
+- Open Android Studio on the `android` directory.
+
+**To Run on a Device**
+- Go to the `Run` tab and click `Run 'app'`.
+- Choose a physical or virtual device to run the app on.
+
+**To Build an APK**
+- Go to the `Build` tab.
+- Click `Build Bundle(s) / APK(s)`.
+- Select `Build APK(s)`.
 
 ### IOS
 ```sh
