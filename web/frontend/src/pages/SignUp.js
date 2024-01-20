@@ -1,7 +1,5 @@
 import * as React from "react";
 
-import logo from '../logo.svg';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash, faSignIn, faUser } from '@fortawesome/free-solid-svg-icons'
 
@@ -67,7 +65,7 @@ function SignInPage(props) {
     <div className="justify-center items-center bg-neutral-200 min-h-[100vh] flex flex-col px-16 py-11 max-md:px-5">
       <span className="shadow-lg bg-blue-950 flex w-[650px] max-w-full flex-col mb-5 pl-12 pr-8 pb-2.5 rounded-2xl max-md:px-5 text-white">
         <img
-          src={logo}
+          srcSet={process.env.PUBLIC_URL + "/assets/images/logo.png"}
           alt="Eagle Engagement Logo"
           className="h-40 mb-[-80px]"
         />

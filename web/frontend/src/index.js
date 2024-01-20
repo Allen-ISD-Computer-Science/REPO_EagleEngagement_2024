@@ -8,6 +8,12 @@ import ErrorPage from "./pages/error.js"
 import SignInPage from "./pages/SignIn.js"
 import SignUpPage from "./pages/SignUp.js"
 
+// Teacher Pages
+import ClubsDashboard from './pages/teacher/ClubsDashboard.js';
+import ClubPage from './pages/teacher/Club.js';
+
+// Admin Pages
+
 import {
   createBrowserRouter,
   RouterProvider,
@@ -26,6 +32,14 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <SignUpPage />,
+  },
+  {
+    path: "/dashboard",
+    element: <ClubsDashboard />,
+  },
+  {
+    path: "/club/*",
+    element: <ClubPage />,
   }
 ],
 {

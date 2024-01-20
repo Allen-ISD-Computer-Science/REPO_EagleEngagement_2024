@@ -1,7 +1,5 @@
 import * as React from "react";
 
-import logo from '../logo.svg';
-
 function HomePage(props) {
   return (
     <div className="bg-neutral-200 flex flex-col justify-center items-stretch">
@@ -15,7 +13,7 @@ function HomePage(props) {
         <nav className="justify-between items-stretch flex w-full gap-5 sticky top-0 max-md:w-full max-md:flex-wrap">
           <span className="flex flex-col items-stretch">
             <img
-              src={logo}
+              srcSet={process.env.PUBLIC_URL + "/assets/images/logo.png"}
               alt="Eagle Engagement Logo"
             />
           </span>
