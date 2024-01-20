@@ -5,7 +5,7 @@ import { faPlus, faUsers } from '@fortawesome/free-solid-svg-icons'
 
 function TeacherNav(props) {
   return (
-    <nav className="items-stretch bg-blue-950 flex max-w-[400px] w-full flex-col pb-12">
+    <nav className="items-stretch bg-blue-950 flex max-w-[400px] w-full flex-col pb-12 max-md:hidden">
       <img
         loading="lazy"
         srcSet={process.env.PUBLIC_URL + "/assets/images/logo.png"}

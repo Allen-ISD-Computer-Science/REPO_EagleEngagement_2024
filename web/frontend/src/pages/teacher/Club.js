@@ -53,7 +53,7 @@ function ClubPage(props) {
           className="p-12 flex flex-col items-stretch max-md:px-5"
         >
           <div
-            className="flex flex-row justify-between items-stretch gap-40"
+            className="flex flex-row justify-between items-stretch gap-40 max-md:flex-col max-md:gap-4"
           >
             <div className="flex flex-col">
               <img
@@ -64,9 +64,9 @@ function ClubPage(props) {
               <span className="text-xl">{clubObj.following + " Students Following"}</span>
             </div>
             <div className="flex flex-col leading-10">
-              <span className="text-4xl font-bold my-6">{clubObj.name}</span>
-              <span className="text-2xl h-[96px] pr-10">{clubObj.description}</span>
-              <div className="flex flex-row gap-5 text-xl">
+              <span className="text-4xl font-bold my-6 max-md:text-2xl">{clubObj.name}</span>
+              <span className="text-2xl min-h-[96px] pr-10 max-md:text-xl max-md:pr-4">{clubObj.description}</span>
+              <div className="flex flex-row gap-5 text-xl max-md:text-l max-md:flex-col">
                 {clubObj.link ? <a href={"https://" + clubObj.link} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faLink} size="s" /> {clubObj.link}</a> : ""}
                 {clubObj.twitter ? <a href={"https://x.com/" + clubObj.twitter} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faXTwitter} size="s" /> @{clubObj.twitter}</a> : ""}
                 {clubObj.instagram ? <a  href={"https://instagram.com/" + clubObj.instagram} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faInstagram} size="s" /> @{clubObj.instagram}</a> : ""}
