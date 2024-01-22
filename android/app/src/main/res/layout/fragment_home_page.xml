@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EventsFragment"
     xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
-    <data/>
+
     <LinearLayout android:gravity="center_horizontal"
         android:id="@+id/linearHomePage"
         android:layout_height="match_parent"
@@ -88,4 +91,4 @@
                 itemSpace="@{@dimen/_17pxh}" tools:itemCount="2" tools:listitem="@layout/row_home_page"/>
         </LinearLayout>
     </LinearLayout>
-</layout>
+</FrameLayout>
