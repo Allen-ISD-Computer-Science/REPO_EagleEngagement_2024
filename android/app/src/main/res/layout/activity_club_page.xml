@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+    <data/>
+    <LinearLayout android:gravity="center_horizontal"
+        android:id="@+id/linearClubPage"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="vertical" style="@style/groupStylewhite_A700">
+        <LinearLayout android:gravity="start"
+            android:id="@+id/linearUpperInfo"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="vertical" style="@style/groupStylecornerRadius">
+            <FrameLayout android:id="@+id/frameStackeventthumbmail"
+                android:layout_height="@dimen/_186pxv" android:layout_width="match_parent">
+                <ImageView android:id="@+id/imageEventThumbmail"
+                    android:layout_gravity="start"
+                    android:layout_height="@dimen/_186pxh"
+                    android:layout_width="match_parent"
+                    android:scaleType="fitXY"
+                    imageRes="@{@drawable/img_eventthumbmail_186x360}"
+                    tools:ignore="ContentDescription" tools:src="@drawable/img_eventthumbmail_186x360"/>
+                <LinearLayout android:id="@+id/linearColumnarrowleft"
+                    android:layout_gravity="top|center"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_10pxh"
+                    android:layout_marginVertical="@dimen/_10pxv"
+                    android:layout_width="match_parent" android:orientation="vertical">
+                    <ImageView android:id="@+id/imageArrowleft"
+                        android:layout_gravity="start"
+                        android:layout_height="@dimen/_22pxh"
+                        android:layout_marginEnd="@dimen/_10pxh"
+                        android:layout_width="@dimen/_13pxh"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/img_arrowleft_white_a700"
+                        tools:ignore="ContentDescription" tools:src="@drawable/img_arrowleft_white_a700"/>
+
+                    <TextView
+                        android:id="@+id/txtEagleRobotics"
+                        style="@style/txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10pxh"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginTop="@dimen/_36pxv"
+                        android:layout_marginRight="0dp"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:text="@string/lbl_eagle_robotics"
+                        tools:text="@string/lbl_eagle_robotics" />
+                </LinearLayout>
+            </FrameLayout>
+            <View android:background="@color/white_A700"
+                android:id="@+id/lineLineOne"
+                android:layout_height="@dimen/_1pxv" android:layout_width="@dimen/_360pxh"/>
+            <LinearLayout android:gravity="center_vertical"
+                android:id="@+id/linearRowsponsorgregor"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_45pxh"
+                android:layout_marginStart="@dimen/_45pxh"
+                android:layout_marginTop="@dimen/_8pxv"
+                android:layout_width="match_parent" android:orientation="horizontal">
+                <TextView android:id="@+id/txtSponsorGregor"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.51"
+                    android:layout_width="0dp"
+                    android:text="@string/msg_sponsor_gregor"
+                    style="@style/txtKhulaextrabold15" tools:text="@string/msg_sponsor_gregor"/>
+                <TextView android:id="@+id/txtTime"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_1pxv"
+                    android:layout_marginStart="@dimen/_21pxh"
+                    android:layout_weight="0.49"
+                    android:layout_width="0dp"
+                    android:text="@string/msg_times_tues_thu"
+                    style="@style/txtKhulaextrabold15" tools:text="@string/msg_times_tues_thu"/>
+            </LinearLayout>
+            <TextView android:ellipsize="end"
+                android:id="@+id/txtLocationSTEAM"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_6pxv"
+                android:layout_marginEnd="@dimen/_45pxh"
+                android:layout_marginStart="@dimen/_45pxh"
+                android:layout_marginTop="@dimen/_7pxv"
+                android:layout_width="wrap_content"
+                android:singleLine="true"
+                android:text="@string/msg_location_steam"
+                style="@style/txtKhulaextrabold15" tools:text="@string/msg_location_steam"/>
+        </LinearLayout>
+        <TextView android:gravity="center_horizontal"
+            android:id="@+id/txtDescription"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_22pxh"
+            android:layout_marginStart="@dimen/_22pxh"
+            android:layout_marginTop="@dimen/_23pxv"
+            android:layout_width="match_parent"
+            android:text="@string/msg_eagle_robotics"
+            style="@style/txtKhulaextrabold16_1" tools:text="@string/msg_eagle_robotics"/>
+        <ImageView android:id="@+id/imageFrameTwentyFive"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="@dimen/_37pxh"
+            android:layout_marginEnd="@dimen/_22pxh"
+            android:layout_marginStart="@dimen/_22pxh"
+            android:layout_marginTop="@dimen/_120pxv"
+            android:layout_width="@dimen/_242pxh"
+            android:scaleType="fitXY"
+            android:src="@drawable/img_frame25"
+            tools:ignore="ContentDescription" tools:src="@drawable/img_frame25"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:ellipsize="end" android:gravity="center"
+            android:id="@+id/btnFollow"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="@dimen/_61pxv"
+            android:layout_marginBottom="@dimen/_20pxv"
+            android:layout_marginEnd="@dimen/_22pxh"
+            android:layout_marginStart="@dimen/_22pxh"
+            android:layout_marginTop="@dimen/_95pxv"
+            android:layout_width="@dimen/_192pxh"
+            android:paddingBottom="@dimen/_11pxv"
+            android:paddingEnd="@dimen/_30pxh"
+            android:paddingStart="@dimen/_30pxh"
+            android:paddingTop="@dimen/_11pxv" android:singleLine="true"
+            android:text="@string/lbl_follow"
+            android:textAllCaps="false" style="@style/btnSolidRounded" tools:text="@string/lbl_follow"/>
+    </LinearLayout>
+</layout>

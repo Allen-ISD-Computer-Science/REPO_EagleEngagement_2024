@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+    <data/>
+    <LinearLayout android:id="@+id/linearGroup43"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/_8pxh" android:paddingVertical="@dimen/_8pxv">
+        <TextView android:ellipsize="end" android:id="@+id/txtTitle"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:singleLine="true" android:textSize="@dimen/_14pxh"/>
+    </LinearLayout>
+</layout>

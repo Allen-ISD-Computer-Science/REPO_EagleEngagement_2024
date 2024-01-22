@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+    <data/>
+    <LinearLayout android:gravity="center_horizontal"
+        android:id="@+id/linearPointHistoryP"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="vertical" style="@style/groupStylewhite_A700">
+        <androidx.appcompat.widget.Toolbar android:gravity="start"
+            android:id="@+id/toolbarToolbar"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent" app:contentInsetStart="0dp">
+            <LinearLayout android:gravity="start"
+                android:id="@+id/linearUpperInfo"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="horizontal" style="@style/groupStylecornerRadius">
+                <ImageView android:id="@+id/imageArrowleft"
+                    android:layout_height="@dimen/_22pxh"
+                    android:layout_marginBottom="@dimen/_66pxv"
+                    android:layout_marginStart="@dimen/_10pxh"
+                    android:layout_marginTop="@dimen/_10pxv"
+                    android:layout_width="@dimen/_13pxh"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/img_arrowleft_white_a700"
+                    tools:ignore="ContentDescription" tools:src="@drawable/img_arrowleft_white_a700"/>
+                <TextView android:ellipsize="end"
+                    android:id="@+id/txtPointHistory"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_33pxv"
+                    android:layout_marginEnd="@dimen/_91pxh"
+                    android:layout_marginStart="@dimen/_66pxh"
+                    android:layout_marginTop="@dimen/_22pxv"
+                    android:layout_weight="0.93"
+                    android:layout_width="0dp" android:singleLine="true"
+                    android:text="@string/lbl_point_history"
+                    style="@style/txt" tools:text="@string/lbl_point_history"/>
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+        <androidx.recyclerview.widget.RecyclerView
+            android:gravity="center_horizontal"
+            android:id="@+id/recyclerListallenvnorth"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_27pxh"
+            android:layout_marginStart="@dimen/_27pxh"
+            android:layout_marginTop="@dimen/_18pxv"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            itemSpace="@{@dimen/_19pxh}" tools:itemCount="2" tools:listitem="@layout/row_point_history"/>
+    </LinearLayout>
+</layout>
