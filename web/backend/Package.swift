@@ -13,10 +13,16 @@ let package = Package(
     // Targets can depend on other targets in this package, and on products in packages which this package depends on.
     .target(name: "CBase32"),
     .target(name: "CVaporBcrypt"),
-    .executableTarget(name: "EagleEngagement", dependencies: [
-                                            .product(name: "Atomics", package: "swift-atomics"),
-                                            .target(name: "CBase32"),
-                                            .target(name: "CVaporBcrypt")
-                                          ])
+    .executableTarget(name: "EagleEngagement",
+                      dependencies: [
+                        .product(name: "Atomics", package: "swift-atomics"),
+                        .target(name: "CBase32"),
+                        .target(name: "CVaporBcrypt")
+                      ],
+                      exclude: [
+                        "App/JWT/",
+                        "App/JWTKit/"
+                      ]
+    )
   ]
 )

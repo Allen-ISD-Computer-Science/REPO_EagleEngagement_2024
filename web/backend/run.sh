@@ -1,5 +1,7 @@
 
 # Ensure front-end has been built before attempting to run
+cd "$(dirname "$0")"
+
 if [ ! -d "Public/static/" ]
 then
     echo "WARN: Frontend has not yet been built."
