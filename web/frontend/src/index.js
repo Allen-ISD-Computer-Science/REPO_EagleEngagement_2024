@@ -1,7 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { CookiesProvider } from 'react-cookie';
+
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+
 import './index.css';
-import reportWebVitals from './reportWebVitals';
 
 import HomePage from "./pages/Home.js"
 import ErrorPage from "./pages/error.js"
@@ -13,6 +17,9 @@ import ClubsDashboard from './pages/teacher/ClubsDashboard.js';
 import ClubPage from './pages/teacher/Club.js';
 
 // Admin Pages
+import EventRequestsPage from './pages/admin/EventRequests.js';
+import EventsPage from './pages/admin/Events.js';
+import NewEditEventPage from './pages/admin/NewEditEvent.js';
 
 import {
   createBrowserRouter,
@@ -40,20 +47,35 @@ const router = createBrowserRouter([
   {
     path: "/club/*",
     element: <ClubPage />,
+  },
+  {
+    path: "/admin/eventRequests",
+    element: <EventRequestsPage />,
+  },
+  {
+    path: "/admin/events",
+    element: <EventsPage />,
+  },
+  {
+    path: "/admin/events/new",
+    element: <NewEditEventPage />,
+  },
+  {
+    path: "/admin/events/edit/*",
+    element: <NewEditEventPage />,
   }
 ],
-{
-  basename: process.env.PUBLIC_URL ? `${process.env.PUBLIC_URL}/` : "/",
-});
+  {
+    basename: process.env.PUBLIC_URL ? `${process.env.PUBLIC_URL}/` : "/",
+  });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <React.StrictMode>
-	<RouterProvider router={router} />
-    </React.StrictMode>
+  <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <CookiesProvider>
+      <React.StrictMode>
+        <RouterProvider router={router} />
+      </React.StrictMode>
+    </CookiesProvider>
+  </LocalizationProvider>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
