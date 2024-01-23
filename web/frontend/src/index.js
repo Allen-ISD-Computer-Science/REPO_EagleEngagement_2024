@@ -20,6 +20,7 @@ import ClubPage from './pages/teacher/Club.js';
 import EventRequestsPage from './pages/admin/EventRequests.js';
 import EventsPage from './pages/admin/Events.js';
 import NewEditEventPage from './pages/admin/NewEditEvent.js';
+import EventCheckInPage from './pages/admin/EventCheckIn.js';
 
 import {
   createBrowserRouter,
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
   {
     path: "/admin/events/edit/*",
     element: <NewEditEventPage />,
+  },
+  {
+    path: "/admin/events/checkin/*",
+    element: <EventCheckInPage />,
   }
 ],
   {

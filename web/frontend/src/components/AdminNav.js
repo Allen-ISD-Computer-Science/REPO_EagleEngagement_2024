@@ -26,7 +26,7 @@ function AdminNav(props) {
       >
         <FontAwesomeIcon icon={faBars} size="2xl" />
       </button>
-      <nav className={`h-full items-stretch bg-blue-950 flex max-w-[400px] z-40 w-full flex-col pb-12 max-md:${isHidden ? "hidden" : "block"} max-md:w-full max-md:absolute max-md:max-w-full`}>
+      <nav className={`h-full items-stretch bg-blue-950 flex max-w-[400px] z-40 w-full flex-col pb-12 ${isHidden ? "max-md:hidden" : "max-md:block"} max-md:w-full max-md:absolute max-md:max-w-full`}>
         <img
           loading="lazy"
           srcSet={process.env.PUBLIC_URL + "/assets/images/logo.png"}

@@ -14,6 +14,7 @@ function NewEditEventPage(props) {
 
   React.useEffect(() => {
     const eventID = parseInt(window.location.pathname.split("/").pop());
+    console.log(eventID);
     if (!isNaN(eventID)) {
       setTitle("Edit Event - ...");
       
@@ -30,6 +31,7 @@ function NewEditEventPage(props) {
         // console.error(err);
       });
       
+      return;
     }
 
     if (window.location.pathname !== "/admin/events/new") throw new Error("Invalid event ID.");
@@ -168,6 +170,8 @@ function NewEditEventPage(props) {
                 <Button
                   variant="contained"
                   color="error"
+                  component="a"
+                  href={process.env.PUBLIC_URL + "/admin/events"}
                 >
                   Cancel
                 </Button>

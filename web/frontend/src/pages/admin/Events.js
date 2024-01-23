@@ -7,7 +7,7 @@ import AdminNav from "../../components/AdminNav";
 
 function EventsPage(props) {
   const [events, setEvents] = React.useState([
-    { name: "B.E.S.T. Robotics State Competition", location: "Allen Football Stadium", date: "9/1/2021", checkInType: "manual" },
+    { id: 1, name: "B.E.S.T. Robotics State Competition", location: "Allen Football Stadium", date: "9/1/2021", checkInType: "manual" },
   ]);
 
   return (
@@ -68,14 +68,16 @@ function EventsPage(props) {
               {/* meeting logs */}
               {
                 events.map((event, i) =>
-                    <tr key={i} className="text-l">
+                    <tr key={event.id} className="text-l">
                       <td>{event.name}</td>
                       <td>{event.location}</td>
                       <td>{event.date}</td>
-                      <td className="[&_button]:mx-4">
-                        <button className="bg-blue-950 text-white px-4 py-2 rounded-xl"><FontAwesomeIcon icon={faEdit} size="m" /></button>
+                      <td className="[&>*]:mx-4">
+                        <a className="bg-blue-950 text-white px-4 py-2 rounded-xl" href={process.env.PUBLIC_URL + `/admin/events/edit/${event.id}`}>
+                          <FontAwesomeIcon icon={faEdit} size="m" />
+                        </a>
                         {
-                          event.checkInType === "manual" ? <button className="bg-blue-950 text-white px-4 py-2 rounded-xl"><FontAwesomeIcon icon={faIdCard} size="m" /></button> : ""
+                          event.checkInType === "manual" ? <a href={process.env.PUBLIC_URL + `/admin/events/checkin/${event.id}`} className="bg-blue-950 text-white px-4 py-2 rounded-xl"><FontAwesomeIcon icon={faIdCard} size="m" /></a> : ""
                         }
                         <button className="bg-blue-950 text-white px-4 py-2 rounded-xl"><FontAwesomeIcon icon={faTrash} size="m" /></button>
                       </td>
