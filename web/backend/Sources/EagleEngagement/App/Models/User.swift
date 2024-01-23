@@ -26,9 +26,22 @@ final public class User: Model, Content {
     @Field(key: "name")
     public var name: String
 
+    // Hash of the User's Password
+    @Field(key: "passwordHash")
+    public var passwordHash: String
+
+
     @Enum(key: "type")
     public var userType: UserType
 
     // Creates a new, empty User.
     public init() { }
+
+    // Creates a User from params
+    public init(email: String, name: String, passwordHash: String, type: UserType) {
+        self.email = email;
+        self.name = name;
+        self.passwordHash = passwordHash;
+        self.userType = type;
+    }
 }

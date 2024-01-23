@@ -3,8 +3,16 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 
-import App from "./pages/App.js"
+import HomePage from "./pages/Home.js"
 import ErrorPage from "./pages/error.js"
+import SignInPage from "./pages/SignIn.js"
+import SignUpPage from "./pages/SignUp.js"
+
+// Teacher Pages
+import ClubsDashboard from './pages/teacher/ClubsDashboard.js';
+import ClubPage from './pages/teacher/Club.js';
+
+// Admin Pages
 
 import {
   createBrowserRouter,
@@ -14,8 +22,24 @@ import {
 const router = createBrowserRouter([
   {
     path: "/",
-      element: <App />,
-      errorElement: <ErrorPage />
+    element: <HomePage />,
+    errorElement: <ErrorPage />
+  },
+  {
+    path: "/login",
+    element: <SignInPage />,
+  },
+  {
+    path: "/signup",
+    element: <SignUpPage />,
+  },
+  {
+    path: "/dashboard",
+    element: <ClubsDashboard />,
+  },
+  {
+    path: "/club/*",
+    element: <ClubPage />,
   }
 ],
 {
