@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="txtSolidRoundedOutline">
+        <item name="android:textSize">@dimen/_18pxh</item>
+        <item name="android:textColor">@color/indigo_700</item>
+        <item name="android:fontFamily">@font/khula</item>
+        <item name="android:textFontWeight" tools:targetApi="p">800</item>
+        <item name="android:background">@drawable/rectangle_bg_white_a700_border_gray_700_radius_6</item>
+    </style>
+    <style name="txtKhulaextrabold20">
+        <item name="android:textSize">@dimen/_20pxh</item>
+        <item name="android:textColor">@color/white_A700</item>
+        <item name="android:fontFamily">@font/khula</item>
+        <item name="android:textFontWeight" tools:targetApi="p">800</item>
+    </style>
+    <style name="txtSolidRounded">
+        <item name="android:textSize">@dimen/_24pxh</item>
+        <item name="android:textColor">@color/white_A700</item>
+        <item name="android:fontFamily">@font/kanit</item>
+        <item name="android:textFontWeight" tools:targetApi="p">800</item>
+        <item name="android:background">@drawable/rectangle_bg_indigo_901_radius_10</item>
+    </style>
+    <style name="txtKhulaextrabold20_1">
+        <item name="android:textSize">@dimen/_20pxh</item>
+        <item name="android:textColor">@color/indigo_700</item>
+        <item name="android:fontFamily">@font/khula</item>
+        <item name="android:textFontWeight" tools:targetApi="p">800</item>
+    </style>
+    <style name="txtKhulaextrabold24_2">
+        <item name="android:textSize">@dimen/_24pxh</item>
+        <item name="android:textColor">@color/indigo_901</item>
+        <item name="android:fontFamily">@font/khula</item>
+        <item name="android:textFontWeight" tools:targetApi="p">800</item>
+    </style>
+    <style name="txtKhulaextrabold24_1">
+        <item name="android:textSize">@dimen/_24pxh</item>
+        <item name="android:textColor">@color/white_A700</item>
+        <item name="android:fontFamily">@font/khula</item>
+        <item name="android:textFontWeight" tools:targetApi="p">800</item>
+    </style>
+    <style name="txtKrubmediumitalic16">
+        <item name="android:textSize">@dimen/_16pxh</item>
+        <item name="android:textColor">@color/gray_400</item>
+        <item name="android:fontFamily">@font/krub</item>
+        <item name="android:textFontWeight" tools:targetApi="p">500</item>
+    </style>
+    <style name="txtKhulabold16">
+        <item name="android:textSize">@dimen/_16pxh</item>
+        <item name="android:textColor">@color/black_900</item>
+        <item name="android:fontFamily">@font/khula</item>
+        <item name="android:textFontWeight" tools:targetApi="p">700</item>
+    </style>
+    <style name="groupStylecornerRadius">
+        <item name="android:background">@drawable/rectangle_gradient_s_indigo_900_e_indigo_900_8c_radius_bl_30_br_30</item>
+    </style>
+    <style name="txtKhulaextrabold24">
+        <item name="android:textSize">@dimen/_24pxh</item>
+        <item name="android:textColor">@color/black_900</item>
+        <item name="android:fontFamily">@font/khula</item>
+        <item name="android:textFontWeight" tools:targetApi="p">800</item>
+    </style>
+    <style name="txtKhulabold14">
+        <item name="android:textSize">@dimen/_14pxh</item>
+        <item name="android:textColor">@color/white_A700</item>
+        <item name="android:fontFamily">@font/khula</item>
+        <item name="android:textFontWeight" tools:targetApi="p">700</item>
+    </style>
+    <style name="groupStylegray_100cornerRadius">
+        <item name="android:background">@drawable/rectangle_bg_gray_100_radius_10</item>
+    </style>
+    <style name="txtKhulaextrabold22">
+        <item name="android:textSize">@dimen/_22pxh</item>
+        <item name="android:textColor">@color/white_A700</item>
+        <item name="android:fontFamily">@font/khula</item>
+        <item name="android:textFontWeight" tools:targetApi="p">800</item>
+    </style>
+    <style name="groupStyleindigo_901">
+        <item name="android:background">@drawable/rectangle_bg_indigo_901</item>
+    </style>
+    <style name="groupStylewhite_A700">
+        <item name="android:background">@drawable/rectangle_bg_white_a700</item>
+    </style>
+    <style name="txtKhulabold16_1">
+        <item name="android:textSize">@dimen/_16pxh</item>
+        <item name="android:textColor">@color/white_A700</item>
+        <item name="android:fontFamily">@font/khula</item>
+        <item name="android:textFontWeight" tools:targetApi="p">700</item>
+    </style>
+    <style name="groupStylecornerRadius_3">
+        <item name="android:background">@drawable/rectangle_gradient_s_indigo_902_e_indigo_900_e5_radius_tr_30_bl_30</item>
+    </style>
+    <style name="groupStylecornerRadius_2">
+        <item name="android:background">@drawable/rectangle_gradient_s_indigo_902_e_indigo_900_e5_radius_tr_30_bl_31</item>
+    </style>
+    <style name="btnSolidRounded">
+        <item name="android:textSize">@dimen/_24pxh</item>
+        <item name="android:textColor">@color/white_A700</item>
+        <item name="android:fontFamily">@font/khula</item>
+        <item name="android:textFontWeight" tools:targetApi="p">800</item>
+        <item name="android:background">@drawable/rectangle_bg_indigo_700_radius_20</item>
+    </style>
+    <style name="groupStylecornerRadius_4">
+        <item name="android:background">@drawable/rectangle_gradient_s_indigo_902_e_indigo_900_e6_radius_tr_30_bl_30</item>
+    </style>
+    <style name="txtKhulaextrabold14_1">
+        <item name="android:textSize">@dimen/_14pxh</item>
+        <item name="android:textColor">@color/indigo_901</item>
+        <item name="android:fontFamily">@font/khula</item>
+        <item name="android:textFontWeight" tools:targetApi="p">800</item>
+    </style>
+    <style name="txtKhulaextrabold16_1">
+        <item name="android:textSize">@dimen/_16pxh</item>
+        <item name="android:textColor">@color/black_900</item>
+        <item name="android:fontFamily">@font/khula</item>
+        <item name="android:textFontWeight" tools:targetApi="p">800</item>
+    </style>
+    <style name="groupStylecornerRadius_1">
+        <item name="android:background">@drawable/rectangle_gradient_s_indigo_902_e_blue_900_8c_radius_tr_30_bl_30</item>
+    </style>
+    <style name="etGradientRounded">
+        <item name="android:textSize">@dimen/_16pxh</item>
+        <item name="android:textColor">@color/gray_400</item>
+        <item name="android:fontFamily">@font/krub</item>
+        <item name="android:textFontWeight" tools:targetApi="p">500</item>
+        <item name="android:background">@drawable/rectangle_gradient_s_indigo_902_e_indigo_900_e6_radius_tr_30_bl_30</item>
+    </style>
+    <style name="txtKhulaextrabold18">
+        <item name="android:textSize">@dimen/_18pxh</item>
+        <item name="android:textColor">@color/gray_800</item>
+        <item name="android:fontFamily">@font/khula</item>
+        <item name="android:textFontWeight" tools:targetApi="p">800</item>
+    </style>
+    <style name="txtKanitextrabold24">
+        <item name="android:textSize">@dimen/_24pxh</item>
+        <item name="android:textColor">@color/white_A700</item>
+        <item name="android:fontFamily">@font/kanit</item>
+        <item name="android:textFontWeight" tools:targetApi="p">800</item>
+    </style>
+    <style name="txtKhulaextrabold16">
+        <item name="android:textSize">@dimen/_16pxh</item>
+        <item name="android:textColor">@color/indigo_700</item>
+        <item name="android:fontFamily">@font/khula</item>
+        <item name="android:textFontWeight" tools:targetApi="p">800</item>
+    </style>
+    <style name="txtKhulaextrabold15">
+        <item name="android:textSize">@dimen/_15pxh</item>
+        <item name="android:textColor">@color/white_A700</item>
+        <item name="android:fontFamily">@font/khula</item>
+        <item name="android:textFontWeight" tools:targetApi="p">800</item>
+    </style>
+    <style name="groupStyleindigo_901cornerRadius">
+        <item name="android:background">@drawable/rectangle_bg_indigo_901_radius_tl_30_tr_30</item>
+    </style>
+    <style name="txtKhulaextrabold14">
+        <item name="android:textSize">@dimen/_14pxh</item>
+        <item name="android:textColor">@color/white_A700</item>
+        <item name="android:fontFamily">@font/khula</item>
+        <item name="android:textFontWeight" tools:targetApi="p">800</item>
+    </style>
+    <style name="groupStyleindigo_1">
+        <item name="android:background">@drawable/rectangle_bg_indigo_901_radius_tr_30_bl_30</item>
+    </style>
+    <style name="groupStyleindigo_700cornerRadius">
+        <item name="android:background">@drawable/rectangle_bg_indigo_700_radius_tr_30_bl_30</item>
+    </style>
+    <style name="txt">
+        <item name="android:textSize">@dimen/_28pxh</item>
+        <item name="android:textColor">@color/white_A700</item>
+        <item name="android:fontFamily">@font/khula</item>
+        <item name="android:textFontWeight" tools:targetApi="p">800</item>
+        <item name="android:background">@drawable/rectangle_dhi_0</item>
+    </style>
+    <style name="txtGradientRounded">
+        <item name="android:textSize">@dimen/_24pxh</item>
+        <item name="android:textColor">@color/white_A700</item>
+        <item name="android:fontFamily">@font/kanit</item>
+        <item name="android:textFontWeight" tools:targetApi="p">800</item>
+        <item name="android:background">@drawable/rectangle_gradient_s_indigo_900_bf_c_indigo_900_f9_e_indigo_900_d8_radius_20</item>
+    </style>
+    <style name="txtKhulaextrabold16_3">
+        <item name="android:textSize">@dimen/_16pxh</item>
+        <item name="android:textColor">@color/gray_400</item>
+        <item name="android:fontFamily">@font/khula</item>
+        <item name="android:textFontWeight" tools:targetApi="p">800</item>
+    </style>
+    <style name="txt_1">
+        <item name="android:textSize">@dimen/_28pxh</item>
+        <item name="android:textColor">@color/white_A700</item>
+        <item name="android:fontFamily">@font/khula</item>
+        <item name="android:textFontWeight" tools:targetApi="p">800</item>
+        <item name="android:background">@drawable/rectangle_dhi_0</item>
+    </style>
+    <style name="txtKhulaextrabold16_2">
+        <item name="android:textSize">@dimen/_16pxh</item>
+        <item name="android:textColor">@color/white_A700</item>
+        <item name="android:fontFamily">@font/khula</item>
+        <item name="android:textFontWeight" tools:targetApi="p">800</item>
+    </style>
+    <style name="txt_2">
+        <item name="android:textSize">@dimen/_96pxh</item>
+        <item name="android:textColor">@color/indigo_901</item>
+        <item name="android:fontFamily">@font/khula</item>
+        <item name="android:textFontWeight" tools:targetApi="p">800</item>
+        <item name="android:background">@drawable/rectangle_dhi_0</item>
+    </style>
+    <style name="txt_3">
+        <item name="android:textSize">@dimen/_32pxh</item>
+        <item name="android:textColor">@color/white_A700</item>
+        <item name="android:fontFamily">@font/khula</item>
+        <item name="android:textFontWeight" tools:targetApi="p">800</item>
+        <item name="android:background">@drawable/rectangle_dhi_0</item>
+    </style>
+</resources>
