@@ -11,7 +11,7 @@ function EventsPage(props) {
   ]);
 
   return (
-    <div className="flex flex-row items-stretch min-h-[100vh]">
+    <div className="flex flex-row items-stretch min-h-[100vh] z-[100]">
       <AdminNav />
       <div className="flex flex-col items-stretch w-full">
         <div className="flex flex-col justify-center text-white text-6xl font-bold bg-blue-950 w-full pl-12 pr-12 items-start max-md:text-4xl max-md:px-5 h-[150px] max-md:max-h-[100px]">
@@ -37,9 +37,9 @@ function EventsPage(props) {
               <FontAwesomeIcon icon={faSearch} size="xl" />
             </button>
           </div>
-          <div>
+          <div className="max-md:mt-6 max-md:w-full">
             <button
-              className="bg-blue-950 text-white px-4 py-2 rounded-xl font-semibold"
+              className="bg-blue-950 text-white px-4 py-2 rounded-xl font-semibold max-md:w-full"
             >
               <a
                 href={process.env.PUBLIC_URL + "/admin/events/new"}

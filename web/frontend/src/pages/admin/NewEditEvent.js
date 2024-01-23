@@ -2,9 +2,6 @@ import * as React from "react";
 
 import { DateTimePicker, TimePicker } from "@mui/x-date-pickers";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faImage } from '@fortawesome/free-solid-svg-icons'
-
 import AdminNav from "../../components/AdminNav";
 import { Button, MenuItem, Select, TextField } from "@mui/material";
 
