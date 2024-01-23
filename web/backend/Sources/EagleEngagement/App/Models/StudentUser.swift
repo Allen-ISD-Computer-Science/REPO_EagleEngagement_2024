@@ -29,4 +29,9 @@ final public class StudentUser: Model, Content {
     
     // Creates a new, empty User.
     public init() { }
+
+    public init(userID: Int, studentID: Int) {
+        self.id = userID;
+        self.studentID = studentID;
+    }
 }
