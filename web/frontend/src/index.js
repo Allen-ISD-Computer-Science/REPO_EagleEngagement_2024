@@ -22,6 +22,9 @@ import EventsPage from './pages/admin/Events.js';
 import NewEditEventPage from './pages/admin/NewEditEvent.js';
 import EventCheckInPage from './pages/admin/EventCheckIn.js';
 
+import LocationsPage from './pages/admin/Locations.js';
+import NewEditLocationPage from './pages/admin/NewEditLocation.js';
+
 import {
   createBrowserRouter,
   RouterProvider,
@@ -68,6 +71,14 @@ const router = createBrowserRouter([
   {
     path: "/admin/events/checkin/*",
     element: <EventCheckInPage />,
+  },
+  {
+    path: "/admin/locations",
+    element: <LocationsPage />,
+  },
+  {
+    path: "/admin/locations/new",
+    element: <NewEditLocationPage />,
   }
 ],
   {

@@ -14,7 +14,7 @@ function EventCheckInPage(props) {
 
   React.useEffect(() => {
     const eventID = parseInt(window.location.pathname.split("/").pop());
-    if (!isNaN(eventID)) {     
+    if (!isNaN(eventID)) {
       const getEvent = async () => {
         const res = await fetch("./api/event/" + eventID);
         return await res.json();
@@ -26,7 +26,7 @@ function EventCheckInPage(props) {
       }).catch((err) => {
         // console.error(err);
       });
-      
+
       return;
     }
 
@@ -36,9 +36,9 @@ function EventCheckInPage(props) {
 
   return (
     <div className="flex flex-row items-stretch min-h-[100vh]">
-      <AdminNav />
+      <AdminNav selected="events" />
       <div className="flex flex-col items-stretch w-full">
-        <div className="flex flex-col justify-center text-white text-6xl font-bold bg-blue-950 w-full pl-12 pr-12 items-start max-md:text-4xl max-md:px-5 h-[150px] max-md:max-h-[100px]">
+        <div className="flex flex-col justify-center text-white text-5xl font-bold bg-blue-950 w-full pl-12 pr-12 items-start max-md:text-4xl max-md:px-5 h-[150px] max-md:max-h-[100px]">
           <span className="my-auto">
             Event Check In
           </span>

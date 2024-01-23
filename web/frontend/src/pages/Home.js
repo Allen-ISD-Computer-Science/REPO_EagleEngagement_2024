@@ -30,8 +30,8 @@ function HomePage(props) {
               <div className="flex flex-col items-stretch w-[33%] ml-5 max-md:w-full max-md:ml-0">
                 <div className="text-white text-center text-2xl font-bold uppercase w-[100%] max-md:mt-10">
                   <a
-                      href={process.env.PUBLIC_URL + "/download"}
-                      className="transition-colors hover:text-blue-500"
+                    href={process.env.PUBLIC_URL + "/download"}
+                    className="transition-colors hover:text-blue-500"
                   >Student Download
                   </a>
                 </div>
@@ -39,7 +39,7 @@ function HomePage(props) {
               <div className="flex flex-col items-stretch w-[33%] ml-5 max-md:w-full max-md:ml-0">
                 <div className="text-white text-2xl font-bold uppercase text-center max-md:mt-10">
                   <a
-                      href={process.env.PUBLIC_URL + "/login"}
+                    href={process.env.PUBLIC_URL + "/login"}
                     className="transition-colors hover:text-blue-500"
                   >Faculty Login
                   </a>
@@ -48,7 +48,7 @@ function HomePage(props) {
             </div>
           </div>
         </nav>
-        <div className="drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] relative text-white text-center text-6xl font-extrabold max-w-[700px] self-center mt-40 mb-72 max-md:max-w-full max-md:text-4xl max-md:my-10">
+        <div className="drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] relative text-white text-center text-5xl font-extrabold max-w-[700px] self-center mt-40 mb-72 max-md:max-w-full max-md:text-4xl max-md:my-10">
           <span className="text-3xl text-white max-md:!pb-10">|</span>
           <br />
           <span>
