@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         loadFragment(EventsFragment())
         bottomNav = findViewById(R.id.navBar) as BottomNavigationView
+        bottomNav.menu.findItem(R.id.events).isChecked = true
 //        bottomNav.setOnItemSelectedListener {
 //            when(it.itemId) {
 //                R.id.clubs -> {
