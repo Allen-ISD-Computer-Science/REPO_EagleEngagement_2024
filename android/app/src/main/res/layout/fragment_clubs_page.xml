@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
-    <data/>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ClubsFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+
     <LinearLayout android:gravity="center_horizontal"
-        android:id="@+id/linearRewardsPage"
+        android:id="@+id/linearClubsPage"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/_18pxv"
         android:layout_width="match_parent"
@@ -63,45 +67,15 @@
                     android:text="@string/lbl_0_applied"
                     style="@style/txtKhulaextrabold16" tools:text="@string/lbl_0_applied"/>
             </LinearLayout>
-            <LinearLayout android:gravity="center_horizontal"
-                android:id="@+id/linearColumnfallexamexemp"
+            <androidx.recyclerview.widget.RecyclerView
+                android:gravity="start"
+                android:id="@+id/recyclerClubsPage"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_21pxv"
+                android:layout_marginTop="@dimen/_26pxv"
                 android:layout_width="match_parent"
-                android:orientation="vertical" style="@style/groupStylecornerRadius_4">
-                <TextView android:ellipsize="end"
-                    android:gravity="center_horizontal"
-                    android:id="@+id/txtFallExamExemp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_10pxh"
-                    android:layout_marginStart="@dimen/_15pxh"
-                    android:layout_marginTop="@dimen/_19pxv"
-                    android:layout_width="match_parent"
-                    android:singleLine="true"
-                    android:text="@string/msg_fall_exam_exemp"
-                    style="@style/txtKhulaextrabold20" tools:text="@string/msg_fall_exam_exemp"/>
-                <TextView android:gravity="center_horizontal"
-                    android:id="@+id/txtDescription"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_15pxh"
-                    android:layout_marginStart="@dimen/_15pxh"
-                    android:layout_marginTop="@dimen/_12pxv"
-                    android:layout_width="match_parent"
-                    android:text="@string/msg_make_sure_you_m"
-                    style="@style/txtKhulabold14" tools:text="@string/msg_make_sure_you_m"/>
-                <TextView android:ellipsize="end"
-                    android:id="@+id/txtReadMore"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_22pxv"
-                    android:layout_marginEnd="@dimen/_15pxh"
-                    android:layout_marginStart="@dimen/_15pxh"
-                    android:layout_marginTop="@dimen/_8pxv"
-                    android:layout_width="wrap_content"
-                    android:singleLine="true"
-                    android:text="@string/lbl_read_more"
-                    style="@style/txtKhulaextrabold16_3" tools:text="@string/lbl_read_more"/>
-            </LinearLayout>
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                itemSpace="@{@dimen/_26pxh}" tools:itemCount="2" tools:listitem="@layout/row_club"/>
         </LinearLayout>
     </LinearLayout>
-</layout>
+</FrameLayout>

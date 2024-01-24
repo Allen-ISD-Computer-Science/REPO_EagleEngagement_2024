@@ -45,16 +45,20 @@
                                 android:scaleType="fitXY"
                                 android:src="@drawable/img_user_indigo_901"
                                 tools:ignore="ContentDescription" tools:src="@drawable/img_user_indigo_901"/>
-                            <TextView android:ellipsize="end"
+
+                            <TextView
                                 android:id="@+id/txtRequest"
-                                android:layout_gravity="start"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="@dimen/_10pxh"
+                                style="@style/txtKhulaextrabold14_1"
                                 android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:layout_marginEnd="@dimen/_10pxh"
+                                android:ellipsize="end"
                                 android:lineSpacingExtra="@dimen/_9pxh"
                                 android:singleLine="true"
                                 android:text="@string/lbl_request"
-                                style="@style/txtKhulaextrabold14_1" tools:text="@string/lbl_request"/>
+                                tools:ignore="TextSizeCheck"
+                                tools:text="@string/lbl_request" />
                         </LinearLayout>
                         <TextView android:ellipsize="end"
                             android:id="@+id/txtTwentyOne"
@@ -88,7 +92,7 @@
                 android:layout_width="match_parent"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                itemSpace="@{@dimen/_17pxh}" tools:itemCount="2" tools:listitem="@layout/row_home_page"/>
+                itemSpace="@{@dimen/_17pxh}" tools:itemCount="2" tools:listitem="@layout/row_event"/>
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>
