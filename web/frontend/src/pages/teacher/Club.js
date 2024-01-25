@@ -45,7 +45,7 @@ function ClubPage(props) {
     <div className="flex flex-row items-stretch min-h-[100vh]">
       <TeacherNav selected="clubs" />
       <div className="flex flex-col items-stretch w-full">
-        <div className="flex flex-col justify-center text-white text-6xl font-bold bg-blue-950 w-full pl-12 pr-12 items-start max-md:text-4xl max-md:px-5 h-[150px] max-md:max-h-[100px]">
+        <div className="flex flex-col justify-center text-white text-5xl font-bold bg-blue-950 w-full pl-12 pr-12 items-start max-md:text-4xl max-md:px-5 h-[150px] max-md:max-h-[100px]">
           <span className="my-auto">
             Club - {clubObj.name}
           </span>
@@ -71,7 +71,7 @@ function ClubPage(props) {
               <div className="flex flex-row gap-5 text-xl max-md:text-l max-md:flex-col">
                 {clubObj.link ? <a href={"https://" + clubObj.link} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faLink} size="s" /> {clubObj.link}</a> : ""}
                 {clubObj.twitter ? <a href={"https://x.com/" + clubObj.twitter} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faXTwitter} size="s" /> @{clubObj.twitter}</a> : ""}
-                {clubObj.instagram ? <a  href={"https://instagram.com/" + clubObj.instagram} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faInstagram} size="s" /> @{clubObj.instagram}</a> : ""}
+                {clubObj.instagram ? <a href={"https://instagram.com/" + clubObj.instagram} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faInstagram} size="s" /> @{clubObj.instagram}</a> : ""}
                 {clubObj.youtube ? <a href={"https://youtube.com/" + clubObj.youtube} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faYoutube} size="s" /> {clubObj.youtube}</a> : ""}
               </div>
             </div>
@@ -96,13 +96,13 @@ function ClubPage(props) {
                 {/* meeting logs */}
                 {
                   clubObj.meetingLogs.map((meetingLog, i) =>
-                      <tr key={i} className="text-l">
-                        <td>{meetingLog.date}</td>
-                        <td>{meetingLog.numStudents}</td>
-                        <td>
-                          <button className="bg-blue-950 text-white px-4 py-2 rounded-xl"><FontAwesomeIcon icon={faEye} size="m" /></button>
-                        </td>
-                      </tr>
+                    <tr key={i} className="text-l">
+                      <td>{meetingLog.date}</td>
+                      <td>{meetingLog.numStudents}</td>
+                      <td>
+                        <button className="bg-blue-950 text-white px-4 py-2 rounded-xl"><FontAwesomeIcon icon={faEye} size="lg" /></button>
+                      </td>
+                    </tr>
                   )
                 }
               </tbody>

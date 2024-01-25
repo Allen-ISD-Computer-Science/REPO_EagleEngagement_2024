@@ -12,9 +12,9 @@ function EventRequestsPage(props) {
 
   return (
     <div className="flex flex-row items-stretch min-h-[100vh]">
-      <AdminNav />
+      <AdminNav selected="event-requests" />
       <div className="flex flex-col items-stretch w-full">
-        <div className="flex flex-col justify-center text-white text-6xl font-bold bg-blue-950 w-full pl-12 pr-12 items-start max-md:text-4xl max-md:px-5 h-[150px] max-md:max-h-[100px]">
+        <div className="flex flex-col justify-center text-white text-5xl font-bold bg-blue-950 w-full pl-12 pr-12 items-start max-md:text-4xl max-md:px-5 h-[150px] max-md:max-h-[100px]">
           <span className="my-auto">
             Event Requests
           </span>
@@ -55,8 +55,8 @@ function EventRequestsPage(props) {
                     <td>{eventReq.name}</td>
                     <td>{eventReq.date}</td>
                     <td className="[&_button]:mx-4">
-                      <button className="bg-blue-950 text-white px-4 py-2 rounded-xl"><FontAwesomeIcon icon={faCheck} size="m" /></button>
-                      <button className="bg-blue-950 text-white px-4 py-2 rounded-xl"><FontAwesomeIcon icon={faTrash} size="m" /></button>
+                      <button className="bg-blue-950 text-white px-4 py-2 rounded-xl"><FontAwesomeIcon icon={faCheck} size="lg" /></button>
+                      <button className="bg-blue-950 text-white px-4 py-2 rounded-xl"><FontAwesomeIcon icon={faTrash} size="lg" /></button>
                     </td>
                   </tr>
                 )

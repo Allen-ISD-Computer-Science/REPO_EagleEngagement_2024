@@ -15,16 +15,24 @@ import SignUpPage from "./pages/SignUp.js"
 // Teacher Pages
 import ClubsDashboard from './pages/teacher/ClubsDashboard.js';
 import ClubPage from './pages/teacher/Club.js';
+import EventRequestPage from './pages/teacher/EventRequest.js';
 
 // Admin Pages
+import CheckInRequestsPage from './pages/admin/CheckInRequests.js';
+
 import EventRequestsPage from './pages/admin/EventRequests.js';
 import EventsPage from './pages/admin/Events.js';
 import NewEditEventPage from './pages/admin/NewEditEvent.js';
+import EventCheckInPage from './pages/admin/EventCheckIn.js';
+
+import LocationsPage from './pages/admin/Locations.js';
+import NewEditLocationPage from './pages/admin/NewEditLocation.js';
 
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import MissingPointsRequestsPage from './pages/admin/MissingPointsRequests.js';
 
 const router = createBrowserRouter([
   {
@@ -49,7 +57,11 @@ const router = createBrowserRouter([
     element: <ClubPage />,
   },
   {
-    path: "/admin/eventRequests",
+    path: "/event-request",
+    element: <EventRequestPage />,
+  },
+  {
+    path: "/admin/event-requests",
     element: <EventRequestsPage />,
   },
   {
@@ -63,6 +75,26 @@ const router = createBrowserRouter([
   {
     path: "/admin/events/edit/*",
     element: <NewEditEventPage />,
+  },
+  {
+    path: "/admin/events/checkin/*",
+    element: <EventCheckInPage />,
+  },
+  {
+    path: "/admin/locations",
+    element: <LocationsPage />,
+  },
+  {
+    path: "/admin/locations/new",
+    element: <NewEditLocationPage />,
+  },
+  {
+    path: "/admin/review-checkins",
+    element: <CheckInRequestsPage />,
+  },
+  {
+    path: "/admin/review-missing-points",
+    element: <MissingPointsRequestsPage />,
   }
 ],
   {

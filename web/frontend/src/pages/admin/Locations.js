@@ -5,18 +5,18 @@ import { faEdit, faIdCard, faPlus, faSearch, faTrash } from '@fortawesome/free-s
 
 import AdminNav from "../../components/AdminNav";
 
-function EventsPage(props) {
-  const [events, setEvents] = React.useState([
-    { id: 1, name: "B.E.S.T. Robotics State Competition", location: "Allen Football Stadium", date: "9/1/2021", checkInType: "manual" },
+function LocationsPage(props) {
+  const [locations, setLocations] = React.useState([
+    { id: 1, name: "Allen High School PAC", address: "300 Rivercrest Blvd, Allen, TX 75002" },
   ]);
 
   return (
     <div className="flex flex-row items-stretch min-h-[100vh] z-[100]">
-      <AdminNav selected="events" />
+      <AdminNav selected="locations" />
       <div className="flex flex-col items-stretch w-full">
         <div className="flex flex-col justify-center text-white text-5xl font-bold bg-blue-950 w-full pl-12 pr-12 items-start max-md:text-4xl max-md:px-5 h-[150px] max-md:max-h-[100px]">
           <span className="my-auto">
-            Events
+            Locations
           </span>
         </div>
         <div
@@ -42,10 +42,10 @@ function EventsPage(props) {
               className="bg-blue-950 text-white px-4 py-2 rounded-xl font-semibold max-md:w-full"
             >
               <a
-                href={process.env.PUBLIC_URL + "/admin/events/new"}
+                href={process.env.PUBLIC_URL + "/admin/locations/new"}
               >
                 <FontAwesomeIcon icon={faPlus} size="lg" className="mr-2" />
-                Create Event
+                Create Location
               </a>
             </button>
           </div>
@@ -56,27 +56,23 @@ function EventsPage(props) {
             className="w-full bg-blue-900 text-white table-fixed text-center border border-slate-400 [&_th]:border-slate-400 [&_td]:border-slate-400 [&_th]:border-r [&_td]:border-r [&_th]:p-2 [&_td]:p-2"
           >
             <thead className="border-b border-slate-400">
+              {/* date, number of students, and actions columns */}
               <tr className="text-xl font-bold">
                 <th>Name</th>
-                <th>Location</th>
-                <th>Date</th>
+                <th>Address</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody className="border-b border-slate-400">
               {
-                events.map((event, i) =>
-                  <tr key={event.id} className="text-l">
-                    <td>{event.name}</td>
-                    <td>{event.location}</td>
-                    <td>{event.date}</td>
+                locations.map((location, i) =>
+                  <tr key={location.id} className="text-l">
+                    <td>{location.name}</td>
+                    <td>{location.address}</td>
                     <td className="[&>*]:mx-4">
-                      <a className="bg-blue-950 text-white px-4 py-2 rounded-xl" href={process.env.PUBLIC_URL + `/admin/events/edit/${event.id}`}>
+                      <a className="bg-blue-950 text-white px-4 py-2 rounded-xl" href={process.env.PUBLIC_URL + `/admin/locations/edit/${location.id}`}>
                         <FontAwesomeIcon icon={faEdit} size="lg" />
                       </a>
-                      {
-                        event.checkInType === "manual" ? <a href={process.env.PUBLIC_URL + `/admin/events/checkin/${event.id}`} className="bg-blue-950 text-white px-4 py-2 rounded-xl"><FontAwesomeIcon icon={faIdCard} size="lg" /></a> : ""
-                      }
                       <button className="bg-blue-950 text-white px-4 py-2 rounded-xl"><FontAwesomeIcon icon={faTrash} size="lg" /></button>
                     </td>
                   </tr>
@@ -90,4 +86,4 @@ function EventsPage(props) {
   );
 }
 
-export default EventsPage;
+export default LocationsPage;
