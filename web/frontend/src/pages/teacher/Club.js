@@ -27,8 +27,10 @@ function ClubPage(props) {
     if (isNaN(clubID)) throw new Error("Invalid club ID.");
 
     const getClub = async () => {
-      const res = await fetch("./api/club/" + clubID);
-      return await res.json();
+	const res = await fetch("./api/club/" + clubID);
+	const json = await res.json();
+	if (!json.name) throw new Error("Invalid club?");
+	return json;
     }
 
     getClub().then((club) => {

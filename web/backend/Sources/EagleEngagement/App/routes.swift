@@ -46,9 +46,19 @@ func routes(_ app: Application) throws {
         return Msg(success: true, msg: "authenticated");
     }
 
-    let protectedRoutes = sessionRoutes.grouped(User.redirectMiddleware(path: "login")); 
+    let teacherProtectedRoutes = sessionRoutes.grouped(TeacherMiddleware()); 
     
-    protectedRoutes.get("dashboard") { req in
+    teacherProtectedRoutes.get("dashboard") { req in
         return try await serveIndex(req)        
     }
+
+    teacherProtectedRoutes.get("club", ":clubId") { req in
+        return try await serveIndex(req)        
+    }
+
+    teacherProtectedRoutes.get("event-request") { req in
+        return try await serveIndex(req)        
+    }
+
+    try app.register(collection: AdminController())
 }
