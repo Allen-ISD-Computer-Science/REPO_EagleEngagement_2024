@@ -32,7 +32,7 @@
                     android:singleLine="true"
                     android:text="@string/lbl_21"
                     style="@style/txtKhulaextrabold24_2" tools:text="@string/lbl_21"/>
-                <ImageView android:id="@+id/imageLock"
+                <ImageView android:id="@+id/clubProfileBtn"
                     android:layout_height="@dimen/_36pxh"
                     android:layout_marginBottom="@dimen/_2pxv"
                     android:layout_marginEnd="@dimen/_5pxh"

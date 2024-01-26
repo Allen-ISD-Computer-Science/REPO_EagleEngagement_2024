@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:context=".RequestActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
-    <data/>
+
     <LinearLayout android:gravity="center_horizontal"
         android:id="@+id/linearPointRequests"
         android:layout_height="match_parent"
@@ -16,7 +19,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:orientation="horizontal" style="@style/groupStylecornerRadius">
-                <ImageView android:id="@+id/imageArrowleft"
+                <ImageView android:id="@+id/rewardBackBtn"
                     android:layout_height="@dimen/_22pxh"
                     android:layout_marginBottom="@dimen/_56pxv"
                     android:layout_marginStart="@dimen/_15pxh"
@@ -29,11 +32,12 @@
                     android:id="@+id/txtPointRequest"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/_23pxv"
-                    android:layout_marginEnd="@dimen/_85pxh"
-                    android:layout_marginStart="@dimen/_56pxh"
+                    android:layout_marginEnd="28dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:layout_marginTop="@dimen/_22pxv"
-                    android:layout_weight="0.93"
-                    android:layout_width="0dp" android:singleLine="true"
+                    android:layout_width="wrap_content" android:singleLine="true"
                     android:text="@string/lbl_point_request"
                     style="@style/txt" tools:text="@string/lbl_point_request"/>
             </LinearLayout>
@@ -144,21 +148,25 @@
                 android:src="@drawable/img_twitter"
                 tools:ignore="ContentDescription" tools:src="@drawable/img_twitter"/>
         </LinearLayout>
+
         <androidx.appcompat.widget.AppCompatCheckBox
-            android:buttonTint="@color/gray_700"
-            android:fontFamily="@font/khula"
             android:id="@+id/checkBoxLabelOne"
-            android:layout_gravity="start"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_35pxh"
+            android:layout_gravity="start"
             android:layout_marginStart="@dimen/_35pxh"
             android:layout_marginTop="@dimen/_28pxv"
-            android:layout_width="wrap_content"
+            android:layout_marginEnd="@dimen/_35pxh"
+            android:buttonTint="@color/gray_700"
+            android:fontFamily="@font/khula"
             android:paddingStart="@dimen/_9pxh"
             android:text="@string/msg_send_current_lo"
             android:textColor="@color/indigo_700"
             android:textFontWeight="800"
-            android:textSize="@dimen/_18pxh" android:textStyle="bold" tools:text="@string/msg_send_current_lo"/>
+            android:textSize="@dimen/_18pxh"
+            android:textStyle="bold"
+            tools:ignore="TouchTargetSizeCheck"
+            tools:text="@string/msg_send_current_lo" />
         <androidx.appcompat.widget.AppCompatButton
             android:ellipsize="end" android:gravity="center"
             android:id="@+id/btnSubmit"
@@ -176,4 +184,4 @@
             android:text="@string/lbl_submit"
             android:textAllCaps="false" style="@style/btnSolidRounded" tools:text="@string/lbl_submit"/>
     </LinearLayout>
-</layout>
+</RelativeLayout>
