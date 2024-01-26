@@ -2,13 +2,13 @@ import * as React from "react";
 
 import { DateTimePicker, TimePicker } from "@mui/x-date-pickers";
 
-import AdminNav from "../../components/AdminNav";
+import TeacherNav from "../../components/TeacherNav";
 import { Button, MenuItem, Select, TextField } from "@mui/material";
 
 function EventRequestPage(props) {
   return (
     <div className="flex flex-row items-stretch min-h-[100vh]">
-      <AdminNav selected="events" />
+      <TeacherNav selected="event-request" />
       <div className="flex flex-col items-stretch w-full">
         <div className="flex flex-col justify-center text-white text-5xl font-bold bg-blue-950 w-full pl-12 pr-12 items-start max-md:text-4xl max-md:px-5 h-[150px] max-md:max-h-[100px]">
           <span className="my-auto">
