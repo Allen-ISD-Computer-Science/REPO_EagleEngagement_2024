@@ -13,4 +13,5 @@ fi
 source .env
 
 # Run
+source make.sh
 makeSwift --mode=run "$@"

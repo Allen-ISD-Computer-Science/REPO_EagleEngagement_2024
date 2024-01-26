@@ -46,6 +46,11 @@ func routes(_ app: Application) throws {
         return Msg(success: true, msg: "authenticated");
     }
 
+    let teacherSignUp = TeacherSignUp();
+    sessionRoutes.post("signup") { req -> Msg in
+        return try await teacherSignUp.signUp(req);
+    };
+
     let teacherProtectedRoutes = sessionRoutes.grouped(TeacherMiddleware()); 
     
     teacherProtectedRoutes.get("dashboard") { req in
