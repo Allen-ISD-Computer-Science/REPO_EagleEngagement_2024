@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash, faSignIn, faUser } from '@fortawesome/free-solid-svg-icons'
 
 function SignInPage(props) {
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [passwordConfirm, setPasswordConfirm] = React.useState("");
@@ -35,6 +37,14 @@ function SignInPage(props) {
   const canSignUp = () => {
     if (!validateInfo(email, password, passwordConfirm)) return false;
 
+    if (firstName === "") {
+      setErrorText("First name cannot be empty.");
+      return false;
+    }
+    if (lastName === "") {
+      setErrorText("Last name cannot be empty.");
+      return false;
+    }      
     if (email === "") {
       setErrorText("Email cannot be empty.");
       return false;
@@ -49,16 +59,18 @@ function SignInPage(props) {
   }
 
   const submitSignUp = async () => {
-    if (!canSignUp()) return;
+      if (!canSignUp()) return;
 
-    const body = {
-      email: email.toLowerCase(),
-      password: btoa(password),
-      passwordConfirm: btoa(passwordConfirm)
-    }
+      const body = {
+	  firstName: firstName,
+	  lastName: lastName,
+	  email: email.toLowerCase(),
+	  password: btoa(password),
+	  passwordConfirm: btoa(passwordConfirm)
+      }
 
-    const res = await fetch("./signup", { method: "POST", body: JSON.stringify(body) });
-    console.log(res);
+      const res = await fetch("./signup", { method: "POST", headers: {"content-type": "application/json"},  body: JSON.stringify(body) });
+      console.log(res);
   }
 
   return (
@@ -80,7 +92,31 @@ function SignInPage(props) {
             </span>
           </div>
         </div>
-        <div>
+          <div>
+	      <div class="flex flex-row items-center">
+		  <div className="flex-1">
+		      <span className="text-2xl max-md:text-xl">First Name</span>
+		      <input
+		      className="appearance-none bg-transparent border-none w-full placeholder-white text-gray-100 mr-3 py-1 leading-tight focus:outline-none"
+		      type="text"
+		      placeholder=" "
+		      aria-label="First Name"
+		      value={firstName}
+		      onChange={(e) => { setFirstName(e.target.value); validateInfo(email, password, passwordConfirm) }}
+		      />
+		  </div>
+		  <div className="flex-1">
+		      <span className="text-2xl max-md:text-xl">Last Name</span>
+		      <input
+		      className="appearance-none bg-transparent border-none w-full placeholder-white text-gray-100 mr-3 py-1 leading-tight focus:outline-none"
+		      type="text"
+		      placeholder=" "
+		      aria-label="Last Name"
+		      value={lastName}
+		      onChange={(e) => { setLastName(e.target.value); validateInfo(email, password, passwordConfirm) }}
+		      />
+		  </div>
+	  </div>
           <span className="text-2xl max-md:text-xl">Email</span>
           <div className="flex items-center border-b border-white py-2 px-4 text-xl max-md:text-l">
             <input
