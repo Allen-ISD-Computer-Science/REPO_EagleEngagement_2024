@@ -1,11 +1,11 @@
+import Fluent
 import Vapor
 import JWT
 
-// Example JWT payload.
-struct SessionToken: Content, Authenticatable, JWTPayload {
+struct UserToken: Content, Authenticatable, JWTPayload {
 
-    // Expiration - 6 Months;
-    let expirationTime: TimeInterval = 60 * 60 * 24 * 31 * 6;
+    // Expiration - 8 Months;
+    let expirationTime: TimeInterval = 60 * 60 * 24 * 31 * 8;
 
     // Token Data
     var expiration: ExpirationClaim
@@ -16,7 +16,7 @@ struct SessionToken: Content, Authenticatable, JWTPayload {
         self.userId = userId;
         self.expiredNum = expiredNum;
         self.expiration = ExpirationClaim(value: Date().addingTimeInterval(expirationTime))
-    }    
+    }
 
     init(user: User) throws {
         self.userId = user.id!;
@@ -27,4 +27,23 @@ struct SessionToken: Content, Authenticatable, JWTPayload {
     func verify(using signer: JWTSigner) throws {
         try expiration.verifyNotExpired()
     }
+}
+
+struct StudentUserAuthenticator : JWTAuthenticator {
+
+    func authenticate(jwt: UserToken, for req: Request) -> EventLoopFuture<Void> {
+        StudentUser.query(on: req.db)
+          .filter(\.$id == jwt.userId)
+          .first()
+          .map {
+              do {
+                  if let user = $0, user.expiredNum == jwt.expiredNum {
+                      req.auth.login(jwt);
+                  }
+              } catch { }
+          }
+
+        return req.eventLoop.makeSucceededFuture(());
+    }
+    
 }
