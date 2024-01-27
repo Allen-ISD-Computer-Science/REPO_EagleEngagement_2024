@@ -13,9 +13,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import JWT
 import Vapor
-
-// UNCOMMENT-DATABASE to configure database example
 import Fluent
 import FluentMySQLDriver
 
@@ -39,6 +38,12 @@ func configure(_ app: Application) throws {
     guard let mysqlDBName = Environment.get("MYSQL_DATABASE") else {
         fatalError("Failed to determine MYSQL_DATABASE from environment");
     }
+
+    guard let jwtSecret = Environment.get("JWT_SECRET") else {
+        fatalError("Failed to determine JWT_SECRET from environment");
+    }
+
+    app.jwt.signers.use(.hs256(key: jwtSecret));
     
     var tls = TLSConfiguration.makeClientConfiguration()
     tls.certificateVerification = .none

@@ -8,7 +8,22 @@ struct StudentController : RouteCollection {
         let apiRoutes = routes.grouped("api");
         let protectedRoutes = apiRoutes.grouped([StudentUserAuthenticator(), UserToken.guardMiddleware()])
 
+        protectedRoutes.get("logoutall", use: logOutAllDevices);
+        
         protectedRoutes.get("events", use: fetchEvents);
+    }
+
+    func logOutAllDevices(_ req: Request) async throws -> Msg {
+        let userToken = try req.jwt.verify(as: UserToken.self);
+        
+        guard let studentUser = try await StudentUser.find(userToken.userId, on: req.db) else {
+            throw Abort(.notFound);
+        }
+
+        studentUser.expiredNum += 1;
+
+        try await studentUser.save(on: req.db);
+        return Msg(success: true, msg: "Logged out of all devices!");
     }
     
     func fetchEvents(_ req: Request) async throws -> [Events] {
