@@ -39,6 +39,15 @@ build
 - Select `Build APK(s)`.
 
 ### IOS
-```sh
-cd ios
-```
+- Launch XCode
+- Select `Open a project or file`
+- Navigate to the `ios` directory and select the file with extension `.xcworkspace`
+- Click `Open`
+
+**To Preview App**
+- Navigate within the project to the `{Project_Name}/Views/{Page_Name}View` directory and select the `{Page_Name}View` File	
+- A preview should pop up with the page rendered on the phone of choice
+
+**To Build App**
+- Select the play button in the top left of the XCode window
+- Navigate through the menus and the built app should display
