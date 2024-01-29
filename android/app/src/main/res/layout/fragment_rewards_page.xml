@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
-    <data/>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RewardsFragment" xmlns:tools="http://schemas.android.com/tools">
+
     <LinearLayout android:gravity="center_horizontal"
         android:id="@+id/linearRewardsPage"
         android:layout_height="match_parent"
@@ -28,7 +31,7 @@
                     android:singleLine="true"
                     android:text="@string/lbl_21"
                     style="@style/txtKhulaextrabold24_2" tools:text="@string/lbl_21"/>
-                <ImageView android:id="@+id/imageLock"
+                <ImageView android:id="@+id/rewardProfileBtn"
                     android:layout_height="@dimen/_36pxh"
                     android:layout_marginBottom="@dimen/_2pxv"
                     android:layout_marginEnd="@dimen/_5pxh"
@@ -104,4 +107,4 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</layout>
+</FrameLayout>

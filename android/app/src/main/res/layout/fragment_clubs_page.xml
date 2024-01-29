@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ClubsFragment"
     xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
-    <data/>
+
     <LinearLayout android:gravity="center_horizontal"
         android:id="@+id/linearClubsPage"
         android:layout_height="match_parent"
@@ -29,7 +32,7 @@
                     android:singleLine="true"
                     android:text="@string/lbl_21"
                     style="@style/txtKhulaextrabold24_2" tools:text="@string/lbl_21"/>
-                <ImageView android:id="@+id/imageLock"
+                <ImageView android:id="@+id/clubProfileBtn"
                     android:layout_height="@dimen/_36pxh"
                     android:layout_marginBottom="@dimen/_2pxv"
                     android:layout_marginEnd="@dimen/_5pxh"
@@ -72,7 +75,7 @@
                 android:layout_width="match_parent"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                itemSpace="@{@dimen/_26pxh}" tools:itemCount="2" tools:listitem="@layout/row_clubs_page"/>
+                itemSpace="@{@dimen/_26pxh}" tools:itemCount="2" tools:listitem="@layout/row_club"/>
         </LinearLayout>
     </LinearLayout>
-</layout>
+</FrameLayout>

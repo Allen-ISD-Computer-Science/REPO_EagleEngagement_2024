@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:context=".PointHistoryActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
-    <data/>
+
     <LinearLayout android:gravity="center_horizontal"
         android:id="@+id/linearPointHistoryP"
         android:layout_height="match_parent"
@@ -16,7 +19,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:orientation="horizontal" style="@style/groupStylecornerRadius">
-                <ImageView android:id="@+id/imageArrowleft"
+                <ImageView android:id="@+id/pointHistoryBackBtn"
                     android:layout_height="@dimen/_22pxh"
                     android:layout_marginBottom="@dimen/_66pxv"
                     android:layout_marginStart="@dimen/_10pxh"
@@ -50,4 +53,4 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             itemSpace="@{@dimen/_19pxh}" tools:itemCount="2" tools:listitem="@layout/row_point_history"/>
     </LinearLayout>
-</layout>
+</RelativeLayout>
