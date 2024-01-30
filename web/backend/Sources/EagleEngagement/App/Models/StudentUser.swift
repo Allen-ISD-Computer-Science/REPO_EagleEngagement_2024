@@ -21,11 +21,11 @@ final public class StudentUser: Model, Content {
 
     // Grade of the studentUser
     @Field(key: "grade")
-    public var grade: Int
+    public var grade: Int?
 
     // House of the studentUser
     @Field(key: "house")
-    public var house: Int
+    public var house: Int?
 
     // Used for "log out of all devices"
     @Field(key: "expiredNum")

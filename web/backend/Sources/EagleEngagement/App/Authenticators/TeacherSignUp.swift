@@ -11,6 +11,10 @@ struct TeacherSignUpParams : Content {
 }
 
 struct TeacherSignUp {
+    func randomString(length: Int) -> String {
+        let letters = "abcdefgh0123456789"
+        return String((0..<length).map{ _ in letters.randomElement()! })
+    }
 
     func signUp(_ req: Request) async throws -> Msg {
         let args = try req.content.decode(TeacherSignUpParams.self);
@@ -41,16 +45,20 @@ struct TeacherSignUp {
         }
 
         let passwordHash = try Bcrypt.hash(decodedString);
-
+        let verificationString = randomString(length: 8);
+        
         let user = User(
           email: args.email,
           name: args.firstName + " " + args.lastName,
           passwordHash: passwordHash,
+          verificationToken: verificationString,
           type: .unverified
         );
 
         try await user.save(on: req.db);
 
+        print("Created: \(args.email) with verificationToken: \(verificationString)");
+        
         return Msg(success: true, msg: "Created User! Check email for verification code!");
 
     }

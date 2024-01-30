@@ -18,9 +18,9 @@ struct UserToken: Content, Authenticatable, JWTPayload {
         self.expiration = ExpirationClaim(value: Date().addingTimeInterval(expirationTime))
     }
 
-    init(user: User) throws {
+    init(user: StudentUser) throws {
         self.userId = user.id!;
-        self.expiredNum = 1;
+        self.expiredNum = user.expiredNum;
         self.expiration = ExpirationClaim(value: Date().addingTimeInterval(expirationTime))
     }
 
