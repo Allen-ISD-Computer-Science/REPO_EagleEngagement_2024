@@ -44,11 +44,18 @@ struct Verification {
         user.verificationToken = "";
         user.passwordHash = try Bcrypt.hash(decodedString);
 
+        if (args.email.contains("@student.allenisd.org")) {
+            user.userType = .student;
+        } else {
+            user.userType = .teacher;
+        }
+
         try await user.save(on: req.db);
 
         if (args.email.contains("@student.allenisd.org")) {
             let studentUser = try await StudentUser.query(on: req.db)
-              .filter(\.$id == user.id!)
+              .with(\.$user)
+              .filter(\.$user.$id == user.id!)
               .first();
             if (studentUser == nil) {
                 throw Abort(.badRequest, reason: "StudentUser doesn't exist?");

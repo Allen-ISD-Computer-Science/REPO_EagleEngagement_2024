@@ -44,12 +44,16 @@ struct StudentController : RouteCollection {
 
         guard let user = try await User.query(on: req.db)
                 .filter(\.$email == args.email)
-                .first(), try Bcrypt.verify(args.password, created: user.passwordHash)
+                .first(), try Bcrypt.verify(decodedString, created: user.passwordHash)
         else {
             throw Abort(.unauthorized);
         }
 
-        guard let studentUser = try await StudentUser.find(user.id!, on: req.db) else {
+        guard let studentUser = try await StudentUser.query(on: req.db)
+                .with(\.$user)
+                .filter(\.$user.$id == user.id!)
+                .first()
+                else {
             throw Abort(.badRequest, reason: "StudentUser doesn't exist?");
         }
         
@@ -60,7 +64,11 @@ struct StudentController : RouteCollection {
     func logOutAllDevices(_ req: Request) async throws -> Msg {
         let userToken = try req.jwt.verify(as: UserToken.self);
         
-        guard let studentUser = try await StudentUser.find(userToken.userId, on: req.db) else {
+        guard let studentUser = try await StudentUser.query(on: req.db)
+                .join(User.self, on: \StudentUser.$user.$id == \User.$id)
+                .filter(User.self, \.$id == userToken.userId)
+                .first()
+        else {
             throw Abort(.unauthorized);
         }
 
@@ -101,6 +109,15 @@ struct StudentController : RouteCollection {
           };
 
         return events;
+    }
+
+    struct UserInfo : Content {
+        var name: String;
+        var email: String;
+        var studentID: Int;
+        var points: Int;
+        var grade: Int?;
+        var house: Int?;
     }
 
     
