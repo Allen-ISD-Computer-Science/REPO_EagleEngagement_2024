@@ -23,7 +23,9 @@ struct StudentController : RouteCollection {
         protectedRoutes.post("logOutAll", use: logOutAllDevices);
         
         // Data
+        protectedRoutes.post("profile", use: fetchProfile);
         protectedRoutes.post("events", use: fetchEvents);
+        protectedRoutes.post("event", ":id", use: fetchEvent);
     }
 
     func login(_ req: Request) async throws -> Msg {
@@ -78,6 +80,37 @@ struct StudentController : RouteCollection {
         return Msg(success: true, msg: "Logged out of all devices!");
     }
 
+    struct ProfileInfo : Content {
+        var name: String;
+        var studentID: Int;
+        var points: Int;
+/*        var rankingNum = Int;
+        var rankingPercent = Int;
+        var rankingNumGrade = Int;
+        var rankingPercentGrade = Int; */
+        var grade: Int;
+        var house: Int;
+    }
+
+    func fetchProfile(_ req: Request) async throws -> ProfileInfo {
+        let userToken = try req.jwt.verify(as: UserToken.self);
+        
+        guard let studentUser = try await StudentUser.query(on: req.db)
+                .join(User.self, on: \StudentUser.$user.$id == \User.$id)
+                .filter(User.self, \.$id == userToken.userId)
+                .first()
+        else {
+            throw Abort(.unauthorized);
+        }
+
+        let both = try studentUser.joined(User.self);
+        return ProfileInfo.init(
+          name: both.name, studentID: studentUser.studentID, points: studentUser.points,
+//          rankingNum: Int(1), rankingPercent: Int(1), rankingNumGrade: Int(1), rankingPercentGrade: 1,
+          grade: (studentUser.grade ?? -1), house: (studentUser.house ?? -1)
+        )
+    }
+
     struct EventInfo : Content {
         var id: Int;
         var name: String;
@@ -111,13 +144,33 @@ struct StudentController : RouteCollection {
         return events;
     }
 
-    struct UserInfo : Content {
+    struct FullEventInfo : Content {
+        var id: Int;
         var name: String;
-        var email: String;
-        var studentID: Int;
-        var points: Int;
-        var grade: Int?;
-        var house: Int?;
+        var eventType: String;
+        var locationName: String;
+        var address: String;
+        var pointsWorth: Int;
+        var startDate: Date;
+        var endDate: Date;
+    }
+
+    func fetchEvent(_ req: Request) async throws -> FullEventInfo {
+        guard let id = req.parameters.get("id", as: Int.self) else {
+            throw Abort(.badRequest)
+        }
+        
+        guard let event = try await Events.query(on: req.db)
+          .join(Location.self, on: \Events.$location.$id == \Location.$id)
+          .filter(\.$id == id)
+          .first()
+        else {
+            throw Abort(.badRequest);
+        }
+        
+        let both = try event.joined(Location.self);
+        return FullEventInfo.init(id: event.id!, name: event.name, eventType: event.eventType, locationName: both.locationName, address: both.address, pointsWorth: event.pointsWorth, startDate: event.startDate, endDate: event.endDate)
+        
     }
 
     
