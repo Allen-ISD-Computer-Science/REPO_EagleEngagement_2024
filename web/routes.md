@@ -48,6 +48,12 @@ Returns: {success: Bool, msg: String} - if success is true, msg is a JWT
 **Important:** To receive data, all requests to an API must have an `Authorization: Bearer {token}` header. Without it or if the token is invalid, a 404 will be returned.
 
 ```
+POST /api/profile
+
+Returns: {name: String, studentID: Int, points: Int, grade: Int, house: Int} - If grade or house are nil, they will be represented as -1.
+```
+
+```
 POST /api/events
 
 Returns: [{id: INT, name: String, eventType: String, locationName: String, pointsWorth: INT, startDate: Date, endDate: Date}]
