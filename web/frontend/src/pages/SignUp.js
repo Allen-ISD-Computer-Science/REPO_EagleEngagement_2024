@@ -1,9 +1,9 @@
 import * as React from "react";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEye, faEyeSlash, faSignIn, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faSignIn, faUser } from '@fortawesome/free-solid-svg-icons'
 
-function SignInPage(props) {
+function SignUpPage(props) {
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
   const [email, setEmail] = React.useState("");
@@ -15,27 +15,20 @@ function SignInPage(props) {
 
   /**
    * @param {String} email
-   * @param {String} password 
-   * @param {String} passwordConfirm 
    * @returns {Boolean}
    */
-  const validateInfo = (email, password, passwordConfirm) => {
+  const validateInfo = (email) => {
     if (email !== "" && (!email.includes("@") || !email.includes(".") || email.split("@").pop().length < 2 || email.split(".").pop().length < 2)) {
       setErrorText("Invalid email.");
       return false;
     }
 
-    if (passwordConfirm !== password) {
-      setErrorText("Passwords do not match.");
-      console.log(passwordConfirm, password)
-      return false;
-    }
     setErrorText("");
     return true;
   }
 
   const canSignUp = () => {
-    if (!validateInfo(email, password, passwordConfirm)) return false;
+    if (!validateInfo(email)) return false;
 
     if (firstName === "") {
       setErrorText("First name cannot be empty.");
@@ -49,12 +42,6 @@ function SignInPage(props) {
       setErrorText("Email cannot be empty.");
       return false;
     }
-
-    if (password === "") {
-      setErrorText("Password cannot be empty.");
-      return false;
-    }
-
     return true;
   }
 
@@ -65,8 +52,6 @@ function SignInPage(props) {
 	  firstName: firstName,
 	  lastName: lastName,
 	  email: email.toLowerCase(),
-	  password: btoa(password),
-	  passwordConfirm: btoa(passwordConfirm)
       }
 
       const res = await fetch("./signup", { method: "POST", headers: {"content-type": "application/json"},  body: JSON.stringify(body) });
@@ -79,7 +64,7 @@ function SignInPage(props) {
         <img
           srcSet={process.env.PUBLIC_URL + "/assets/images/logo.png"}
           alt="Eagle Engagement Logo"
-          className="h-40 mb-[-80px]"
+          className="h-40 w-auto"
         />
         <div className="justify-center items-center self-stretch flex flex-col mt-11 px-16 max-md:max-w-full max-md:mt-10 max-md:px-5">
           <div className="flex max-w-full flex-col items-center">
@@ -93,7 +78,7 @@ function SignInPage(props) {
           </div>
         </div>
           <div>
-	      <div class="flex flex-row items-center">
+	      <div class="flex flex-row items-center border-b border-white py-2 px-4 text-xl max-md:text-l">
 		  <div className="flex-1">
 		      <span className="text-2xl max-md:text-xl">First Name</span>
 		      <input
@@ -102,7 +87,7 @@ function SignInPage(props) {
 		      placeholder=" "
 		      aria-label="First Name"
 		      value={firstName}
-		      onChange={(e) => { setFirstName(e.target.value); validateInfo(email, password, passwordConfirm) }}
+		      onChange={(e) => { setFirstName(e.target.value); validateInfo(email) }}
 		      />
 		  </div>
 		  <div className="flex-1">
@@ -113,7 +98,7 @@ function SignInPage(props) {
 		      placeholder=" "
 		      aria-label="Last Name"
 		      value={lastName}
-		      onChange={(e) => { setLastName(e.target.value); validateInfo(email, password, passwordConfirm) }}
+		      onChange={(e) => { setLastName(e.target.value); validateInfo(email) }}
 		      />
 		  </div>
 	  </div>
@@ -125,61 +110,9 @@ function SignInPage(props) {
               placeholder=" "
               aria-label="Email"
               value={email}
-              onChange={(e) => { setEmail(e.target.value); validateInfo(e.target.value, password, passwordConfirm) }}
+              onChange={(e) => { setEmail(e.target.value); validateInfo(e.target.value) }}
             />
             <FontAwesomeIcon icon={faUser} size="sm" />
-          </div>
-        </div>
-        <div className="mt-5">
-          <span className="text-2xl max-md:text-xl">Password</span>
-          <div className="flex items-center border-b border-white py-2 px-4 text-xl max-md:text-l">
-            <input
-              className="appearance-none bg-transparent border-none w-full placeholder-white text-gray-100 mr-3 py-1 leading-tight focus:outline-none"
-              type={passwordType}
-              placeholder=""
-              aria-label="Password"
-              value={password}
-              onChange={(e) => { setPassword(e.target.value); validateInfo(email, e.target.value, passwordConfirm); }}
-            />
-            <button
-              id="togglePassword"
-              type="button"
-              onClick={() => {
-                setPasswordType(passwordType === "password" ? "text" : "password");
-              }}
-            >
-              <FontAwesomeIcon
-                icon={passwordType === "password" ? faEyeSlash : faEye}
-                size="sm"
-                style={{ width: "25px" }}
-              />
-            </button>
-          </div>
-        </div>
-        <div className="mt-5">
-          <span className="text-2xl max-md:text-xl">Confirm Password</span>
-          <div className="flex items-center border-b border-white py-2 px-4 text-xl max-md:text-l">
-            <input
-              className="appearance-none bg-transparent border-none w-full placeholder-white text-gray-100 mr-3 py-1 leading-tight focus:outline-none"
-              type={passwordType}
-              placeholder=""
-              aria-label="Confirm Password"
-              value={passwordConfirm}
-              onChange={(e) => { setPasswordConfirm(e.target.value); validateInfo(email, password, e.target.value); }}
-            />
-            <button
-              id="togglePassword"
-              type="button"
-              onClick={() => {
-                setPasswordType(passwordType === "password" ? "text" : "password");
-              }}
-            >
-              <FontAwesomeIcon
-                icon={passwordType === "password" ? faEyeSlash : faEye}
-                size="sm"
-                style={{ width: "25px" }}
-              />
-            </button>
           </div>
         </div>
         <span className={`text-red-500 text-center mt-5 ${errorText ? "opacity-100" : "opacity-0"}`}>
@@ -200,4 +133,4 @@ function SignInPage(props) {
   );
 }
 
-export default SignInPage;
+export default SignUpPage;

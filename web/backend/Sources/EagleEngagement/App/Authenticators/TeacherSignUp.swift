@@ -19,12 +19,8 @@ struct TeacherSignUp {
     func signUp(_ req: Request) async throws -> Msg {
         let args = try req.content.decode(TeacherSignUpParams.self);
 
-        if (args.firstName.isEmpty || args.lastName.isEmpty || args.email.isEmpty || args.password.isEmpty || args.passwordConfirm.isEmpty) {
+        if (args.firstName.isEmpty || args.lastName.isEmpty || args.email.isEmpty) {
             throw Abort(.badRequest);
-        }
-
-        if (args.password != args.passwordConfirm) {
-            throw Abort(.badRequest, reason: "Passwords do not match.");
         }
 
         if (!args.email.hasSuffix("@allenisd.org") || Array(args.email.split(separator: "@")).count > 2) {
@@ -39,18 +35,12 @@ struct TeacherSignUp {
             throw Abort(.badRequest, reason: "Email is already in use.");
         }
 
-        var decodedString = ""
-        if let decodedData = Data(base64Encoded: args.password) {
-            decodedString = String(data: decodedData, encoding: .utf8)!
-        }
-
-        let passwordHash = try Bcrypt.hash(decodedString);
         let verificationString = randomString(length: 8);
         
         let user = User(
           email: args.email,
           name: args.firstName + " " + args.lastName,
-          passwordHash: passwordHash,
+          passwordHash: "",
           verificationToken: verificationString,
           type: .unverified
         );

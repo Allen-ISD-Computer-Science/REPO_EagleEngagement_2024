@@ -66,3 +66,40 @@ id: INT
 
 Returns: {id: INT, name: String, eventType: String, locationName: String, address: String, pointsWorth: INT, startDate: Date, endDate: Date}
 `````` -->
+
+## Web
+
+### Authentication
+```
+POST /signup
+firstName: String
+lastName: String
+email: String
+
+Returns: {success: Bool, msg: String}
+```
+
+```
+POST /verify
+emal: String
+token: String
+password: String
+passwordConfirm: String
+
+Returns: {success: Bool, msg: String}
+```
+
+
+```
+POST /login
+email: String
+password: String
+```
+
+### Data
+```
+POST /admin/api/events
+includePast: Bool
+
+Returns: [{id: Int, name: String, eventType: String, locationID: Int, locationName: String, pointsWorth: Int, startDate: Date, endDate: Date}]
+```
