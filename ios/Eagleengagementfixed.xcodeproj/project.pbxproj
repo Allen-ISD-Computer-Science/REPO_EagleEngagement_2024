@@ -3,14 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		079F07C7EA0B3D9164311B1E /* ProfilepageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14F40385E45C7400EF12BCC /* ProfilepageViewModel.swift */; };
 		0C95ADC52BDF0B502B412310 /* ClubspageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A64CDEEC07164DDC7A968DA /* ClubspageView.swift */; };
 		170A3A63AC78B95E9AB6EC0A /* KhulaExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF7E515A65E370BAED241518 /* KhulaExtraBold.ttf */; };
-		29DAC0779B379B973C061009 /* LoginpageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924184AA5BA56D2BD5C25475 /* LoginpageView.swift */; };
 		2ABAA88C6FF7BC3CB51DC729 /* AccountcreationpageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F25FA6A67D9660871625A0F /* AccountcreationpageViewModel.swift */; };
 		33A54A058D91033B4CAE2A37 /* PasswordrecoverypageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5569FFEC89046DC7937F11A2 /* PasswordrecoverypageViewModel.swift */; };
 		345F7097B0BE7357FB9CA670 /* ClubpageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BFC25B938BE7BDEDEDC95E /* ClubpageViewModel.swift */; };
@@ -19,7 +18,9 @@
 		55B304E47F51488E7A1A4FC7 /* RewardspageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6547BD2A40EE185F211DFE99 /* RewardspageView.swift */; };
 		672F839653526A6109E65A3C /* ColumnellipsefiftynineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AADB9E1636C1083CD36FC8 /* ColumnellipsefiftynineCell.swift */; };
 		777A2C7DB47422874E8A6DEC /* HomepageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8479E3DE484E4D8DA78CC61 /* HomepageView.swift */; };
+		7840B2922B6AA8CA00E88320 /* EventThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7840B2912B6AA8CA00E88320 /* EventThumbnailView.swift */; };
 		78720561D29BEBF33E8D414C /* ClubpageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87F6FF55D8AB2F3DAE1E015 /* ClubpageView.swift */; };
+		788ACF2A2B680ED90070C718 /* LoginpageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788ACF292B680ED90070C718 /* LoginpageView.swift */; };
 		7941F55ACE25BC4851A2DFA3 /* PointrequestpageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AB1910445D6AA9C34FCCBD /* PointrequestpageViewModel.swift */; };
 		7F44DBA127422A5D00171570 /* ActivityLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F44DBA027422A5D00171570 /* ActivityLoader.swift */; };
 		884F3E5127B0E65A00963FC4 /* RoundedCornersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884F3E5027B0E65A00963FC4 /* RoundedCornersView.swift */; };
@@ -62,7 +63,7 @@
 		055905C8F1A2495006FD5181 /* LoginpageViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoginpageViewModel.swift; sourceTree = "<group>"; };
 		0637B31736D63A7A02DFFD32 /* Pods-Eagleengagementfixed.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eagleengagementfixed.debug.xcconfig"; path = "Target Support Files/Pods-Eagleengagementfixed/Pods-Eagleengagementfixed.debug.xcconfig"; sourceTree = "<group>"; };
 		15BFC25B938BE7BDEDEDC95E /* ClubpageViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ClubpageViewModel.swift; sourceTree = "<group>"; };
-		192529BA9B8E5D10A6E41AB3 /* KhulaBold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = KhulaBold.ttf; sourceTree = "<group>"; };
+		192529BA9B8E5D10A6E41AB3 /* KhulaBold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = KhulaBold.ttf; sourceTree = "<group>"; };
 		1F69F8FA5D49A9556B19B6BC /* PasswordrecoverypageView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PasswordrecoverypageView.swift; sourceTree = "<group>"; };
 		25199EE627EF087E1C6E6DCE /* ClubspageViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ClubspageViewModel.swift; sourceTree = "<group>"; };
 		251F2E24D1410ABE1CEC7B91 /* Event1Cell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Event1Cell.swift; sourceTree = "<group>"; };
@@ -74,7 +75,9 @@
 		5FE343419015A0B499B015A5 /* ColorConstants.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
 		6547BD2A40EE185F211DFE99 /* RewardspageView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RewardspageView.swift; sourceTree = "<group>"; };
 		66B8A888EE7FCA2EC7F6569C /* EventpageViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EventpageViewModel.swift; sourceTree = "<group>"; };
-		67199145DF91D7145BF5890B /* KanitExtraBold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = KanitExtraBold.ttf; sourceTree = "<group>"; };
+		67199145DF91D7145BF5890B /* KanitExtraBold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = KanitExtraBold.ttf; sourceTree = "<group>"; };
+		7840B2912B6AA8CA00E88320 /* EventThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventThumbnailView.swift; sourceTree = "<group>"; };
+		788ACF292B680ED90070C718 /* LoginpageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginpageView.swift; sourceTree = "<group>"; };
 		7A64CDEEC07164DDC7A968DA /* ClubspageView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ClubspageView.swift; sourceTree = "<group>"; };
 		7F25FA6A67D9660871625A0F /* AccountcreationpageViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AccountcreationpageViewModel.swift; sourceTree = "<group>"; };
 		7F44DBA027422A5D00171570 /* ActivityLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityLoader.swift; sourceTree = "<group>"; };
@@ -94,14 +97,13 @@
 		88ED74FF272FFECA0088E3EF /* EagleengagementfixedApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EagleengagementfixedApp.swift; sourceTree = "<group>"; };
 		8A262B836904EE6382B8DEAC /* EngagmentInfoCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EngagmentInfoCell.swift; sourceTree = "<group>"; };
 		90B3A83D6CED4C4DC014AFD8 /* RewardspageViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RewardspageViewModel.swift; sourceTree = "<group>"; };
-		924184AA5BA56D2BD5C25475 /* LoginpageView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoginpageView.swift; sourceTree = "<group>"; };
 		A496015D2F0BF8607F407ED7 /* HomepageViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HomepageViewModel.swift; sourceTree = "<group>"; };
 		B14F40385E45C7400EF12BCC /* ProfilepageViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProfilepageViewModel.swift; sourceTree = "<group>"; };
 		BDB630A668B3D7FE14482B4E /* EventpageView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EventpageView.swift; sourceTree = "<group>"; };
 		C40AB9F72754D79E006BC5D7 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C4268119F96A9C3C6B8D2779 /* ProfilepageView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProfilepageView.swift; sourceTree = "<group>"; };
 		C8479E3DE484E4D8DA78CC61 /* HomepageView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HomepageView.swift; sourceTree = "<group>"; };
-		C8CBEE1848E9E0E47314160F /* KrubMediumItalic.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = KrubMediumItalic.ttf; sourceTree = "<group>"; };
+		C8CBEE1848E9E0E47314160F /* KrubMediumItalic.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = KrubMediumItalic.ttf; sourceTree = "<group>"; };
 		D736F1B8A500F148D045BB6A /* Pods-Eagleengagementfixed.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eagleengagementfixed.release.xcconfig"; path = "Target Support Files/Pods-Eagleengagementfixed/Pods-Eagleengagementfixed.release.xcconfig"; sourceTree = "<group>"; };
 		DDD426A25D729A685195AE94 /* Pods_Eagleengagementfixed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Eagleengagementfixed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7AB1910445D6AA9C34FCCBD /* PointrequestpageViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PointrequestpageViewModel.swift; sourceTree = "<group>"; };
@@ -109,7 +111,7 @@
 		F92DDCEA32E91A886C949133 /* StringScheme.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StringScheme.swift; sourceTree = "<group>"; };
 		FCC48AA41B903E0B7F82647F /* CheckboxField.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CheckboxField.swift; sourceTree = "<group>"; };
 		FD81456D1064B3541C06F856 /* PointhistorypageView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PointhistorypageView.swift; sourceTree = "<group>"; };
-		FF7E515A65E370BAED241518 /* KhulaExtraBold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = KhulaExtraBold.ttf; sourceTree = "<group>"; };
+		FF7E515A65E370BAED241518 /* KhulaExtraBold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = KhulaExtraBold.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,8 +130,8 @@
 			isa = PBXGroup;
 			children = (
 				251F2E24D1410ABE1CEC7B91 /* Event1Cell.swift */,
+				7840B2912B6AA8CA00E88320 /* EventThumbnailView.swift */,
 			);
-			name = Cell;
 			path = Cell;
 			sourceTree = "<group>";
 		};
@@ -138,7 +140,6 @@
 			children = (
 				29AADB9E1636C1083CD36FC8 /* ColumnellipsefiftynineCell.swift */,
 			);
-			name = Cell;
 			path = Cell;
 			sourceTree = "<group>";
 		};
@@ -149,7 +150,6 @@
 				F160EDD3B8ED9D57EA474882 /* Cell */,
 				3D7A7D07D8C1182CB5341D91 /* PointhistorypageViewModel.swift */,
 			);
-			name = PointhistorypageView;
 			path = PointhistorypageView;
 			sourceTree = "<group>";
 		};
@@ -160,7 +160,6 @@
 				1F8191D2CE51846C26748A8C /* Cell */,
 				25199EE627EF087E1C6E6DCE /* ClubspageViewModel.swift */,
 			);
-			name = ClubspageView;
 			path = ClubspageView;
 			sourceTree = "<group>";
 		};
@@ -169,7 +168,6 @@
 			children = (
 				FCC48AA41B903E0B7F82647F /* CheckboxField.swift */,
 			);
-			name = Checkbox;
 			path = Checkbox;
 			sourceTree = "<group>";
 		};
@@ -180,17 +178,15 @@
 				00A3CB12509A3F0CE4E436D1 /* Cell */,
 				A496015D2F0BF8607F407ED7 /* HomepageViewModel.swift */,
 			);
-			name = HomepageView;
 			path = HomepageView;
 			sourceTree = "<group>";
 		};
 		6774D3D867E3412215431C3D /* LoginpageView */ = {
 			isa = PBXGroup;
 			children = (
-				924184AA5BA56D2BD5C25475 /* LoginpageView.swift */,
+				788ACF292B680ED90070C718 /* LoginpageView.swift */,
 				055905C8F1A2495006FD5181 /* LoginpageViewModel.swift */,
 			);
-			name = LoginpageView;
 			path = LoginpageView;
 			sourceTree = "<group>";
 		};
@@ -200,7 +196,6 @@
 				C4268119F96A9C3C6B8D2779 /* ProfilepageView.swift */,
 				B14F40385E45C7400EF12BCC /* ProfilepageViewModel.swift */,
 			);
-			name = ProfilepageView;
 			path = ProfilepageView;
 			sourceTree = "<group>";
 		};
@@ -227,7 +222,6 @@
 				0637B31736D63A7A02DFFD32 /* Pods-Eagleengagementfixed.debug.xcconfig */,
 				D736F1B8A500F148D045BB6A /* Pods-Eagleengagementfixed.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -342,12 +336,11 @@
 				E1B50EF8F8DB305C191B6AE3 /* PointrequestpageView */,
 				97087CF19B81820C345388E7 /* RewardspageView */,
 				3499C6C28ABCA2FB4C6CA763 /* PointhistorypageView */,
+				6716126F6AC84AB23B0A9701 /* HomepageView */,
 				6774D3D867E3412215431C3D /* LoginpageView */,
 				E2C27829C8C1C2234B16FAEB /* AccountcreationpageView */,
-				6716126F6AC84AB23B0A9701 /* HomepageView */,
 				B997E46938CB30715A26FB71 /* PasswordrecoverypageView */,
 			);
-			name = Views;
 			path = Views;
 			sourceTree = "<group>";
 		};
@@ -365,7 +358,6 @@
 				6547BD2A40EE185F211DFE99 /* RewardspageView.swift */,
 				90B3A83D6CED4C4DC014AFD8 /* RewardspageViewModel.swift */,
 			);
-			name = RewardspageView;
 			path = RewardspageView;
 			sourceTree = "<group>";
 		};
@@ -375,7 +367,6 @@
 				F87F6FF55D8AB2F3DAE1E015 /* ClubpageView.swift */,
 				15BFC25B938BE7BDEDEDC95E /* ClubpageViewModel.swift */,
 			);
-			name = ClubpageView;
 			path = ClubpageView;
 			sourceTree = "<group>";
 		};
@@ -385,7 +376,6 @@
 				1F69F8FA5D49A9556B19B6BC /* PasswordrecoverypageView.swift */,
 				5569FFEC89046DC7937F11A2 /* PasswordrecoverypageViewModel.swift */,
 			);
-			name = PasswordrecoverypageView;
 			path = PasswordrecoverypageView;
 			sourceTree = "<group>";
 		};
@@ -397,7 +387,6 @@
 				67199145DF91D7145BF5890B /* KanitExtraBold.ttf */,
 				192529BA9B8E5D10A6E41AB3 /* KhulaBold.ttf */,
 			);
-			name = Fonts;
 			path = Fonts;
 			sourceTree = "<group>";
 		};
@@ -407,7 +396,6 @@
 				BDB630A668B3D7FE14482B4E /* EventpageView.swift */,
 				66B8A888EE7FCA2EC7F6569C /* EventpageViewModel.swift */,
 			);
-			name = EventpageView;
 			path = EventpageView;
 			sourceTree = "<group>";
 		};
@@ -416,7 +404,6 @@
 			children = (
 				5D802294B419609EAD702514 /* Checkbox */,
 			);
-			name = CustomViews;
 			path = CustomViews;
 			sourceTree = "<group>";
 		};
@@ -426,7 +413,6 @@
 				267EEA7E1C8345749BA2659F /* PointrequestpageView.swift */,
 				F7AB1910445D6AA9C34FCCBD /* PointrequestpageViewModel.swift */,
 			);
-			name = PointrequestpageView;
 			path = PointrequestpageView;
 			sourceTree = "<group>";
 		};
@@ -436,7 +422,6 @@
 				045220F7F1536002C7CE3C18 /* AccountcreationpageView.swift */,
 				7F25FA6A67D9660871625A0F /* AccountcreationpageViewModel.swift */,
 			);
-			name = AccountcreationpageView;
 			path = AccountcreationpageView;
 			sourceTree = "<group>";
 		};
@@ -445,7 +430,6 @@
 			children = (
 				C5B62C7F1E4F7319F28D1695 /* Fonts */,
 			);
-			name = Resources;
 			path = Resources;
 			sourceTree = "<group>";
 		};
@@ -454,7 +438,6 @@
 			children = (
 				8A262B836904EE6382B8DEAC /* EngagmentInfoCell.swift */,
 			);
-			name = Cell;
 			path = Cell;
 			sourceTree = "<group>";
 		};
@@ -584,6 +567,7 @@
 				88ED7500272FFECA0088E3EF /* Utilities.swift in Sources */,
 				88ED7504272FFECA0088E3EF /* EagleengagementfixedApp.swift in Sources */,
 				C40AB9F82754D79E006BC5D7 /* AppDelegate.swift in Sources */,
+				7840B2922B6AA8CA00E88320 /* EventThumbnailView.swift in Sources */,
 				88680D1C2775C601002E964F /* ViewportHelper.swift in Sources */,
 				88ED7501272FFECA0088E3EF /* AppConstants.swift in Sources */,
 				884F3E5127B0E65A00963FC4 /* RoundedCornersView.swift in Sources */,
@@ -599,7 +583,7 @@
 				55B304E47F51488E7A1A4FC7 /* RewardspageView.swift in Sources */,
 				D716CDE856126440F89EAC04 /* PointhistorypageView.swift in Sources */,
 				E25F28A763ADA2D09BB732B3 /* EngagmentInfoCell.swift in Sources */,
-				29DAC0779B379B973C061009 /* LoginpageView.swift in Sources */,
+				788ACF2A2B680ED90070C718 /* LoginpageView.swift in Sources */,
 				EAA71ECA9E560ACDD0BFC6F7 /* AccountcreationpageView.swift in Sources */,
 				777A2C7DB47422874E8A6DEC /* HomepageView.swift in Sources */,
 				BBB7856B2F712E151310CC89 /* Event1Cell.swift in Sources */,
