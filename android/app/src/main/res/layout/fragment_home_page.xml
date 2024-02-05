@@ -59,14 +59,7 @@
                         android:layout_height="1dp"
                         android:layout_weight="1">
                     </Space>
-                        <TextView android:ellipsize="end"
-                            android:id="@+id/txtTwentyOne"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/_12pxv"
-                            android:layout_width="wrap_content"
-                            android:singleLine="true"
-                            android:text="@string/lbl_21"
-                            style="@style/txtKhulaextrabold24_2" tools:text="@string/lbl_21"/>
+
                     <Space
                         android:layout_width="0dp"
                         android:layout_height="1dp"

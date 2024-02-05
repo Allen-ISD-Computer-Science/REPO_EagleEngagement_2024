@@ -23,15 +23,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10pxh"
                 android:layout_width="wrap_content" android:orientation="horizontal">
-                <TextView android:ellipsize="end"
-                    android:id="@+id/txtTwentyOne"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_5pxv"
-                    android:layout_marginTop="@dimen/_1pxv"
-                    android:layout_width="wrap_content"
-                    android:singleLine="true"
-                    android:text="@string/lbl_21"
-                    style="@style/txtKhulaextrabold24_2" tools:text="@string/lbl_21"/>
                 <ImageView android:id="@+id/clubProfileBtn"
                     android:layout_height="@dimen/_36pxh"
                     android:layout_marginBottom="@dimen/_2pxv"
