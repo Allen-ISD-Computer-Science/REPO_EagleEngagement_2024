@@ -27,6 +27,14 @@ final public class Events: Model, Content {
     @Field(key: "eventType")
     public var eventType: String
 
+    // Date the event will be held
+    @Field(key: "date")
+    public var startDate: Date
+
+    // Date event ends (has to be same day)
+    @Field(key: "end")
+    public var endDate: Date
+
     // Creates a new, empty Event.
     public init() { }
 }

@@ -6,15 +6,15 @@ import ClubCard from "../../components/ClubCard";
 function ClubsDashboard(props) {
   return (
     <div className="flex flex-row items-stretch min-h-[100vh]">
-      <TeacherNav />
+      <TeacherNav selected="clubs" />
       <div className="flex flex-col items-stretch w-full">
-        <div className="flex flex-col justify-center text-white text-6xl font-bold bg-blue-950 w-full pl-12 pr-12 items-start max-md:text-4xl max-md:px-5 h-[150px] max-md:max-h-[100px]">
+        <div className="flex flex-col justify-center text-white text-5xl font-bold bg-blue-950 w-full pl-12 pr-12 items-start max-md:text-4xl max-md:px-5 h-[150px] max-md:max-h-[100px]">
           <span className="my-auto">
             Clubs
           </span>
         </div>
-        
-        <ClubCard 
+
+        <ClubCard
           clubID="1"
           clubName="Allen Eagle Robotics"
           clubDescription="Allen Eagle Robotics is a club that focuses on building robots and competing in competitions..."

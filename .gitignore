@@ -8,3 +8,5 @@
 *.elc
 auto-save-list
 .\#*
+
+.vscode/

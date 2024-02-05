@@ -46,5 +46,8 @@ fi
 
 mv -f build/index.html ../backend/Resources/Views
 mv -f build/* ../backend/Public
+mkdir -p ../backend/Public/assets/images
+mkdir -p build/assets/images
+mv -f build/assets/images/* ../backend/Public/assets/images
 
 echo "Frontend files built & moved to the backend"

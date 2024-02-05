@@ -26,6 +26,10 @@ final public class StudentUser: Model, Content {
     // House of the studentUser
     @Field(key: "house")
     public var house: Int
+
+    // Used for "log out of all devices"
+    @Field(key: "expiredNum")
+    public var expiredNum: Int;
     
     // Creates a new, empty User.
     public init() { }

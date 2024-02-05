@@ -13,7 +13,7 @@ final public class Location: Model, Content {
 
     /// Name of location
     @Field(key: "name")
-    public var name: String
+    public var locationName: String
 
     /// Address of location
     @Field(key: "address")
