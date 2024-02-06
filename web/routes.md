@@ -57,7 +57,7 @@ Returns: {name: String, studentID: Int, points: Int, grade: Int, house: Int} - I
 POST /api/events
 
 Returns: [{id: INT, name: String, eventType: String, locationName: String, pointsWorth: INT, startDate: Date, endDate: Date}]
-``````
+```
 Note: will not return events that have already passed.
 
 <!-- ```
@@ -65,7 +65,7 @@ POST /api/event
 id: INT
 
 Returns: {id: INT, name: String, eventType: String, locationName: String, address: String, pointsWorth: INT, startDate: Date, endDate: Date}
-`````` -->
+``` -->
 
 ## Web
 
@@ -100,6 +100,41 @@ password: String
 ```
 POST /admin/api/events
 includePast: Bool
+filterByName: String - Send "" to not filter.
 
 Returns: [{id: Int, name: String, eventType: String, locationID: Int, locationName: String, pointsWorth: Int, startDate: Date, endDate: Date}]
+```
+
+```
+POST /admin/api/event/:id
+
+Returns: {id: Int, name: String, description: String, eventType: String, locationID: Int, locationName: String, pointsWorth: Int, startDate: Date, endDate: Date, customImagePath: String}
+```
+
+```
+POST /admin/api/events/new
+name: String
+description: String
+eventType: String
+locationID: Int
+pointsWorth: Int
+startDate: Date
+endDate: Date
+customImagePath: String - Use "" for no custom image
+
+Returns {success: Bool, msg: String}
+```
+
+```
+POST /admin/api/events/edit/:id
+name: String
+description: String
+eventType: String
+locationID: Int
+pointsWorth: Int
+startDate: Date
+endDate: Date
+customImagePath: String - Use "" for no custom image
+
+Returns {success: Bool, msg: String}
 ```

@@ -15,6 +15,10 @@ final public class Location: Model, Content {
     @Field(key: "name")
     public var locationName: String
 
+    // Description of location
+    @Field(key: "description")
+    public var description: String
+
     /// Address of location
     @Field(key: "address")
     public var address: String
@@ -33,5 +37,14 @@ final public class Location: Model, Content {
 
     // Creates a new, empty Location.
     public init() { }
+
+    public init(name: String, description: String, address: String, latitude: Float, longitude: Float, radius: Float) {
+        self.locationName = name;
+        self.description = description;
+        self.address = address;
+        self.latitude = latitude;
+        self.longitude = longitude;
+        self.radius = radius;
+    }
 }
 

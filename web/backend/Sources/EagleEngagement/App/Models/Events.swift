@@ -15,6 +15,10 @@ final public class Events: Model, Content {
     @Field(key: "name")
     public var name: String
 
+    // Description of event
+    @Field(key: "description")
+    public var description: String
+
     /// Location id
     @Parent(key: "locationID")
     public var location: Location
@@ -35,6 +39,22 @@ final public class Events: Model, Content {
     @Field(key: "endDate")
     public var endDate: Date
 
+    // if there is a custom image
+    @Field(key: "customImage")
+    public var customImagePath: String
+
+    // Creates a new Event
+    public init(name: String, description: String, eventType: String, locationID: Int, pointsWorth: Int, startDate: Date, endDate: Date, customImagePath: String) {
+        self.name = name;
+        self.description = description;
+        self.eventType = eventType;
+        self.location.id = locationID;
+        self.pointsWorth = pointsWorth;
+        self.startDate = startDate;
+        self.endDate = endDate;
+        self.customImagePath = customImagePath;
+    }
+    
     // Creates a new, empty Event.
     public init() { }
 }
