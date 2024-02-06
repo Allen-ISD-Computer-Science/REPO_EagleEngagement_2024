@@ -40,7 +40,7 @@ Returns: {success: Bool, msg: String} - if success is true, msg is a JWT
 ```
 POST /api/logOutAll
 
-Returns: {success: Bool, msg: String} - if success is true, msg is a JWT
+Returns: {success: Bool, msg: String}
 ``````
 
 

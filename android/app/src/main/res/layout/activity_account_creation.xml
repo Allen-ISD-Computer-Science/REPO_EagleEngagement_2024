@@ -58,7 +58,7 @@
 
                         <ImageView
                             android:id="@+id/img_eagleEngagementLogo"
-                            imageRes="@{@drawable/img_eagleEngagementLogo}"
+                            imageRes="@{@drawable/img_eagle_engagement_logo}"
                             android:layout_width="315dp"
                             android:layout_height="233dp"
                             android:layout_gravity="top|center"
@@ -68,7 +68,7 @@
                             android:layout_marginBottom="@dimen/_10pxv"
                             android:scaleType="fitXY"
                             tools:ignore="ContentDescription"
-                            tools:src="@drawable/img_eagleEngagementLogo" />
+                            tools:src="@drawable/img_eagle_engagement_logo" />
 
                     </FrameLayout>
 
@@ -83,8 +83,8 @@
                         android:layout_marginEnd="@dimen/_56pxh"
                         android:ellipsize="end"
                         android:singleLine="true"
-                        android:text="@string/lbl_student_id"
-                        tools:text="@string/lbl_student_id" />
+                        android:text="@string/lbl_email"
+                        tools:text="@string/lbl_email" />
 
                     <LinearLayout
                         android:id="@+id/linearColumnzipcode"

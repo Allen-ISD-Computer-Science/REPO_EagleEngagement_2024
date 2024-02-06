@@ -11,7 +11,34 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/navBar"/>
+        android:layout_above="@+id/navBar" />
+    <LinearLayout
+        android:id="@+id/mainLinearPts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center_horizontal" >
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1">
+        </Space>
+        <TextView android:ellipsize="end"
+            android:id="@+id/txtPoints"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_12pxv"
+            android:layout_width="wrap_content"
+            android:singleLine="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            android:text="0"
+            style="@style/txtKhulaextrabold24_2" tools:text="0"/>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1">
+        </Space>
+    </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navBar"

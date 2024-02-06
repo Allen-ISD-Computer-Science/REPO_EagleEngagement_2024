@@ -27,7 +27,7 @@
         <item name="android:textFontWeight" tools:targetApi="p">800</item>
     </style>
     <style name="txtKhulaextrabold24_2">
-        <item name="android:textSize">@dimen/_24pxh</item>
+        <item name="android:textSize">@dimen/_26pxh</item>
         <item name="android:textColor">@color/indigo_901</item>
         <item name="android:fontFamily">@font/khula</item>
         <item name="android:textFontWeight" tools:targetApi="p">800</item>

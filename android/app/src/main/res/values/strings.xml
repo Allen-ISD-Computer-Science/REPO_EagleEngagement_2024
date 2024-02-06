@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <resources>
-    <string name="app_name">layney_s_application1</string>
+    <string name="app_name">Eagle Engagement</string>
+    <string name="api_link">https://stg.codermerlin.academy/vapor/layne-yarbrough/api/</string>
+    <string name="jwt_storage_file_name">jwt_storage</string>
     <string name="loading">Loading…</string>
     <string name="no_internet_connection">No internet connection!</string>
     <string name="lbl_steam_b100">STEAM B100</string>
@@ -77,6 +79,7 @@ No Tier II/III Honor Code violations</string>
     <string name="lbl_1">1
 </string>
     <string name="lbl_student_id">Student ID</string>
+    <string name="lbl_email">Email</string>
     <string name="lbl_gender">Gender</string>
     <string name="msg_insert_reason_h">Insert Reason Here</string>
     <string name="lbl_5">5</string>
