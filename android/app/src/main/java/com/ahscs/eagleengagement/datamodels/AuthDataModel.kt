@@ -13,6 +13,13 @@ sealed class AuthDataModel {
         var studentID: Int
     ) : AuthDataModel()
 
+    data class VerifyDataModel(
+        var email: String,
+        var token: String,
+        var password: String,
+        var passwordConfirm: String
+    ) : AuthDataModel()
+
     data class response(
         var success: Boolean,
         var msg: String

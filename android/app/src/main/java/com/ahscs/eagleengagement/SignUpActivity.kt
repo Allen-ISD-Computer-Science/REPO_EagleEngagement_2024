@@ -41,7 +41,7 @@ class SignUpActivity : AppCompatActivity() {
             .build()
 
         val retrofitAPI = retrofit.create(RetrofitAPI::class.java)
-        val dataModel = AuthDataModel.SignUpDataModel(firstName, lastName, email, studentID.toInt())
+        val dataModel = AuthDataModel.SignUpDataModel(firstName, lastName, email.lowercase(), studentID.toInt())
         val call: Call<AuthDataModel.response> = retrofitAPI.postSignUp(dataModel)
         call!!.enqueue(object: Callback<AuthDataModel.response?> {
             override fun onResponse(
@@ -52,8 +52,8 @@ class SignUpActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     Toast.makeText(applicationContext, "Account Creation started!", Toast.LENGTH_SHORT).show()
 
-//                    startActivity(Intent(applicationContext, MainActivity::class.java))
-//                    finish()
+                    startActivity(Intent(applicationContext, VerifyActivity::class.java))
+                    finish()
                 }else{
                     println(response.raw().toString())
                     Toast.makeText(applicationContext, "An error occurred!", Toast.LENGTH_SHORT).show()

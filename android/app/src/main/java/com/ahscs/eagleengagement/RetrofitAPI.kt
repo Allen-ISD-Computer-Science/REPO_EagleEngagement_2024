@@ -17,4 +17,7 @@ interface RetrofitAPI {
 
     @POST("signup")
     fun postSignUp(@Body dataModel: AuthDataModel.SignUpDataModel?) : Call<AuthDataModel.response>
+
+    @POST("verify")
+    fun postVerify(@Body dataModel: AuthDataModel.VerifyDataModel?) : Call<AuthDataModel.response>
 }
