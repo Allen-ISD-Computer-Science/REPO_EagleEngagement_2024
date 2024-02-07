@@ -18,9 +18,9 @@ struct UserToken: Content, Authenticatable, JWTPayload {
         self.expiration = ExpirationClaim(value: Date().addingTimeInterval(expirationTime))
     }
 
-    init(user: User) throws {
-        self.userId = user.id!;
-        self.expiredNum = 1;
+    init(user: StudentUser) throws {
+        self.userId = user.user.id!;
+        self.expiredNum = user.expiredNum;
         self.expiration = ExpirationClaim(value: Date().addingTimeInterval(expirationTime))
     }
 
@@ -33,7 +33,8 @@ struct StudentUserAuthenticator : JWTAuthenticator {
 
     func authenticate(jwt: UserToken, for req: Request) -> EventLoopFuture<Void> {
         StudentUser.query(on: req.db)
-          .filter(\.$id == jwt.userId)
+          .join(User.self, on: \StudentUser.$user.$id == \User.$id)
+          .filter(User.self, \.$id == jwt.userId)
           .first()
           .map {
               do {

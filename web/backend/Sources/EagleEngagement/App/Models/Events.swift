@@ -16,8 +16,8 @@ final public class Events: Model, Content {
     public var name: String
 
     /// Location id
-    @Field(key: "locationID")
-    public var locationID: Int
+    @Parent(key: "locationID")
+    public var location: Location
 
     /// point value
     @Field(key: "pointsWorth")
@@ -28,11 +28,11 @@ final public class Events: Model, Content {
     public var eventType: String
 
     // Date the event will be held
-    @Field(key: "date")
+    @Field(key: "startDate")
     public var startDate: Date
 
     // Date event ends (has to be same day)
-    @Field(key: "end")
+    @Field(key: "endDate")
     public var endDate: Date
 
     // Creates a new, empty Event.

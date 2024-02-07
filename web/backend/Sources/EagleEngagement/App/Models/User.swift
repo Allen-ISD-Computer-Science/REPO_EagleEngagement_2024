@@ -30,6 +30,9 @@ final public class User: Model, Content {
     @Field(key: "passwordHash")
     public var passwordHash: String
 
+    // Token for verification / password reset
+    @Field(key: "verificationToken")
+    public var verificationToken: String
 
     @Enum(key: "type")
     public var userType: UserType
@@ -38,10 +41,11 @@ final public class User: Model, Content {
     public init() { }
 
     // Creates a User from params
-    public init(email: String, name: String, passwordHash: String, type: UserType) {
+    public init(email: String, name: String, passwordHash: String, verificationToken: String, type: UserType) {
         self.email = email;
         self.name = name;
         self.passwordHash = passwordHash;
+        self.verificationToken = verificationToken;
         self.userType = type;
     }
 }

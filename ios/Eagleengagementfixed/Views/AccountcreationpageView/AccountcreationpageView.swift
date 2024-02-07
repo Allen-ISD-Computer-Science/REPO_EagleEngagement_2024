@@ -1,196 +1,104 @@
 import SwiftUI
 
 struct AccountcreationpageView: View {
-    @StateObject var accountcreationpageViewModel = AccountcreationpageViewModel()
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @State private var username = ""
+    @State private var password = ""
+    @State private var wrongUsername = 0
+    @State private var wrongPassword = 0
+    @State private var showingLoginScreen = false
     var body: some View {
-        VStack {
-            VStack {
-                VStack {
-                    ZStack(alignment: .center) {
-                        Image("img_loginbackgroun")
-                            .resizable()
-                            .frame(width: UIScreen.main.bounds.width,
-                                   height: getRelativeHeight(443.0), alignment: .center)
-                            .scaledToFit()
-                            .clipped()
-                        VStack {
-                            ZStack(alignment: .leading) {
-                                Text(StringConstants.kLblSignUp)
-                                    .font(FontScheme.kKhulaExtraBold(size: getRelativeHeight(28.0)))
-                                    .fontWeight(.heavy)
-                                    .foregroundColor(ColorConstants.WhiteA700)
-                                    .minimumScaleFactor(0.5)
-                                    .multilineTextAlignment(.center)
-                                    .frame(width: getRelativeWidth(277.0),
-                                           height: getRelativeHeight(30.0), alignment: .center)
-                                    .shadow(color: ColorConstants.Black9003f, radius: 4, x: 0, y: 4)
-                                    .padding(.top, getRelativeHeight(208.0))
-                                    .padding(.horizontal, getRelativeWidth(30.0))
-                                VStack {
-                                    ZStack(alignment: .center) {
-                                        ZStack(alignment: .center) {
-                                            Text(StringConstants.kLblEagle)
-                                                .font(FontScheme
-                                                    .kKhulaExtraBold(size: getRelativeHeight(96.0)))
-                                                .fontWeight(.heavy)
-                                                .foregroundColor(ColorConstants.Indigo901)
-                                                .minimumScaleFactor(0.5)
-                                                .multilineTextAlignment(.center)
-                                                .frame(width: getRelativeWidth(335.0),
-                                                       height: getRelativeHeight(87.0),
-                                                       alignment: .center)
-                                                .shadow(color: ColorConstants.Black9003f, radius: 4,
-                                                        x: 0, y: 4)
-                                            Text(StringConstants.kLblEagle)
-                                                .font(FontScheme
-                                                    .kKhulaExtraBold(size: getRelativeHeight(96.0)))
-                                                .fontWeight(.heavy)
-                                                .foregroundColor(ColorConstants.Indigo901)
-                                                .minimumScaleFactor(0.5)
-                                                .multilineTextAlignment(.center)
-                                                .frame(width: getRelativeWidth(306.0),
-                                                       height: getRelativeHeight(80.0),
-                                                       alignment: .center)
-                                                .shadow(color: ColorConstants.Black9003f, radius: 4,
-                                                        x: 0, y: 4)
-                                                .padding(.bottom, getRelativeHeight(7.0))
-                                                .padding(.horizontal, getRelativeWidth(14.58))
-                                        }
-                                        .hideNavigationBar()
-                                        .frame(width: getRelativeWidth(335.0),
-                                               height: getRelativeHeight(87.0),
-                                               alignment: .bottomLeading)
-                                        .padding(.top, getRelativeHeight(48.0))
-                                        Image("img_alleneagles3l")
-                                            .resizable()
-                                            .frame(width: getRelativeWidth(150.0),
-                                                   height: getRelativeHeight(85.0),
-                                                   alignment: .center)
-                                            .scaledToFit()
-                                            .clipped()
-                                            .padding(.bottom, getRelativeHeight(50.0))
-                                            .padding(.horizontal, getRelativeWidth(93.0))
-                                    }
-                                    .hideNavigationBar()
-                                    .frame(width: getRelativeWidth(335.0),
-                                           height: getRelativeHeight(135.0), alignment: .leading)
-                                    Text(StringConstants.kLblEngagement)
-                                        .font(FontScheme
-                                            .kKhulaExtraBold(size: getRelativeHeight(32.0)))
-                                        .fontWeight(.heavy)
-                                        .foregroundColor(ColorConstants.WhiteA700)
-                                        .minimumScaleFactor(0.5)
-                                        .multilineTextAlignment(.center)
-                                        .frame(width: getRelativeWidth(277.0),
-                                               height: getRelativeHeight(109.0), alignment: .center)
-                                        .shadow(color: ColorConstants.Black9003f, radius: 4, x: 0,
-                                                y: 4)
-                                        .padding(.top, getRelativeHeight(9.0))
-                                        .padding(.horizontal, getRelativeWidth(30.0))
-                                }
-                                .frame(width: getRelativeWidth(335.0),
-                                       height: getRelativeHeight(254.0), alignment: .leading)
-                            }
-                            .hideNavigationBar()
-                            .frame(width: getRelativeWidth(335.0), height: getRelativeHeight(254.0),
-                                   alignment: .leading)
-                            Text(StringConstants.kLblStudentId)
-                                .font(FontScheme.kKhulaExtraBold(size: getRelativeHeight(16.0)))
-                                .fontWeight(.heavy)
-                                .foregroundColor(ColorConstants.WhiteA700)
-                                .minimumScaleFactor(0.5)
-                                .multilineTextAlignment(.leading)
-                                .frame(width: getRelativeWidth(81.0),
-                                       height: getRelativeHeight(26.0), alignment: .topLeading)
-                                .padding(.top, getRelativeHeight(21.0))
-                                .padding(.horizontal, getRelativeWidth(56.0))
-                            VStack {
-                                Text(StringConstants.kLbl257385)
-                                    .font(FontScheme.kKhulaExtraBold(size: getRelativeHeight(24.0)))
-                                    .fontWeight(.heavy)
-                                    .foregroundColor(ColorConstants.WhiteA700)
-                                    .minimumScaleFactor(0.5)
-                                    .multilineTextAlignment(.leading)
-                                    .frame(width: getRelativeWidth(80.0),
-                                           height: getRelativeHeight(39.0), alignment: .topLeading)
-                                    .padding(.vertical, getRelativeHeight(12.0))
-                                    .padding(.horizontal, getRelativeWidth(72.0))
-                            }
-                            .frame(width: getRelativeWidth(224.0), height: getRelativeHeight(64.0),
-                                   alignment: .center)
-                            .background(RoundedCorners(topRight: 30.0, bottomLeft: 30.0)
-                                .fill(ColorConstants.Indigo700))
-                            .shadow(color: ColorConstants.Black9003f, radius: 4, x: 0, y: 4)
-                            .padding(.horizontal, getRelativeWidth(56.0))
-                        }
-                        .frame(width: getRelativeWidth(335.0), height: getRelativeHeight(365.0),
-                               alignment: .center)
-                        .padding(.top, getRelativeHeight(70.0))
-                        .padding(.horizontal, getRelativeWidth(12.0))
-                    }
-                    .hideNavigationBar()
-                    .frame(width: UIScreen.main.bounds.width, height: getRelativeHeight(443.0),
-                           alignment: .leading)
-                    Text(StringConstants.kLblNewPassword)
-                        .font(FontScheme.kKhulaExtraBold(size: getRelativeHeight(16.0)))
-                        .fontWeight(.heavy)
-                        .foregroundColor(ColorConstants.WhiteA700)
-                        .minimumScaleFactor(0.5)
-                        .multilineTextAlignment(.leading)
-                        .frame(width: getRelativeWidth(113.0), height: getRelativeHeight(26.0),
-                               alignment: .topLeading)
-                        .padding(.top, getRelativeHeight(17.0))
-                        .padding(.horizontal, getRelativeWidth(68.0))
-                    VStack {
-                        Text(StringConstants.kLbl)
-                            .font(FontScheme.kKhulaExtraBold(size: getRelativeHeight(24.0)))
-                            .fontWeight(.heavy)
-                            .foregroundColor(ColorConstants.WhiteA700)
-                            .minimumScaleFactor(0.5)
-                            .multilineTextAlignment(.leading)
-                            .frame(width: getRelativeWidth(146.0), height: getRelativeHeight(39.0),
-                                   alignment: .topLeading)
-                            .padding(.vertical, getRelativeHeight(8.0))
-                            .padding(.horizontal, getRelativeWidth(39.0))
-                    }
-                    .frame(width: getRelativeWidth(224.0), height: getRelativeHeight(64.0),
-                           alignment: .center)
-                    .background(RoundedCorners(topRight: 30.0, bottomLeft: 30.0)
-                        .fill(ColorConstants.Indigo700))
-                    .shadow(color: ColorConstants.Black9003f, radius: 4, x: 0, y: 4)
-                    .padding(.horizontal, getRelativeWidth(68.0))
-                    Image("img_usercicrle_white_a700")
+        NavigationView {
+            GeometryReader { geometry in
+                ZStack(alignment: .top) {
+                    // Full-screen solid color background
+                    Rectangle()
+                        .foregroundColor(Color("Indigo900"))
+                        .edgesIgnoringSafeArea(.all)
+
+                    // Image with gradient overlay
+                    Image("img_eaglestadium") // Replace with your image name
                         .resizable()
-                        .frame(width: getRelativeWidth(33.0), height: getRelativeHeight(36.0),
-                               alignment: .center)
-                        .scaledToFit()
+                        .scaledToFill()
+                        .frame(width: geometry.size.width, height: geometry.size.height / 1.8) // Adjust the fraction here
                         .clipped()
-                        .padding(.top, getRelativeHeight(186.0))
-                        .padding(.horizontal, getRelativeWidth(68.0))
-                    Text(StringConstants.kLblSupport)
-                        .font(FontScheme.kKhulaExtraBold(size: getRelativeHeight(15.0)))
-                        .fontWeight(.heavy)
-                        .foregroundColor(ColorConstants.WhiteA700)
-                        .minimumScaleFactor(0.5)
-                        .multilineTextAlignment(.leading)
-                        .frame(width: getRelativeWidth(58.0), height: getRelativeHeight(25.0),
-                               alignment: .topLeading)
-                        .padding(.horizontal, getRelativeWidth(68.0))
+                        .overlay(
+                            Color.black.opacity(0.6)
+                        )
+                        .overlay(
+                            LinearGradient(gradient: Gradient(colors: [.clear, Color("Indigo900")]), startPoint: .center, endPoint: .bottom)
+                        )
+                        
+                        .blur(radius:1)
+                        .edgesIgnoringSafeArea(.top)
+                    
+                    // Content Stack
+                    VStack(spacing:30) {
+                        
+                        // Eagle Engagement Logo
+                        Image("img_eagleengagementlogo")
+                        
+                        // Page Label
+                        Text("Create Account")
+                            .foregroundColor(Color("txt_primary"))
+                            .font(Font.largeTitle.weight(.bold))
+                        
+                        TextField("", text: $username)
+                            .padding()
+                            .frame(width: 300, height: 50)
+                            .background(Color("Indigo700").opacity(0.5))
+                            .cornerRadius(10)
+                            .border(.red, width: CGFloat(wrongUsername))
+                            .foregroundColor(Color("txt_primary"))
+                            .placeholder(when: username.isEmpty) {
+                                Text("New Username").foregroundColor(Color("txt_primary")).padding()
+                            }
+                        
+                        SecureField("", text: $password)
+                            .padding()
+                            .frame(width: 300, height: 50)
+                            .background(Color("Indigo700").opacity(0.5))
+                            .cornerRadius(10)
+                            .border(.red, width: CGFloat(wrongPassword))
+                            .foregroundColor(Color("txt_primary"))
+                            .placeholder(when: password.isEmpty) {
+                                Text("New Password").foregroundColor(Color("txt_primary")).padding()
+                            }
+                        
+                        Button("Done") {
+                            // Authenticate User
+                            authenticateUser(username: username, password: password)
+                        }
+                        .foregroundColor(Color("txt_primary"))
+                        .font(Font.title.weight(.bold))
+                        .frame(width: 200, height: 50)
+                        .background(Color("Indigo700"))
+                        .cornerRadius(10)
+                        
+                        NavigationLink(destination: LoginpageView(), isActive: $showingLoginScreen){
+                            EmptyView()
+                        }
+
+                        
+                    }
+                    .frame(width: geometry.size.width)
                 }
-                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height,
-                       alignment: .topLeading)
-                .background(ColorConstants.Indigo901)
             }
-            .frame(width: UIScreen.main.bounds.width, alignment: .topLeading)
-            .background(ColorConstants.Indigo901)
-            .padding(.top, getRelativeHeight(30.0))
-            .padding(.bottom, getRelativeHeight(10.0))
+            
         }
-        .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-        .background(ColorConstants.Indigo901)
-        .ignoresSafeArea()
-        .hideNavigationBar()
+        .navigationBarHidden(true)
+    }
+    func authenticateUser(username: String, password: String) {
+        if username.lowercased() == "testuser" {
+            wrongUsername = 0
+            if password.lowercased() == "password" {
+                wrongPassword = 0
+                showingLoginScreen = true
+            } else {
+                wrongPassword = 2
+            }
+        } else {
+            wrongUsername = 2
+        }
     }
 }
 
