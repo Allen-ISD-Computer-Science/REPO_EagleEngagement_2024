@@ -21,7 +21,7 @@ struct AdminController : RouteCollection {
         adminProtectedRoutes.get("review-checkins", use: serveIndex);
         adminProtectedRoutes.get("review-missing-points", use: serveIndex);
 
-        let apiRoutes = adminProtectedRoutes.grouped("api");
+        let apiRoutes = adminProtectedRoutes.grouped("api"); // /admin/api
         apiRoutes.post("events", use: fetchEvents);
         apiRoutes.post("event", ":id", use: fetchEvent);
         apiRoutes.post("events", "new", use: newEvent);
@@ -39,7 +39,7 @@ struct AdminController : RouteCollection {
 
     struct EventsQuery : Content {
         var includePast: Bool;
-        var filterByName: String;
+        var filterByName: String?;
     }
 
     struct EventInfo : Content {
@@ -58,26 +58,24 @@ struct AdminController : RouteCollection {
         let includePast = eventsQuery.includePast;
                
         if (includePast) {
-            let events = try await Events.query(on: req.db)
-              .join(Location.self, on: \Events.$location.$id == \Location.$id)
+            let events = try await Events.query(on: req.db).with(\.$location)
               .sort(Events.self, \.$startDate)
               .all()
               .map { ev in
                   return EventInfo.init(id: ev.id!, name: ev.name, eventType: ev.eventType, locationID: ev.location.id!, locationName: ev.location.locationName, pointsWorth: ev.pointsWorth, startDate: ev.startDate, endDate: ev.endDate)
               };
 
-            if (eventsQuery.filterByName.isEmpty) {
+            if (eventsQuery.filterByName == nil || eventsQuery.filterByName!.isEmpty) {
                 return events;
             }
 
             return events.filter({
-                                     $0.name.lowercased().contains(eventsQuery.filterByName.lowercased());
+                                     $0.name.lowercased().contains(eventsQuery.filterByName!.lowercased());
                                  });
         } else {
             let currentDate = Date()
 
-            let events = try await Events.query(on: req.db)
-              .join(Location.self, on: \Events.$location.$id == \Location.$id)
+            let events = try await Events.query(on: req.db).with(\.$location)
               .filter(Events.self, \.$endDate >= currentDate)
               .sort(Events.self, \.$startDate)
               .all()
@@ -85,12 +83,12 @@ struct AdminController : RouteCollection {
                   return EventInfo.init(id: ev.id!, name: ev.name, eventType: ev.eventType, locationID: ev.location.id!, locationName: ev.location.locationName, pointsWorth: ev.pointsWorth, startDate: ev.startDate, endDate: ev.endDate)
               };
 
-            if (eventsQuery.filterByName.isEmpty) {
+            if (eventsQuery.filterByName == nil || eventsQuery.filterByName!.isEmpty) {
                 return events;
             }
 
             return events.filter({
-                                     $0.name.lowercased().contains(eventsQuery.filterByName.lowercased());
+                                     $0.name.lowercased().contains(eventsQuery.filterByName!.lowercased());
                                  });
         }
     }
@@ -108,13 +106,12 @@ struct AdminController : RouteCollection {
         var customImagePath: String;
     }
 
-    func fetchEvent(_ req: Request) async throws -> FullEventInfo {
+    func fetchEvent(_ req: Request) async throws -> FullEventInfo { // /admin/api/events/
         guard let eventID = req.parameters.get("id", as: Int.self) else {
             throw Abort(.badRequest)
         }
  
-        let event = try await Events.query(on: req.db)
-          .join(Location.self, on: \Events.$location.$id == \Location.$id)
+        let event = try await Events.query(on: req.db).with(\.$location)
           .filter(\Events.$id == eventID)
           .first()
           .map { ev in

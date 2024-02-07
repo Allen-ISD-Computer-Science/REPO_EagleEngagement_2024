@@ -89,7 +89,6 @@ passwordConfirm: String
 Returns: {success: Bool, msg: String}
 ```
 
-
 ```
 POST /login
 email: String
@@ -100,7 +99,7 @@ password: String
 ```
 POST /admin/api/events
 includePast: Bool
-filterByName: String - Send "" to not filter.
+filterByName: String? - Don't have this as a key if no filter
 
 Returns: [{id: Int, name: String, eventType: String, locationID: Int, locationName: String, pointsWorth: Int, startDate: Date, endDate: Date}]
 ```
@@ -120,7 +119,7 @@ locationID: Int
 pointsWorth: Int
 startDate: Date
 endDate: Date
-customImagePath: String - Use "" for no custom image
+customImagePath: String? - Don't have this key if no custom path
 
 Returns {success: Bool, msg: String}
 ```
@@ -134,7 +133,7 @@ locationID: Int
 pointsWorth: Int
 startDate: Date
 endDate: Date
-customImagePath: String - Use "" for no custom image
+customImagePath: String? - Don't have this key if no custom path
 
 Returns {success: Bool, msg: String}
 ```
