@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
-    <data/>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:context=".SignUpActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <LinearLayout android:gravity="center_horizontal"
         android:id="@+id/linearColumnloginbackgroun"
         android:layout_height="match_parent"
@@ -12,30 +16,32 @@
             android:orientation="vertical" style="@style/groupStyleindigo_901">
             <FrameLayout android:gravity="start"
                 android:id="@+id/frameStackloginbackgroun"
-                android:layout_height="@dimen/_443pxv" android:layout_width="match_parent">
-                <ImageView android:id="@+id/imageLoginBackgroun"
-                    android:layout_gravity="start"
-                    android:layout_height="@dimen/_443pxh"
+                android:layout_height="wrap_content" android:layout_width="match_parent">
+
+                <ImageView
+                    android:id="@+id/imageLoginBackgroun"
                     android:layout_width="match_parent"
+                    android:layout_height="230dp"
+                    android:layout_gravity="start"
                     android:scaleType="centerCrop"
-                    imageRes="@{@drawable/img_loginbackgroun}"
-                    tools:ignore="ContentDescription" tools:src="@drawable/img_loginbackgroun"/>
+                    tools:ignore="ContentDescription"
+                    tools:src="@drawable/img_loginbackgroun" />
 
                 <LinearLayout
                     android:id="@+id/linearColumnsignup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|center"
+                    android:layout_gravity="top|center"
                     android:layout_marginStart="@dimen/_12pxh"
-                    android:layout_marginTop="@dimen/_10pxv"
+                    android:layout_marginTop="30dp"
                     android:layout_marginEnd="@dimen/_12pxh"
-                    android:layout_marginBottom="@dimen/_8pxv"
+                    android:layout_marginBottom="0dp"
                     android:orientation="vertical">
 
                     <FrameLayout
                         android:id="@+id/frameStacksignup"
                         android:layout_width="@dimen/_335pxh"
-                        android:layout_height="@dimen/_254pxv"
+                        android:layout_height="230dp"
                         android:layout_marginHorizontal="@dimen/_30sp"
                         android:layout_gravity="start">
 
@@ -58,7 +64,6 @@
 
                         <ImageView
                             android:id="@+id/img_eagleEngagementLogo"
-                            imageRes="@{@drawable/img_eagle_engagement_logo}"
                             android:layout_width="315dp"
                             android:layout_height="233dp"
                             android:layout_gravity="top|center"
@@ -72,76 +77,177 @@
 
                     </FrameLayout>
 
-                    <TextView
-                        android:id="@+id/txtStudentID"
-                        style="@style/txtKhulaextrabold16_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:layout_marginStart="@dimen/_56pxh"
-                        android:layout_marginTop="@dimen/_21pxv"
-                        android:layout_marginEnd="@dimen/_56pxh"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:text="@string/lbl_email"
-                        tools:text="@string/lbl_email" />
-
-                    <LinearLayout
-                        android:id="@+id/linearColumnzipcode"
-                        style="@style/groupStyleindigo_700cornerRadius"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_56pxh"
-                        android:layout_marginEnd="@dimen/_55pxh"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/txtZipcode"
-                            style="@style/txtKhulaextrabold24_1"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="@dimen/_72pxh"
-                            android:layout_marginTop="@dimen/_12pxv"
-                            android:layout_marginEnd="@dimen/_71pxh"
-                            android:layout_marginBottom="@dimen/_12pxv"
-                            android:ellipsize="end"
-                            android:gravity="center_horizontal"
-                            android:singleLine="true"
-                            android:text="@string/lbl_257385"
-                            tools:text="@string/lbl_257385" />
-                    </LinearLayout>
                 </LinearLayout>
             </FrameLayout>
-            <TextView android:ellipsize="end"
-                android:id="@+id/txtNewPassword"
-                android:layout_gravity="start"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_68pxh"
-                android:layout_marginStart="@dimen/_68pxh"
-                android:layout_marginTop="@dimen/_17pxv"
-                android:layout_width="wrap_content"
-                android:singleLine="true"
-                android:text="@string/lbl_new_password"
-                style="@style/txtKhulaextrabold16_2" tools:text="@string/lbl_new_password"/>
-            <LinearLayout android:gravity="center_horizontal"
-                android:id="@+id/linearColumnpassword"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_68pxh"
-                android:layout_marginStart="@dimen/_68pxh"
+            <LinearLayout
+                android:id="@+id/linearColumnsignupForm"
                 android:layout_width="match_parent"
-                android:orientation="vertical" style="@style/groupStyleindigo_700cornerRadius">
-                <TextView android:ellipsize="end"
-                    android:gravity="center_horizontal"
-                    android:id="@+id/txtPassword"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="@dimen/_16pxv"
-                    android:layout_marginEnd="@dimen/_38pxh"
-                    android:layout_marginStart="@dimen/_39pxh"
-                    android:layout_marginTop="@dimen/_8pxv"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_marginStart="@dimen/_12pxh"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="@dimen/_12pxh"
+                android:layout_marginBottom="0dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/txtFirstName"
+                    style="@style/txtKhulaextrabold16_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="@dimen/_56pxh"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/lbl_first_name"
+                    tools:text="@string/lbl_first_name" />
+
+                <LinearLayout
+                    android:id="@+id/linearColumnFirstname"
+                    style="@style/groupStyleindigo_700cornerRadius"
                     android:layout_width="match_parent"
-                    android:singleLine="true" android:text="@string/lbl"
-                    style="@style/txtKhulaextrabold24_1" tools:text="@string/lbl"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/inputFirstName"
+                        style="@style/txtKhulaextrabold24_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/_50pxh"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="@dimen/_50pxh"
+                        android:layout_marginBottom="2dp"
+                        android:ellipsize="end"
+                        android:gravity="center_horizontal"
+                        android:inputType="text"
+                        tools:ignore="SpeakableTextPresentCheck" />
+                </LinearLayout>
+
+                <TextView android:ellipsize="end"
+                    android:id="@+id/txtLastName"
+                    android:layout_gravity="start"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="@string/lbl_last_name"
+                    style="@style/txtKhulaextrabold16_2" tools:text="@string/lbl_last_name"/>
+                <LinearLayout android:gravity="center_horizontal"
+                    android:id="@+id/linearColumnLastname"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical" style="@style/groupStyleindigo_700cornerRadius">
+                    <EditText
+                        android:id="@+id/inputLastName"
+                        style="@style/txtKhulaextrabold24_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/_50pxh"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="@dimen/_50pxh"
+                        android:layout_marginBottom="2dp"
+                        android:ellipsize="end"
+                        android:gravity="center_horizontal"
+                        android:inputType="text"
+                        tools:ignore="SpeakableTextPresentCheck" />
+                </LinearLayout>
+
+                <TextView android:ellipsize="end"
+                    android:id="@+id/txtStudentID"
+                    android:layout_gravity="start"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="@string/lbl_student_id"
+                    style="@style/txtKhulaextrabold16_2" tools:text="@string/lbl_student_id"/>
+                <LinearLayout android:gravity="center_horizontal"
+                    android:id="@+id/linearColumnStudentID"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical" style="@style/groupStyleindigo_700cornerRadius">
+                    <EditText
+                        android:id="@+id/inputStudentID"
+                        style="@style/txtKhulaextrabold24_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/_50pxh"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="@dimen/_50pxh"
+                        android:layout_marginBottom="2dp"
+                        android:ellipsize="end"
+                        android:gravity="center_horizontal"
+                        android:inputType="number"
+                        tools:ignore="SpeakableTextPresentCheck" />
+                </LinearLayout>
+
+                <TextView android:ellipsize="end"
+                    android:id="@+id/txtEmail"
+                    android:layout_gravity="start"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="@string/lbl_email"
+                    style="@style/txtKhulaextrabold16_2" tools:text="@string/lbl_email"/>
+                <LinearLayout android:gravity="center_horizontal"
+                    android:id="@+id/linearColumnEmail"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical" style="@style/groupStyleindigo_700cornerRadius">
+                    <EditText
+                        android:id="@+id/inputSignUpEmail"
+                        style="@style/txtKhulaextrabold24_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/_50pxh"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="@dimen/_50pxh"
+                        android:layout_marginBottom="2dp"
+                        android:ellipsize="end"
+                        android:gravity="center_horizontal"
+                        android:inputType="textEmailAddress"
+                        tools:ignore="SpeakableTextPresentCheck" />
+                </LinearLayout>
+
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonSignup"
+                    style="@style/btnSolidRounded"
+                    android:layout_width="@dimen/_192pxh"
+                    android:layout_height="@dimen/_61pxv"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginBottom="0dp"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/_30pxh"
+                    android:paddingTop="@dimen/_11pxv"
+                    android:paddingEnd="@dimen/_30pxh"
+                    android:paddingBottom="@dimen/_11pxv"
+                    android:singleLine="true"
+                    android:text="@string/lbl_sign_up"
+                    android:textAllCaps="false"
+                    tools:text="@string/lbl_sign_up" />
             </LinearLayout>
             <ImageView android:id="@+id/imageLock"
                 android:layout_gravity="center_horizontal"
@@ -166,4 +272,4 @@
                 style="@style/txtKhulaextrabold15" tools:text="@string/lbl_support"/>
         </LinearLayout>
     </LinearLayout>
-</layout>
+</RelativeLayout>

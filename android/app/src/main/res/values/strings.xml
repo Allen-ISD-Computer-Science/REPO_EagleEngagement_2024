@@ -12,6 +12,8 @@
     <string name="lbl_1_dec">1
 Dec</string>
     <string name="lbl_points">Points</string>
+    <string name="lbl_first_name">First Name</string>
+    <string name="lbl_last_name">Last Name</string>
     <string name="lbl_21">21</string>
     <string name="lbl_ranking2">Ranking
 </string>

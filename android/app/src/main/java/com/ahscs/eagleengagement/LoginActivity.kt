@@ -4,10 +4,6 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
 import com.ahscs.eagleengagement.datamodels.AuthDataModel
 import retrofit2.Call
 import retrofit2.Callback
@@ -15,6 +11,8 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import android.util.Base64
+import android.view.View
+import android.widget.*
 import java.io.File
 import java.io.FileOutputStream
 
@@ -23,11 +21,19 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        configureBtns()
+    }
+
+    private fun configureBtns() {
+        val createAcctBtn = findViewById<TextView>(R.id.txtCreateAcct)
+        createAcctBtn.setOnClickListener {
+            startActivity(Intent(this, SignUpActivity::class.java))
+        }
+
         val loginButton = findViewById<Button>(R.id.buttonLogin)
         loginButton.setOnClickListener {
             val email = findViewById<EditText>(R.id.inputLoginEmail).text.toString()
             val password = findViewById<EditText>(R.id.inputLoginPassword).text.toString()
-//            postDataUsingRetrofit(email, password)
             var encodedPassword = Base64.encodeToString(password.toByteArray(), Base64.NO_WRAP)
             postDataUsingRetrofit(email, encodedPassword)
         }
@@ -41,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
             .build()
 
         val retrofitAPI = retrofit.create(RetrofitAPI::class.java)
-        val dataModel = AuthDataModel.LoginDataModel(email, password)
+        val dataModel = AuthDataModel.LoginDataModel(email.lowercase(), password)
         val call: Call<AuthDataModel.response> = retrofitAPI.postLogin(dataModel)
         call!!.enqueue(object: Callback<AuthDataModel.response?> {
             override fun onResponse(

@@ -14,4 +14,7 @@ interface RetrofitAPI {
 
     @POST("profile")
     fun postProfile(@Header("Authorization") authToken: String) : Call<DataModel.ProfileResponse>
+
+    @POST("signup")
+    fun postSignUp(@Body dataModel: AuthDataModel.SignUpDataModel?) : Call<AuthDataModel.response>
 }

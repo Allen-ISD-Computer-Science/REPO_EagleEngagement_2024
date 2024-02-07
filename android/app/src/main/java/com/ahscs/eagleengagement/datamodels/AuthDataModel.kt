@@ -7,8 +7,10 @@ sealed class AuthDataModel {
     ) : AuthDataModel()
 
     data class SignUpDataModel(
+        var firstName: String,
+        var lastName: String,
         var email: String,
-        var password: String
+        var studentID: Int
     ) : AuthDataModel()
 
     data class response(

@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 //                    }else{
 //                        println("more or less lines")
 //                    }
-                    getPoints(line.readText())
+                    setPoints(line.readText())
                 } catch (e: Exception) {
                     println("exception ${e.message}")
                 }
@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getPoints(jwt: String) {
+    private fun setPoints(jwt: String) {
         var url = resources.getString(R.string.api_link)
         val retrofit = Retrofit.Builder()
             .baseUrl(url)
@@ -81,12 +81,10 @@ class MainActivity : AppCompatActivity() {
             ) {
 
                 if (response.isSuccessful) {
-                    Toast.makeText(applicationContext, "Profile gathered!", Toast.LENGTH_SHORT).show()
                     try {
                         val points = response.body()!!.points
                         findViewById<TextView>(R.id.txtPoints).text = points.toString()
                     } catch (e : Exception) {
-                        Toast.makeText(applicationContext, "Log in first!", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(applicationContext, LoginActivity::class.java))
                         finish()
                     }
