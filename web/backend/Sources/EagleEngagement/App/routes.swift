@@ -29,7 +29,7 @@ func routes(_ app: Application) throws {
     }
 
     let sessionRoutes = app.grouped([User.sessionAuthenticator(), UserAuthenticator()])
-
+    
     sessionRoutes.get("login") { req in
         return try await serveIndex(req);
     }

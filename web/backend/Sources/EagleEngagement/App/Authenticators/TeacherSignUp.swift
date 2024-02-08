@@ -50,7 +50,7 @@ struct TeacherSignUp {
         }
 
         let contact = EmailContact(firstName: args.firstName, lastName: args.lastName, emailAddress: user.email)
-        let verifyEmail = TokenURLEmail(pathComponet: "verify", token: verificationString).createContent(with: contact)
+        let verifyEmail = TokenURLEmail(token: verificationString).createContent(with: contact)
         let emailData = EmailData(contact: contact,
                                   templateExternalID: facultySignUpTemplateID,
                                   templateParameters: verifyEmail)
@@ -66,25 +66,27 @@ struct TeacherSignUp {
         private struct TokenURLEmailWrapper: Encodable {
             let firstName: String?
             let lastName: String?
-            let tokenURL: URL
+            let PUBLIC_URL: String
+            let verificationCode: String 
         }
 
-        let tokenURL: URL
+        let PUBLIC_URL: String;
+        let token: String;
 
-        init(pathComponet: String, token: String) {
-            guard let vaporPublic = Environment.get("VAPOR_SERVER_PUBLIC_URL"), let vaporPublicURL = URL(string: vaporPublic) else {
+        init(token: String) {
+            guard let vaporPublic = Environment.get("VAPOR_SERVER_PUBLIC_URL") else {
                 fatalError("Failed to determine VAPOR_SERVER_PUBIC_URL from environment");
             }
-                    
-            self.tokenURL = vaporPublicURL
-              .appendingPathComponent(pathComponet)
-              .appendingPathComponent(token)
+
+            self.PUBLIC_URL = vaporPublic;
+            self.token = token;
         }
 
         func createContent(with contact: EmailContact) -> Encodable {
             return TokenURLEmailWrapper(firstName: contact.firstName,
                                         lastName: contact.lastName,
-                                        tokenURL: self.tokenURL
+                                        PUBLIC_URL: self.PUBLIC_URL,
+                                        verificationCode: self.token
             )
         }
     }
