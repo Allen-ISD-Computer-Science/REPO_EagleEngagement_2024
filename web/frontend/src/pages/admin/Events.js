@@ -4,16 +4,64 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faIdCard, faPlus, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons'
 
 import AdminNav from "../../components/AdminNav";
+import LoadingOverlay from "../../components/LoadingOverlay";
+import { Checkbox, FormControlLabel } from "@mui/material";
 
 function EventsPage(props) {
+  const searchRef  = React.useRef(null);
+
+  const [requests, setRequests] = React.useState([]);
+
+  function addRequest (name) {
+    const reqCopy = requests;
+    reqCopy.push(name);
+    setRequests(reqCopy);
+  }
+
+  const removeRequest = (name) => {
+    const reqCopy = requests;
+    reqCopy.splice(reqCopy.indexOf(name));
+    setRequests(reqCopy);
+  }
+
+  const [showPast, setShowPast] = React.useState(false);
+  const [filter, setFilter] = React.useState("");
+
   const [events, setEvents] = React.useState([
     { id: 1, name: "B.E.S.T. Robotics State Competition", location: "Allen Football Stadium", date: "9/1/2021", checkInType: "manual" },
   ]);
 
+  React.useEffect(() => {
+    const getEvents = async () => {
+      addRequest("events");
+
+      const args = {
+        includePast: showPast
+      };
+      if (filter !== "") args.filterByName = filter;
+
+      const res = await fetch(`${process.env.PUBLIC_URL}/admin/api/events`, { method: "POST", body: JSON.stringify(args) });
+
+      return await res.json();
+    }
+
+    getEvents().then((events) => {
+      setEvents(events);
+      removeRequest("events");
+    }).catch((err) => {
+      removeRequest("events");
+      console.error(err);
+    });
+  }, [setEvents, showPast, filter])
+
   return (
     <div className="flex flex-row items-stretch min-h-[100vh] z-[100]">
       <AdminNav selected="events" />
-      <div className="flex flex-col items-stretch w-full">
+      <div className="flex flex-col items-stretch w-full relative">
+        <LoadingOverlay
+          isActive={requests.length !== 0}
+          text='Loading your content...'
+        />
         <div className="flex flex-col justify-center text-white text-5xl font-bold bg-blue-950 w-full pl-12 pr-12 items-start max-md:text-4xl max-md:px-5 h-[150px] max-md:max-h-[100px]">
           <span className="my-auto">
             Events
@@ -23,15 +71,38 @@ function EventsPage(props) {
           className="flex flex-row justify-between items-stretch max-md:flex-col px-16 pt-8 max-md:p-4"
         >
           <div
+            id="checkBox"
+            className="flex flex-row justify-start items-stretch gap-4 w-1/8 [&>*]:self-stretch max-md:w-full max-md:flex-col max-md:gap-2"
+          >
+            <FormControlLabel
+              label="Show Past Events?"
+              control={
+                <Checkbox
+                  style ={{
+                    color: "rgb(23 37 84)",
+                  }}
+                  name="showPast"
+                  value={showPast}
+                  onChange={(e) => setShowPast(e.currentTarget.value)}
+                />
+              }
+            />
+          </div>
+          <div
             id="searchBox"
             className="flex flex-row justify-start items-stretch gap-4 w-1/2 [&>*]:self-stretch max-md:w-full max-md:flex-col max-md:gap-2"
           >
             <input
+              onKeyDown={(e) => {
+                if (e.key === "Enter") setFilter(e.currentTarget.value)
+              }}
+              ref={searchRef}
               type="text"
               className="border bg-gray-100 border-slate-600 rounded-xl p-2 w-full"
               placeholder="Search"
             />
             <button
+              onClick={(e) => setFilter(searchRef.current.value)}
               className="bg-blue-950 text-white px-4 py-2 rounded-xl"
             >
               <FontAwesomeIcon icon={faSearch} size="xl" />

@@ -6,9 +6,29 @@ import { faEdit, faIdCard, faPlus, faSearch, faTrash } from '@fortawesome/free-s
 import AdminNav from "../../components/AdminNav";
 
 function LocationsPage(props) {
+  const searchRef  = React.useRef(null);
+
+  const [filter, setFilter] = React.useState("");
+
   const [locations, setLocations] = React.useState([
     { id: 1, name: "Allen High School PAC", address: "300 Rivercrest Blvd, Allen, TX 75002" },
   ]);
+
+  React.useEffect(() => {
+    const getLocations = async () => {
+      const args = {};
+      if (filter !== "") args.filterByName = filter;
+
+      const res = await fetch(`${process.env.PUBLIC_URL}/admin/api/locations`, { method: "POST", body: JSON.stringify(args) });
+      return await res.json();
+    }
+
+    getLocations().then((events) => {
+      setLocations(events);
+    }).catch((err) => {
+      console.error(err);
+    });
+  }, [setLocations, filter])
 
   return (
     <div className="flex flex-row items-stretch min-h-[100vh] z-[100]">
@@ -27,11 +47,16 @@ function LocationsPage(props) {
             className="flex flex-row justify-start items-stretch gap-4 w-1/2 [&>*]:self-stretch max-md:w-full max-md:flex-col max-md:gap-2"
           >
             <input
+              onKeyDown={(e) => {
+                if (e.key === "Enter") setFilter(e.currentTarget.value)
+              }}
+              ref={searchRef}
               type="text"
               className="border bg-gray-100 border-slate-600 rounded-xl p-2 w-full"
               placeholder="Search"
             />
             <button
+              onClick={(e) => setFilter(searchRef.current.value)}
               className="bg-blue-950 text-white px-4 py-2 rounded-xl"
             >
               <FontAwesomeIcon icon={faSearch} size="xl" />
