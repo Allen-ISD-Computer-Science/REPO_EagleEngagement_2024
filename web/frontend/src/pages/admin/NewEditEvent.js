@@ -76,7 +76,7 @@ function NewEditEventPage(props) {
       eventType: "",
       locationName: "",
       locationID: -1,
-      checkInType: "",
+      checkinType: "",
       pointsWorth: -1,
       startDate: "",
       endDate: ""

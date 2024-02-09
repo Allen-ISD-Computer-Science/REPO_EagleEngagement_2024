@@ -110,6 +110,7 @@ struct AdminController : RouteCollection {
         var name: String;
         var description: String;
         var eventType: String;
+        var checkinType: String;
         var locationID: Int;
         var locationName: String;
         var pointsWorth: Int;
@@ -127,7 +128,7 @@ struct AdminController : RouteCollection {
           .filter(\Events.$id == eventID)
           .first()
           .map { ev in
-              return FullEventInfo.init(id: ev.id!, name: ev.name, description: ev.description, eventType: ev.eventType, locationID: ev.location.id!, locationName: ev.location.locationName, pointsWorth: ev.pointsWorth, startDate: ev.startDate, endDate: ev.endDate, customImagePath: ev.customImagePath)
+              return FullEventInfo.init(id: ev.id!, name: ev.name, description: ev.description, eventType: ev.eventType, checkinType: ev.checkinType, locationID: ev.location.id!, locationName: ev.location.locationName, pointsWorth: ev.pointsWorth, startDate: ev.startDate, endDate: ev.endDate, customImagePath: ev.customImagePath)
           };
 
         if (event == nil) {
@@ -142,6 +143,7 @@ struct AdminController : RouteCollection {
         var name: String;
         var description: String;
         var eventType: String;
+        var checkinType: String;
         var locationID: Int;
         var pointsWorth: Int;
         var startDate: Date;
@@ -152,7 +154,11 @@ struct AdminController : RouteCollection {
     func newEvent(_ req: Request) async throws -> Msg {
         let args = try req.content.decode(ManageEventInfo.self);
 
-        let event = Events(name: args.name, description: args.description, eventType: args.eventType, locationID: args.locationID, pointsWorth: args.pointsWorth, startDate: args.startDate, endDate: args.endDate, customImagePath: args.customImagePath ?? "");
+        if (!["location", "manual", "photo"].contains(element: args.checkinType)) {
+            throw Abort(.badRequest, reason: "Invalid checkinType!");
+        }
+
+        let event = Events(name: args.name, description: args.description, eventType: args.eventType, checkinType: CheckinType(rawValue: args.checkinType), locationID: args.locationID, pointsWorth: args.pointsWorth, startDate: args.startDate, endDate: args.endDate, customImagePath: args.customImagePath ?? "");
 
         try await event.save(on: req.db);
 
@@ -173,9 +179,14 @@ struct AdminController : RouteCollection {
         
         let args = try req.content.decode(ManageEventInfo.self);
 
+        if (!["location", "manual", "photo"].contains(element: args.checkinType)) {
+            throw Abort(.badRequest, reason: "Invalid checkinType!");
+        }
+        
         event.name = args.name;
         event.description = args.description;
         event.eventType = args.eventType;
+        event.checkinType = CheckinType(rawValue: args.checkinType);
         event.location.id = args.locationID;
         event.pointsWorth = args.pointsWorth;
         event.startDate = args.startDate;

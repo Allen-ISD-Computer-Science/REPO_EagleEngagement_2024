@@ -2,6 +2,12 @@ import Vapor
 import Fluent
 import FluentMySQLDriver
 
+public enum CheckinType: String, Codable {
+    case location,
+         manual,
+         photo
+}
+
 /// This class provides the model for an Employee
 final public class Events: Model, Content {
     // Name of the table or collection.
@@ -31,6 +37,9 @@ final public class Events: Model, Content {
     @Field(key: "eventType")
     public var eventType: String
 
+    @Enum(key: "checkinType")
+    public var checkinType: CheckinType
+
     // Date the event will be held
     @Field(key: "startDate")
     public var startDate: Date
@@ -44,10 +53,11 @@ final public class Events: Model, Content {
     public var customImagePath: String
 
     // Creates a new Event
-    public init(name: String, description: String, eventType: String, locationID: Int, pointsWorth: Int, startDate: Date, endDate: Date, customImagePath: String) {
+    public init(name: String, description: String, eventType: String, checkinType: CheckinType, locationID: Int, pointsWorth: Int, startDate: Date, endDate: Date, customImagePath: String) {
         self.name = name;
         self.description = description;
         self.eventType = eventType;
+        self.checkinType = checkinType;
         self.$location.id = locationID;
         self.pointsWorth = pointsWorth;
         self.startDate = startDate;
