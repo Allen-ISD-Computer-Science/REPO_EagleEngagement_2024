@@ -48,7 +48,7 @@ final public class Events: Model, Content {
         self.name = name;
         self.description = description;
         self.eventType = eventType;
-        self.location.id = locationID;
+        self.$location.id = locationID;
         self.pointsWorth = pointsWorth;
         self.startDate = startDate;
         self.endDate = endDate;

@@ -11,7 +11,7 @@ function NewEditEventPage(props) {
   const [title, setTitle] = React.useState("New Event");
 
   const [eventInfo, setEventInfo] = React.useState({
-    name: "B.E.S.T. Robotics State Competition", description: "Come visit for the B.E.S.T. Robotics Competition!", eventType: "Robotics", locationName: "Allen Stadium", locationID: 0, startDate: "9/1/2021", points: 3, checkInType: "manual"
+    name: "B.E.S.T. Robotics State Competition", description: "Come visit for the B.E.S.T. Robotics Competition!", eventType: "Robotics", locationName: "Allen Stadium", locationID: 0, startDate: "9/1/2021", pointsWorth: 3, checkInType: "manual"
   });
 
   const [eventTypes, setEventTypes] = React.useState([
@@ -69,7 +69,7 @@ function NewEditEventPage(props) {
       return;
     }
 
-    if (window.location.pathname !== "/admin/events/new") throw new Error("Invalid event ID.");
+      if (!window.location.pathname.endsWith("/admin/events/new")) throw new Error("Invalid event ID.");
     setEventInfo({
       name: "",
       description: "",
@@ -77,26 +77,27 @@ function NewEditEventPage(props) {
       locationName: "",
       locationID: -1,
       checkInType: "",
-      points: -1,
+      pointsWorth: -1,
       startDate: "",
       endDate: ""
     });
   }, []);
 
-  const saveButtonClicked = () => {
+  const saveButtonClicked = async () => {
     var urlPath = "/admin/api/events/new"
-    if (window.location.pathname !== "/admin/events/new") {
+      if (!window.location.pathname.endsWith("/admin/events/new")) {
       const eventID = parseInt(window.location.pathname.split("/").pop());
-      urlPath = `/admin/api/events/${eventID}/edit`
+      urlPath = `/admin/api/event/${eventID}/edit`
     }
 
     const filteredInfo = eventInfo;
-    delete filteredInfo.location;
+      delete filteredInfo.locationName;
+      if (!filteredInfo.customImagePath) delete filteredInfo.customImagePath;
 
     const keys = Object.keys(filteredInfo);
     for (let i = 0; i < keys.length; i++) {
       const key = keys[i];
-      if (!filteredInfo[key] || filteredInfo[key] === -1) {
+	if ((filteredInfo[key] === "" || filteredInfo[key] === null || filteredInfo[key] === -1) && (key != "customImagePath")) {
         toast.error(`${key} cannot be empty!`, {
           position: "top-right",
           autoClose: 2000,
@@ -108,14 +109,44 @@ function NewEditEventPage(props) {
       }
     }
 
-    fetch(`${process.env.PUBLIC_URL}${urlPath}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify(filteredInfo)
-    });
+      filteredInfo.startDate = filteredInfo.startDate.toISOString().split('.')[0]+"Z";
+      filteredInfo.endDate = filteredInfo.startDate.split('T')[0] + "T" + filteredInfo.endDate.toISOString().split("T")[1].split(".")[0]+"Z";
+      
+      addRequest("edit");
+
+      try {
+	  const res = await fetch(`${process.env.PUBLIC_URL}${urlPath}`, {
+	      method: "POST",
+	      headers: {
+		  "Content-Type": "application/json",
+		  "Accept": "application/json"
+	      },
+	      body: JSON.stringify(filteredInfo)
+	  });
+
+	  removeRequest("edit");
+
+	  if (res.status === 200) {
+	      toast.success("Updated event!", {
+		  position: "top-right",
+		  autoClose: 2000,
+		  closeOnClick: true,
+		  pauseOnHover: true,
+		  theme: "light"
+	      });
+	  } else {
+	      toast.error(res.statusText, {
+		  position: "top-right",
+		  autoClose: 2000,
+		  closeOnClick: true,
+		  pauseOnHover: true,
+		  theme: "light"
+              });
+	  }
+      } catch(e) {
+	  console.error(e);
+	  removeRequest("edit");
+      }
   }
 
   return (
@@ -214,7 +245,7 @@ function NewEditEventPage(props) {
               onChange={(e, val) => {
                 setEventInfo({
                   ...eventInfo,
-                  location: val.props.children,
+                  locationName: val.props.children,
                   locationID: parseInt(e.target.value)
                 })
               }}
@@ -251,11 +282,11 @@ function NewEditEventPage(props) {
               placeholder="Points"
               type="number"
               name="points"
-              value={eventInfo.points === -1 ? "" : eventInfo.points}
+              value={eventInfo.pointsWorth === -1 ? "" : eventInfo.pointsWorth}
               onChange={(e) => {
                 setEventInfo({
                   ...eventInfo,
-                  points: e.currentTarget.value
+                    pointsWorth: parseInt(e.currentTarget.value)
                 })
               }}
             />

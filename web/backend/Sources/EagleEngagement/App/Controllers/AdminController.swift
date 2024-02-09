@@ -22,19 +22,31 @@ struct AdminController : RouteCollection {
         adminProtectedRoutes.get("review-missing-points", use: serveIndex);
 
         let apiRoutes = adminProtectedRoutes.grouped("api"); // /admin/api
+        apiRoutes.post("eventTypes", use: fetchEventTypes);
         apiRoutes.post("events", use: fetchEvents);
         apiRoutes.post("event", ":id", use: fetchEvent);
+        apiRoutes.post("event", ":id", "edit", use: editEvent);
         apiRoutes.post("events", "new", use: newEvent);
-        apiRoutes.post("events", "edit", ":id", use: editEvent);
 
         apiRoutes.post("locations", use: fetchLocations);
         apiRoutes.post("location", ":id", use: fetchLocation);
+        apiRoutes.post("location", ":id", "edit", use: editLocation);
         apiRoutes.post("locations", "new", use: newLocation);
-        apiRoutes.post("locations", "edit", ":id", use: editLocation);
     }
 
     func serveIndex(_ req: Request) async throws -> View {
         return try await req.view.render("index.html")
+    }
+
+    func fetchEventTypes(_ req: Request) async throws -> [String] {
+        let eventTypes = try await Events.query(on: req.db)
+          .field(\.$eventType)
+          .all()
+          .map { ev in
+              ev.eventType
+          };
+
+        return Array<String>(Set<String>(eventTypes));
     }
 
     struct EventsQuery : Content {
@@ -134,13 +146,13 @@ struct AdminController : RouteCollection {
         var pointsWorth: Int;
         var startDate: Date;
         var endDate: Date;
-        var customImagePath: String;
+        var customImagePath: String?;
     }
 
     func newEvent(_ req: Request) async throws -> Msg {
         let args = try req.content.decode(ManageEventInfo.self);
 
-        let event = Events(name: args.name, description: args.description, eventType: args.eventType, locationID: args.locationID, pointsWorth: args.pointsWorth, startDate: args.startDate, endDate: args.endDate, customImagePath: args.customImagePath);
+        let event = Events(name: args.name, description: args.description, eventType: args.eventType, locationID: args.locationID, pointsWorth: args.pointsWorth, startDate: args.startDate, endDate: args.endDate, customImagePath: args.customImagePath ?? "");
 
         try await event.save(on: req.db);
 
@@ -153,11 +165,12 @@ struct AdminController : RouteCollection {
         }
  
         guard let event = try await Events.query(on: req.db)
+          .with(\.$location)
           .filter(\.$id == eventID)
           .first() else {
             throw Abort(.badRequest, reason: "Could not find event.")
         }
-
+        
         let args = try req.content.decode(ManageEventInfo.self);
 
         event.name = args.name;
@@ -167,7 +180,11 @@ struct AdminController : RouteCollection {
         event.pointsWorth = args.pointsWorth;
         event.startDate = args.startDate;
         event.endDate = args.endDate;
-        event.customImagePath = args.customImagePath;
+        if let customImagePath = args.customImagePath {
+            event.customImagePath = customImagePath;
+        } else {
+            event.customImagePath = "";
+        }
         
         try await event.save(on: req.db);
 
