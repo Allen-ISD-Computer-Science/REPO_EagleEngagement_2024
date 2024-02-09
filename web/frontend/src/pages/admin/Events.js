@@ -11,30 +11,16 @@ import { Checkbox, FormControlLabel } from "@mui/material";
 function EventsPage(props) {
   const searchRef  = React.useRef(null);
 
-  const [requests, setRequests] = React.useState([]);
-
-  function addRequest (name) {
-    const reqCopy = requests;
-    reqCopy.push(name);
-    setRequests(reqCopy);
-  }
-
-  const removeRequest = (name) => {
-    const reqCopy = requests;
-    reqCopy.splice(reqCopy.indexOf(name));
-    setRequests(reqCopy);
-  }
+  const [requests, setRequests] = React.useState(0);
 
   const [showPast, setShowPast] = React.useState(false);
   const [filter, setFilter] = React.useState("");
 
-  const [events, setEvents] = React.useState([
-      { id: 1, name: "B.E.S.T. Robotics State Competition", locationName: "Allen Football Stadium", startDate: "2024-01-31T19:00:00Z", checkInType: "manual" },
-  ]);
+  const [events, setEvents] = React.useState(null);
 
   React.useEffect(() => {
     const getEvents = async () => {
-      addRequest("events");
+      setRequests((prev) => prev + 1);
 
       const args = {
         includePast: showPast
@@ -51,19 +37,19 @@ function EventsPage(props) {
 
     getEvents().then((events) => {
       setEvents(events);
-      removeRequest("events");
+      setRequests((prev) => prev - 1);
     }).catch((err) => {
-      removeRequest("events");
+      setRequests((prev) => prev - 1);
       console.error(err);
     });
-  }, [setEvents, showPast, filter])
+  }, [setEvents, showPast, filter, setRequests])
 
   return (
     <div className="flex flex-row items-stretch min-h-[100vh] z-[100]">
       <AdminNav selected="events" />
       <div className="flex flex-col items-stretch w-full relative">
         <LoadingOverlay
-          isActive={requests.length !== 0}
+          isActive={requests !== 0}
           text='Loading your content...'
         />
         <div className="flex flex-col justify-center text-white text-5xl font-bold bg-blue-950 w-full pl-12 pr-12 items-start max-md:text-4xl max-md:px-5 h-[150px] max-md:max-h-[100px]">
@@ -140,7 +126,7 @@ function EventsPage(props) {
             </thead>
             <tbody className="border-b border-slate-400">
               {
-                events.map((event, i) =>
+                events?.map((event, i) =>
                   <tr key={event.id} className="text-l">
                     <td>{event.name}</td>
                     <td>{event.locationName}</td>
