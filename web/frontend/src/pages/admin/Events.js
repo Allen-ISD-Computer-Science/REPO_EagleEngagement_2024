@@ -1,4 +1,5 @@
 import * as React from "react";
+import dayjs from "dayjs";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faIdCard, faPlus, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons'
@@ -28,7 +29,7 @@ function EventsPage(props) {
   const [filter, setFilter] = React.useState("");
 
   const [events, setEvents] = React.useState([
-    { id: 1, name: "B.E.S.T. Robotics State Competition", location: "Allen Football Stadium", date: "9/1/2021", checkInType: "manual" },
+      { id: 1, name: "B.E.S.T. Robotics State Competition", locationName: "Allen Football Stadium", startDate: "2024-01-31T19:00:00Z", checkInType: "manual" },
   ]);
 
   React.useEffect(() => {
@@ -40,7 +41,10 @@ function EventsPage(props) {
       };
       if (filter !== "") args.filterByName = filter;
 
-      const res = await fetch(`${process.env.PUBLIC_URL}/admin/api/events`, { method: "POST", body: JSON.stringify(args) });
+	const res = await fetch(`${process.env.PUBLIC_URL}/admin/api/events`, { headers: {
+	    Accept: "application/json",
+	    "Content-Type": "application/json"
+	}, method: "POST", body: JSON.stringify(args) });
 
       return await res.json();
     }
@@ -83,7 +87,7 @@ function EventsPage(props) {
                   }}
                   name="showPast"
                   value={showPast}
-                  onChange={(e) => setShowPast(e.currentTarget.value)}
+                  onChange={(e) => setShowPast(e.target.checked)}
                 />
               }
             />
@@ -139,8 +143,8 @@ function EventsPage(props) {
                 events.map((event, i) =>
                   <tr key={event.id} className="text-l">
                     <td>{event.name}</td>
-                    <td>{event.location}</td>
-                    <td>{event.date}</td>
+                    <td>{event.locationName}</td>
+                      <td>{dayjs(event.startDate).format("MM/DD/YYYY hh:mm A")}</td>
                     <td className="[&>*]:mx-4">
                       <a className="bg-blue-950 text-white px-4 py-2 rounded-xl" href={process.env.PUBLIC_URL + `/admin/events/edit/${event.id}`}>
                         <FontAwesomeIcon icon={faEdit} size="lg" />

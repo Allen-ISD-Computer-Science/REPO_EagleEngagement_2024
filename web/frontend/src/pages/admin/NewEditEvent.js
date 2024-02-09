@@ -11,7 +11,7 @@ function NewEditEventPage(props) {
   const [title, setTitle] = React.useState("New Event");
 
   const [eventInfo, setEventInfo] = React.useState({
-    name: "B.E.S.T. Robotics State Competition", description: "Come visit for the B.E.S.T. Robotics Competition!", eventType: "Robotics", location: "Allen Stadium", locationID: 0, startDate: "9/1/2021", points: 3, checkInType: "manual"
+    name: "B.E.S.T. Robotics State Competition", description: "Come visit for the B.E.S.T. Robotics Competition!", eventType: "Robotics", locationName: "Allen Stadium", locationID: 0, startDate: "9/1/2021", points: 3, checkInType: "manual"
   });
 
   const [eventTypes, setEventTypes] = React.useState([
@@ -34,7 +34,7 @@ function NewEditEventPage(props) {
 
   React.useEffect(() => {
     const getEventTypes = async () => {
-      const res = await fetch(`${process.env.PUBLIC_URL}/admin/api/eventTypes`);
+	const res = await fetch(`${process.env.PUBLIC_URL}/admin/api/eventTypes`, { headers: { Accept: "application/json" }, method: "POST" });
       return await res.json();
     }
 
@@ -51,8 +51,8 @@ function NewEditEventPage(props) {
       setTitle("Edit Event - ...");
 
       const getEvent = async () => {
-        const res = await fetch(`${process.env.PUBLIC_URL}/admin/api/event/${eventID}`);
-        return await res.json();
+          const res = await fetch(`${process.env.PUBLIC_URL}/admin/api/event/${eventID}`, { headers: { Accept: "application/json" }, method: "POST" });
+          return await res.json();
       }
 
       addRequest("event");
@@ -74,7 +74,7 @@ function NewEditEventPage(props) {
       name: "",
       description: "",
       eventType: "",
-      location: "",
+      locationName: "",
       locationID: -1,
       checkInType: "",
       points: -1,
