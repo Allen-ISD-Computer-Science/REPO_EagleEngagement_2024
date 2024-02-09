@@ -5,6 +5,7 @@ import { DateTimePicker, TimePicker } from "@mui/x-date-pickers";
 import { ToastContainer, toast } from 'react-toastify';
 
 import AdminNav from "../../components/AdminNav";
+import LoadingOverlay from "../../components/LoadingOverlay";
 import { Autocomplete, Button, MenuItem, Select, TextField } from "@mui/material";
 
 function NewEditEventPage(props) {
@@ -18,58 +19,46 @@ function NewEditEventPage(props) {
     "Football", "Soccer", "Robotics"
   ]);
 
-  const [requests, setRequests] = React.useState([]);
-
-  function addRequest (name) {
-    const reqCopy = requests;
-    reqCopy.push(name);
-    setRequests(reqCopy);
-  }
-
-  const removeRequest = (name) => {
-    const reqCopy = requests;
-    reqCopy.splice(reqCopy.indexOf(name));
-    setRequests(reqCopy);
-  }
+  const [requests, setRequests] = React.useState(0);
 
   React.useEffect(() => {
     const getEventTypes = async () => {
-	const res = await fetch(`${process.env.PUBLIC_URL}/admin/api/eventTypes`, { headers: { Accept: "application/json" }, method: "POST" });
+      const res = await fetch(`${process.env.PUBLIC_URL}/admin/api/eventTypes`, { headers: { Accept: "application/json" }, method: "POST" });
       return await res.json();
     }
 
-    addRequest("eventTypes")
+    setRequests((prev) => prev + 1);
     getEventTypes().then((types) => {
       setEventTypes(types);
-      removeRequest("eventTypes");
+      setRequests((prev) => prev - 1);
     }).catch((err) => {
-      removeRequest("eventTypes");
+      setRequests((prev) => prev - 1);
     })
-    
+
     const eventID = parseInt(window.location.pathname.split("/").pop());
     if (!isNaN(eventID)) {
       setTitle("Edit Event - ...");
 
       const getEvent = async () => {
-          const res = await fetch(`${process.env.PUBLIC_URL}/admin/api/event/${eventID}`, { headers: { Accept: "application/json" }, method: "POST" });
-          return await res.json();
+        const res = await fetch(`${process.env.PUBLIC_URL}/admin/api/event/${eventID}`, { headers: { Accept: "application/json" }, method: "POST" });
+        return await res.json();
       }
 
-      addRequest("event");
+      setRequests((prev) => prev + 1);
       getEvent().then((event) => {
         document.title = "Edit Event - " + event.name;
         setTitle("Edit Event - " + event.name);
         setEventInfo(event);
-        removeRequest("event");
+        setRequests((prev) => prev - 1);
       }).catch((err) => {
-        removeRequest("event");
+        setRequests((prev) => prev - 1);
         // console.error(err);
       });
 
       return;
     }
 
-      if (!window.location.pathname.endsWith("/admin/events/new")) throw new Error("Invalid event ID.");
+    if (!window.location.pathname.endsWith("/admin/events/new")) throw new Error("Invalid event ID.");
     setEventInfo({
       name: "",
       description: "",
@@ -85,19 +74,19 @@ function NewEditEventPage(props) {
 
   const saveButtonClicked = async () => {
     var urlPath = "/admin/api/events/new"
-      if (!window.location.pathname.endsWith("/admin/events/new")) {
+    if (!window.location.pathname.endsWith("/admin/events/new")) {
       const eventID = parseInt(window.location.pathname.split("/").pop());
       urlPath = `/admin/api/event/${eventID}/edit`
     }
 
     const filteredInfo = eventInfo;
-      delete filteredInfo.locationName;
-      if (!filteredInfo.customImagePath) delete filteredInfo.customImagePath;
+    delete filteredInfo.locationName;
+    if (!filteredInfo.customImagePath) delete filteredInfo.customImagePath;
 
     const keys = Object.keys(filteredInfo);
     for (let i = 0; i < keys.length; i++) {
       const key = keys[i];
-	if ((filteredInfo[key] === "" || filteredInfo[key] === null || filteredInfo[key] === -1) && (key != "customImagePath")) {
+      if ((filteredInfo[key] === "" || filteredInfo[key] === null || filteredInfo[key] === -1) && (key != "customImagePath")) {
         toast.error(`${key} cannot be empty!`, {
           position: "top-right",
           autoClose: 2000,
@@ -109,50 +98,54 @@ function NewEditEventPage(props) {
       }
     }
 
-      filteredInfo.startDate = filteredInfo.startDate.toISOString().split('.')[0]+"Z";
-      filteredInfo.endDate = filteredInfo.startDate.split('T')[0] + "T" + filteredInfo.endDate.toISOString().split("T")[1].split(".")[0]+"Z";
-      
-      addRequest("edit");
+    filteredInfo.startDate = filteredInfo.startDate.toISOString().split('.')[0] + "Z";
+    filteredInfo.endDate = filteredInfo.startDate.split('T')[0] + "T" + filteredInfo.endDate.toISOString().split("T")[1].split(".")[0] + "Z";
 
-      try {
-	  const res = await fetch(`${process.env.PUBLIC_URL}${urlPath}`, {
-	      method: "POST",
-	      headers: {
-		  "Content-Type": "application/json",
-		  "Accept": "application/json"
-	      },
-	      body: JSON.stringify(filteredInfo)
-	  });
+    setRequests((prev) => prev + 1);
+    try {
+      const res = await fetch(`${process.env.PUBLIC_URL}${urlPath}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(filteredInfo)
+      });
 
-	  removeRequest("edit");
+      setRequests((prev) => prev - 1);
 
-	  if (res.status === 200) {
-	      toast.success("Updated event!", {
-		  position: "top-right",
-		  autoClose: 2000,
-		  closeOnClick: true,
-		  pauseOnHover: true,
-		  theme: "light"
-	      });
-	  } else {
-	      toast.error(res.statusText, {
-		  position: "top-right",
-		  autoClose: 2000,
-		  closeOnClick: true,
-		  pauseOnHover: true,
-		  theme: "light"
-              });
-	  }
-      } catch(e) {
-	  console.error(e);
-	  removeRequest("edit");
+      if (res.status === 200) {
+        toast.success("Updated event!", {
+          position: "top-right",
+          autoClose: 2000,
+          closeOnClick: true,
+          pauseOnHover: true,
+          theme: "light"
+        });
+      } else {
+        toast.error(res.statusText, {
+          position: "top-right",
+          autoClose: 2000,
+          closeOnClick: true,
+          pauseOnHover: true,
+          theme: "light"
+        });
       }
+    } catch (e) {
+      console.error(e);
+      setRequests((prev) => prev - 1);
+    }
   }
 
   return (
     <div className="flex flex-row items-stretch min-h-[100vh]">
       <AdminNav selected="events" />
       <div className="flex flex-col items-stretch w-full">
+        <LoadingOverlay
+          isActive={requests !== 0}
+          text='Loading your content...'
+        />
+
         <div className="flex flex-col justify-center text-white text-5xl font-bold bg-blue-950 w-full pl-12 pr-12 items-start max-md:text-4xl max-md:px-5 h-[150px] max-md:max-h-[100px]">
           <span className="my-auto">
             {title}
@@ -286,7 +279,7 @@ function NewEditEventPage(props) {
               onChange={(e) => {
                 setEventInfo({
                   ...eventInfo,
-                    pointsWorth: parseInt(e.currentTarget.value)
+                  pointsWorth: parseInt(e.currentTarget.value)
                 })
               }}
             />
