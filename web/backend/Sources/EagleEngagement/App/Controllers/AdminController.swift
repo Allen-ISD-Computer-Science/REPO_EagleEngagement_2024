@@ -128,7 +128,7 @@ struct AdminController : RouteCollection {
           .filter(\Events.$id == eventID)
           .first()
           .map { ev in
-              return FullEventInfo.init(id: ev.id!, name: ev.name, description: ev.description, eventType: ev.eventType, checkinType: ev.checkinType, locationID: ev.location.id!, locationName: ev.location.locationName, pointsWorth: ev.pointsWorth, startDate: ev.startDate, endDate: ev.endDate, customImagePath: ev.customImagePath)
+              return FullEventInfo.init(id: ev.id!, name: ev.name, description: ev.description, eventType: ev.eventType, checkinType: ev.checkinType.rawValue, locationID: ev.location.id!, locationName: ev.location.locationName, pointsWorth: ev.pointsWorth, startDate: ev.startDate, endDate: ev.endDate, customImagePath: ev.customImagePath)
           };
 
         if (event == nil) {
@@ -154,11 +154,11 @@ struct AdminController : RouteCollection {
     func newEvent(_ req: Request) async throws -> Msg {
         let args = try req.content.decode(ManageEventInfo.self);
 
-        if (!["location", "manual", "photo"].contains(element: args.checkinType)) {
+        if (!["location", "manual", "photo"].contains(args.checkinType)) {
             throw Abort(.badRequest, reason: "Invalid checkinType!");
         }
 
-        let event = Events(name: args.name, description: args.description, eventType: args.eventType, checkinType: CheckinType(rawValue: args.checkinType), locationID: args.locationID, pointsWorth: args.pointsWorth, startDate: args.startDate, endDate: args.endDate, customImagePath: args.customImagePath ?? "");
+        let event = Events(name: args.name, description: args.description, eventType: args.eventType, checkinType: CheckinType(rawValue: args.checkinType)!, locationID: args.locationID, pointsWorth: args.pointsWorth, startDate: args.startDate, endDate: args.endDate, customImagePath: args.customImagePath ?? "");
 
         try await event.save(on: req.db);
 
@@ -179,14 +179,14 @@ struct AdminController : RouteCollection {
         
         let args = try req.content.decode(ManageEventInfo.self);
 
-        if (!["location", "manual", "photo"].contains(element: args.checkinType)) {
+        if (!["location", "manual", "photo"].contains(args.checkinType)) {
             throw Abort(.badRequest, reason: "Invalid checkinType!");
         }
         
         event.name = args.name;
         event.description = args.description;
         event.eventType = args.eventType;
-        event.checkinType = CheckinType(rawValue: args.checkinType);
+        event.checkinType = CheckinType(rawValue: args.checkinType)!;
         event.location.id = args.locationID;
         event.pointsWorth = args.pointsWorth;
         event.startDate = args.startDate;
@@ -203,7 +203,7 @@ struct AdminController : RouteCollection {
     }
 
     struct LocationQuery : Content {
-        var filterByName: String;
+        var filterByName: String?;
     }
 
     struct LocationInfo : Content {
@@ -222,12 +222,12 @@ struct AdminController : RouteCollection {
               LocationInfo.init(id: loc.id!, name: loc.locationName, description: loc.description, address: loc.address);
           };
         
-        if (locationQuery.filterByName.isEmpty) {
+        if (locationQuery.filterByName == nil || locationQuery.filterByName!.isEmpty) {
             return locations;
         }
         
         return locations.filter({
-                                    $0.name.lowercased().contains(locationQuery.filterByName.lowercased());
+                                    $0.name.lowercased().contains(locationQuery.filterByName!.lowercased());
                              });
     }
 
@@ -246,7 +246,7 @@ struct AdminController : RouteCollection {
     }
 
     struct ManageLocationInfo : Content {
-        var name: String;
+        var locationName: String;
         var description: String;
         var address: String;
         var latitude: Float;
@@ -257,7 +257,7 @@ struct AdminController : RouteCollection {
     func newLocation(_ req: Request) async throws -> Msg {
         let args = try req.content.decode(ManageLocationInfo.self);
 
-        let location = Location(name: args.name, description: args.description, address: args.address, latitude: args.latitude, longitude: args.longitude, radius: args.radius);
+        let location = Location(name: args.locationName, description: args.description, address: args.address, latitude: args.latitude, longitude: args.longitude, radius: args.radius);
         
         try await location.save(on: req.db);
 
@@ -277,7 +277,7 @@ struct AdminController : RouteCollection {
             throw Abort(.badRequest, reason: "Could not find location.")
         }
 
-        location.locationName = args.name;
+        location.locationName = args.locationName;
         location.description = args.description;
         location.address = args.address;
         location.latitude = args.latitude;

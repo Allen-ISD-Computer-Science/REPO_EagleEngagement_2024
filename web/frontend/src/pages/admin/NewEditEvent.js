@@ -12,7 +12,7 @@ function NewEditEventPage(props) {
   const [title, setTitle] = React.useState("New Event");
 
   const [eventInfo, setEventInfo] = React.useState({
-    name: "B.E.S.T. Robotics State Competition", description: "Come visit for the B.E.S.T. Robotics Competition!", eventType: "Robotics", locationName: "Allen Stadium", locationID: 0, startDate: "9/1/2021", pointsWorth: 3, checkInType: "manual"
+    name: "B.E.S.T. Robotics State Competition", description: "Come visit for the B.E.S.T. Robotics Competition!", eventType: "Robotics", locationName: "Allen Stadium", locationID: 0, startDate: "9/1/2021", pointsWorth: 3, checkinType: "manual"
   });
 
   const [eventTypes, setEventTypes] = React.useState([
@@ -45,9 +45,14 @@ function NewEditEventPage(props) {
       }
 
       setRequests((prev) => prev + 1);
-      getEvent().then((event) => {
+	getEvent().then((ev) => {
+	    console.log(ev);
+	    const event = ev;
+	    event.startDate = dayjs(ev.startDate);
+	    event.endDate = dayjs(ev.endDate);
+	    console.log(event);
         document.title = "Edit Event - " + event.name;
-        setTitle("Edit Event - " + event.name);
+          setTitle("Edit Event - " + event.name);
         setEventInfo(event);
         setRequests((prev) => prev - 1);
       }).catch((err) => {
@@ -72,14 +77,16 @@ function NewEditEventPage(props) {
     });
   }, []);
 
-  const saveButtonClicked = async () => {
+    const saveButtonClicked = async () => {
+	var isNew = true;
     var urlPath = "/admin/api/events/new"
-    if (!window.location.pathname.endsWith("/admin/events/new")) {
+	if (!window.location.pathname.endsWith("/admin/events/new")) {
+	    isNew = false;
       const eventID = parseInt(window.location.pathname.split("/").pop());
       urlPath = `/admin/api/event/${eventID}/edit`
     }
 
-    const filteredInfo = eventInfo;
+      const filteredInfo = Object.assign({}, eventInfo);
     delete filteredInfo.locationName;
     if (!filteredInfo.customImagePath) delete filteredInfo.customImagePath;
 
@@ -99,10 +106,21 @@ function NewEditEventPage(props) {
     }
 
     filteredInfo.startDate = filteredInfo.startDate.toISOString().split('.')[0] + "Z";
-    filteredInfo.endDate = filteredInfo.startDate.split('T')[0] + "T" + filteredInfo.endDate.toISOString().split("T")[1].split(".")[0] + "Z";
+      filteredInfo.endDate = filteredInfo.startDate.split('T')[0] + "T" + filteredInfo.endDate.toISOString().split("T")[1].split(".")[0] + "Z";
 
-    setRequests((prev) => prev + 1);
-    try {
+      if (requests > 0) {
+	  toast.error(`Request already made. Please wait!`, {
+	      position: "top-right",
+	      autoClose: 2000,
+	      closeOnClick: true,
+	      pauseOnHover: true,
+	      theme: "light"
+          });
+	  return;
+      }
+      
+      setRequests((prev) => prev + 1);
+      try {
       const res = await fetch(`${process.env.PUBLIC_URL}${urlPath}`, {
         method: "POST",
         headers: {
@@ -115,7 +133,7 @@ function NewEditEventPage(props) {
       setRequests((prev) => prev - 1);
 
       if (res.status === 200) {
-        toast.success("Updated event!", {
+          toast.success(`${isNew? "Created" : "Updated"} event!`, {
           position: "top-right",
           autoClose: 2000,
           closeOnClick: true,
@@ -143,7 +161,7 @@ function NewEditEventPage(props) {
       <div className="flex flex-col items-stretch w-full">
         <LoadingOverlay
           isActive={requests !== 0}
-          text='Loading your content...'
+          text='Loading...'
         />
 
         <div className="flex flex-col justify-center text-white text-5xl font-bold bg-blue-950 w-full pl-12 pr-12 items-start max-md:text-4xl max-md:px-5 h-[150px] max-md:max-h-[100px]">
@@ -173,7 +191,7 @@ function NewEditEventPage(props) {
               className="border bg-gray-100 rounded-xl w-full"
               placeholder="Event Name"
               name="name"
-              value={eventInfo.name}
+              value={eventInfo?.name}
               onChange={(e) => {
                 setEventInfo({
                   ...eventInfo,
@@ -189,7 +207,7 @@ function NewEditEventPage(props) {
               className="border bg-gray-100 rounded-xl w-full"
               name="type"
               options={eventTypes}
-              value={eventInfo.eventType}
+              value={eventInfo?.eventType}
               onChange={(e) => {
                 setEventInfo({
                   ...eventInfo,
@@ -217,7 +235,7 @@ function NewEditEventPage(props) {
                 placeholder="Description"
                 name="description"
                 maxLength={255}
-                value={eventInfo.description}
+                value={eventInfo?.description}
                 onChange={(e) => {
                   setEventInfo({
                     ...eventInfo,
@@ -234,7 +252,7 @@ function NewEditEventPage(props) {
             <Select
               className="border bg-gray-100 rounded-xl w-full"
               name="location"
-              value={eventInfo.locationID}
+              value={eventInfo?.locationID}
               onChange={(e, val) => {
                 setEventInfo({
                   ...eventInfo,
@@ -254,11 +272,11 @@ function NewEditEventPage(props) {
             <Select
               className="border bg-gray-100 rounded-xl w-full"
               name="checkInType"
-              value={eventInfo.checkInType}
+              value={eventInfo?.checkinType}
               onChange={(e) => {
                 setEventInfo({
                   ...eventInfo,
-                  checkInType: e.target.value
+                  checkinType: e.target.value
                 })
               }}
             >

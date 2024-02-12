@@ -19,7 +19,14 @@ function LocationsPage(props) {
       const args = {};
       if (filter !== "") args.filterByName = filter;
 
-      const res = await fetch(`${process.env.PUBLIC_URL}/admin/api/locations`, { method: "POST", body: JSON.stringify(args) });
+	const res = await fetch(`${process.env.PUBLIC_URL}/admin/api/locations`, {
+	    method: "POST",
+	    headers : {
+		"Accept": "application/json",
+		"Content-Type": "application/json"
+	    },
+	    body: JSON.stringify(args)
+	});
       return await res.json();
     }
 
