@@ -43,6 +43,8 @@ struct TeacherController : RouteCollection {
     struct FullClubInfo : Content {
         var name: String;
         var description: String;
+        var studentsFollowing: Int;
+        var meetings: [MeetingInfo];
         var meetingTimes: String?;
         var locationName: String?;
         var websiteLink: String?;
@@ -51,23 +53,41 @@ struct TeacherController : RouteCollection {
         var youtubeLink: String?;
     }
 
+    struct MeetingInfo : Content {
+        var date: Date;
+        var numberOfStudentsCheckedIn: Int;
+    }
+
     func fetchClub(_ req: Request) async throws -> FullClubInfo {
         guard let id = req.parameters.get("id", as: Int.self) else {
             throw Abort(.badRequest)
         }
 
-        let club = try await Club.query(on: req.db)
-          .filter(\.$id == id)
+        guard let user = req.auth.get(User.self) else {
+            throw Abort(.unauthorized);
+        }
+          
+        let clubOpt = try await ClubSponsorUser.query(on: req.db)
+          .with(\.$user)
+          .with(\.$club)
+          .filter(\.$user.$id == user.id!)
+          .filter(\.$club.$id == id)
           .first()
-          .map { club in
-              FullClubInfo.init(name: club.name, description: club.description, meetingTimes: club.meetingTimes, locationName: club.locationName, websiteLink: club.websiteLink, instagramLink: club.instagramLink, twitterLink: club.twitterLink, youtubeLink: club.youtubeLink)
+          .map { cS in // clubSponsor
+              FullClubInfo.init(
+                name: cS.club.name, description: cS.club.description,
+                studentsFollowing: 100, meetings: [],
+                meetingTimes: cS.club.meetingTimes, locationName: cS.club.locationName,
+                websiteLink: cS.club.websiteLink, instagramLink: cS.club.instagramLink,
+                twitterLink: cS.club.twitterLink, youtubeLink: cS.club.youtubeLink
+              )
           };
 
-        guard let clubUnwrapped = club else {
-            throw Abort(.badRequest, reason: "Club not found");
+        guard let club = clubOpt else {
+            throw Abort(.badRequest, reason: "No club or unauthorized");
         }
 
-        return clubUnwrapped; 
+        return club;
     }
     
 }

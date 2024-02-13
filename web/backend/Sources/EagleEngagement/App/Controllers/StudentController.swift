@@ -220,6 +220,5 @@ struct StudentController : RouteCollection {
         }
 
         return clubUnwrapped; 
-    }
-    
+    }    
 }
