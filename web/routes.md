@@ -60,12 +60,23 @@ Returns: [{id: INT, name: String, eventType: String, locationName: String, point
 ```
 Note: will not return events that have already passed.
 
-<!-- ```
-POST /api/event
-id: INT
+ ```
+POST /api/event/:id
 
 Returns: {id: INT, name: String, eventType: String, locationName: String, address: String, pointsWorth: INT, startDate: Date, endDate: Date}
-``` -->
+```
+
+```
+POST /api/clubs
+
+Returns: [{id: INT, name: String, descritpion: String}]
+```
+
+```
+POST /api/club/:id
+
+Returns { name: String, description: String, meetingTimes: String?, locationName: String?, websiteLink: String?, instagramLink: String?, twitterLink: String?, youtubeLink: String? }
+```
 
 ## Web
 
