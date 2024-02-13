@@ -10,13 +10,13 @@ final public class ClubSponsorUser: Model, Content {
     @ID(key: .id)
     public var id: UUID?
     
-    // Email associated with the User account
-    @Field(key: "userID")
-    public var userID: Int
+    // UserID of the sponsor
+    @Parent(key: "userID")
+    public var user: User
 
-    // Name of the User
-    @Field(key: "clubID")
-    public var clubID: Int
+    // ClubID of the club
+    @Parent(key: "clubID")
+    public var club: Club
 
     // Creates a new, empty ClubSponsorUser.
     public init() { }

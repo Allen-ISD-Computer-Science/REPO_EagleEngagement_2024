@@ -149,6 +149,7 @@ struct StudentController : RouteCollection {
     struct FullEventInfo : Content {
         var id: Int;
         var name: String;
+        var description: String;
         var eventType: String;
         var locationName: String;
         var address: String;
@@ -171,8 +172,7 @@ struct StudentController : RouteCollection {
         }
         
         let both = try event.joined(Location.self);
-        return FullEventInfo.init(id: event.id!, name: event.name, eventType: event.eventType, locationName: both.locationName, address: both.address, pointsWorth: event.pointsWorth, startDate: event.startDate, endDate: event.endDate)
-        
+        return FullEventInfo.init(id: event.id!, name: event.name, description: event.description, eventType: event.eventType, locationName: both.locationName, address: both.address, pointsWorth: event.pointsWorth, startDate: event.startDate, endDate: event.endDate)
     }
 
     struct ClubInfo : Content {
@@ -221,6 +221,5 @@ struct StudentController : RouteCollection {
 
         return clubUnwrapped; 
     }
-
     
 }
