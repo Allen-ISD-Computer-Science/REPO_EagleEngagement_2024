@@ -26,6 +26,8 @@ struct StudentController : RouteCollection {
         protectedRoutes.post("profile", use: fetchProfile);
         protectedRoutes.post("events", use: fetchEvents);
         protectedRoutes.post("event", ":id", use: fetchEvent);
+        protectedRoutes.post("clubs", use: fetchClubs);
+        protectedRoutes.post("club", ":id", use: fetchClub);
     }
 
     func login(_ req: Request) async throws -> Msg {
@@ -171,6 +173,53 @@ struct StudentController : RouteCollection {
         let both = try event.joined(Location.self);
         return FullEventInfo.init(id: event.id!, name: event.name, eventType: event.eventType, locationName: both.locationName, address: both.address, pointsWorth: event.pointsWorth, startDate: event.startDate, endDate: event.endDate)
         
+    }
+
+    struct ClubInfo : Content {
+        var id: Int;
+        var name: String;
+        var descritpion: String;
+        // todo: revisit        var categories: [String];
+    }
+
+    func fetchClubs(_ req: Request) async throws -> [ClubInfo] {
+        let clubs = try await Club.query(on: req.db)
+          .all()
+          .map { club in
+              ClubInfo.init(id: club.id!, name: club.name, descritpion: club.description)
+          };
+
+        return clubs;
+    }
+
+    struct FullClubInfo : Content {
+        var name: String;
+        var description: String;
+        var meetingTimes: String?;
+        var locationName: String?;
+        var websiteLink: String?;
+        var instagramLink: String?;
+        var twitterLink: String?;
+        var youtubeLink: String?;
+    }
+
+    func fetchClub(_ req: Request) async throws -> FullClubInfo {
+        guard let id = req.parameters.get("id", as: Int.self) else {
+            throw Abort(.badRequest)
+        }
+
+        let club = try await Club.query(on: req.db)
+          .filter(\.$id == id)
+          .first()
+          .map { club in
+              FullClubInfo.init(name: club.name, description: club.description, meetingTimes: club.meetingTimes, locationName: club.locationName, websiteLink: club.websiteLink, instagramLink: club.instagramLink, twitterLink: club.twitterLink, youtubeLink: club.youtubeLink)
+          };
+
+        guard let clubUnwrapped = club else {
+            throw Abort(.badRequest, reason: "Club not found");
+        }
+
+        return clubUnwrapped; 
     }
 
     
