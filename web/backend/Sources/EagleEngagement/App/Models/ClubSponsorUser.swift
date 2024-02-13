@@ -19,5 +19,10 @@ final public class ClubSponsorUser: Model, Content {
     public var club: Club
 
     // Creates a new, empty ClubSponsorUser.
-    public init() { }
+    public init() {}
+
+    public init(user: User, club: Club) {
+        self.$user.id = user.id!;
+        self.$club.id = club.id!;
+    }
 }

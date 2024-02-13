@@ -57,4 +57,15 @@ final public class Club: Model, Content {
     
     // Creates a new, empty Club
     public init() { }
+
+    public init(name: String, description: String, meetingTimes: String?, locationName: String?, websiteLink: String?, instagramLink: String?, twitterLink: String?, youtubeLink: String?) {
+        self.name = name;
+        self.description = description;
+        self.meetingTimes = meetingTimes;
+        self.locationName = locationName;
+        self.websiteLink = websiteLink;
+        self.instagramLink = instagramLink;
+        self.twitterLink = twitterLink;
+        self.youtubeLink = youtubeLink;
+    }
 }
