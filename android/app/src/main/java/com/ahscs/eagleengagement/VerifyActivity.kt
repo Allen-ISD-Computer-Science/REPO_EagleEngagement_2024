@@ -57,6 +57,7 @@ class VerifyActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext, "Account Created!", Toast.LENGTH_SHORT).show()
                     try {
                         val jwt = response.body()!!.msg
+
                         if(!filesDir.exists()) filesDir.mkdir()
                         val jwt_file = getString(R.string.jwt_storage_file_name)
                         val fosSaved: FileOutputStream = openFileOutput(jwt_file, Context.MODE_PRIVATE)

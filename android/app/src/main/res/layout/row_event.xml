@@ -2,20 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="https://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout android:gravity="start" android:id="@+id/linearEvent"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_marginBottom="20dp"
         android:orientation="vertical" style="@style/groupStyleindigo_1">
         <FrameLayout android:id="@+id/frameStackeventthumbmail"
-            android:layout_height="@dimen/_226pxv" android:layout_width="wrap_content">
+            android:layout_height="@dimen/_226pxv" android:layout_width="match_parent">
 
             <ImageView
                 android:id="@+id/imageEventThumbmail"
-                cornerRadius="@{@dimen/_30pxh}"
-                imageRes="@{@drawable/img_eventthumbmail_226x306}"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_226pxh"
                 android:layout_gravity="start"
@@ -40,12 +39,17 @@
                     android:paddingVertical="@dimen/_12pxv"
                     android:scaleType="fitCenter"
                     android:src="@drawable/img_vector_white_a700_74x74" tools:ignore="ContentDescription"/>
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1">
+                </Space>
                 <TextView android:ellipsize="end"
-                    android:id="@+id/txtPointsIcon"
+                    android:id="@+id/txtPoints"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/_38pxv"
-                    android:layout_marginStart="@dimen/_168pxh"
-                    android:layout_weight="0.35"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginStart="0dp"
                     android:layout_width="wrap_content"
                     android:paddingBottom="@dimen/_3pxv"
                     android:paddingEnd="@dimen/_4pxh"
@@ -81,7 +85,7 @@
                 android:layout_marginTop="@dimen/_2pxv"
                 android:layout_width="match_parent" android:orientation="horizontal">
                 <TextView android:ellipsize="end"
-                    android:id="@+id/txtTime"
+                    android:id="@+id/txtDate"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/_1pxv"
                     android:layout_marginTop="@dimen/_1pxv"
@@ -96,7 +100,7 @@
                     android:layout_marginStart="@dimen/_9pxh"
                     android:layout_weight="0.01" android:layout_width="0dp"/>
                 <TextView android:ellipsize="end"
-                    android:id="@+id/txtEventDetailsOne"
+                    android:id="@+id/txtLocation"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_20pxh"
                     android:layout_marginTop="@dimen/_1pxv"

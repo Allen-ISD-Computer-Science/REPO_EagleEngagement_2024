@@ -5,8 +5,11 @@ import com.ahscs.eagleengagement.datamodels.AuthDataModel.LoginDataModel
 import com.ahscs.eagleengagement.datamodels.DataModel
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface RetrofitAPI {
     @POST("login")
@@ -20,4 +23,10 @@ interface RetrofitAPI {
 
     @POST("verify")
     fun postVerify(@Body dataModel: AuthDataModel.VerifyDataModel?) : Call<AuthDataModel.response>
+
+    @POST("events")
+    fun postEvents(@Header("Authorization") authToken: String): Call<MutableList<DataModel.EventResponse>>
+
+    @POST("event/{id}")
+    fun postEventContent(@Header ("Authorization") authToken: String, @Path("id") eventId: String): Call<DataModel.EventContentResponse>
 }

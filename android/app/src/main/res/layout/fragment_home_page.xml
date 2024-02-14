@@ -79,15 +79,13 @@
             </androidx.appcompat.widget.Toolbar>
             <androidx.recyclerview.widget.RecyclerView
                 android:gravity="center_horizontal"
-                android:id="@+id/recyclerHomePage"
+                android:id="@+id/eventRecycler"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_9pxh"
-                android:layout_marginStart="@dimen/_8pxh"
-                android:layout_marginTop="@dimen/_12pxv"
+                android:layout_marginEnd="0dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
-                android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                itemSpace="@{@dimen/_17pxh}" tools:itemCount="2" tools:listitem="@layout/row_event"/>
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

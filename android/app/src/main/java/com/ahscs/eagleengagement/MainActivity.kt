@@ -28,6 +28,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        var jwt: String? = null
+
         if(!filesDir.exists()) filesDir.mkdir()
         val jwt_file = getString(R.string.jwt_storage_file_name)
         if(!File(filesDir, jwt_file).exists()) {
@@ -41,14 +43,19 @@ class MainActivity : AppCompatActivity() {
 //                    }else{
 //                        println("more or less lines")
 //                    }
-                    setPoints(line.readText())
+                    jwt = line.readText()
+                    setPoints(jwt!!)
                 } catch (e: Exception) {
                     println("exception ${e.message}")
                 }
             }
         }
 
-        val eventsList = EventsFragment()
+        if (jwt == null) {
+            throw Exception("JWT is null!")
+        }
+
+        val eventsList = EventsFragment(jwt!!)
         val clubsList = ClubsFragment()
         val rewardsList = RewardsFragment()
 
@@ -63,6 +70,7 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+
     }
 
     private fun setPoints(jwt: String) {

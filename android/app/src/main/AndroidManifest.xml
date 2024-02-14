@@ -15,6 +15,9 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".EventActivity"
+            android:exported="false" />
+        <activity
             android:name=".VerifyActivity"
             android:exported="false" />
         <activity
