@@ -55,18 +55,26 @@ class EventActivity : AppCompatActivity() {
                         var address : TextView = findViewById(R.id.txtAddress)
                         address.text = data.locationName + "\n" + data.address
 
-                        val timeFormat1 = SimpleDateFormat("EEE h:mma - ")
+                        val dayFormat = SimpleDateFormat("EEEE")
+                        val day : TextView = findViewById(R.id.txtDay)
+                        day.text = dayFormat.format(data.startDate)
+
+                        val timeFormat1 = SimpleDateFormat("h:mma - ")
                         val timeFormat2 = SimpleDateFormat("h:mma")
                         val timeString = timeFormat1.format(data.startDate) + timeFormat2.format(data.endDate)
                         var time : TextView = findViewById(R.id.txtTime)
                         time.text = timeString
 
-                        val dateFormat = SimpleDateFormat("d MMM")
+                        val dateFormat = SimpleDateFormat("d")
                         var date : TextView = findViewById(R.id.txtDate)
                         date.text = dateFormat.format(data.startDate)
 
-//                        var description : TextView = findViewById(R.id.txtDescription)
-//                        description.text = data.name
+                        val monthFormat = SimpleDateFormat("MMM")
+                        val month : TextView = findViewById(R.id.txtMonth)
+                        month.text = monthFormat.format(data.startDate)
+
+                        var description : TextView = findViewById(R.id.txtDescription)
+                        description.text = data.description
                     } catch (e : Exception) {
                         println("Error getting events")
                     }

@@ -24,6 +24,7 @@ sealed class DataModel {
     data class EventContentResponse(
         var id: Int,
         var name: String,
+        var description: String,
         var eventType: String,
         var locationName: String,
         var address: String,
