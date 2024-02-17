@@ -67,7 +67,8 @@ struct TeacherSignUp {
             let firstName: String?
             let lastName: String?
             let PUBLIC_URL: String
-            let verificationCode: String 
+            let verificationCode: String
+            let name: String
         }
 
         let PUBLIC_URL: String;
@@ -86,7 +87,8 @@ struct TeacherSignUp {
             return TokenURLEmailWrapper(firstName: contact.firstName,
                                         lastName: contact.lastName,
                                         PUBLIC_URL: self.PUBLIC_URL,
-                                        verificationCode: self.token
+                                        verificationCode: self.token,
+                                        name: "\(contact.firstName!) \(contact.lastName!)"
             )
         }
     }
