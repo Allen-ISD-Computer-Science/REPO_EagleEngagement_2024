@@ -1,6 +1,7 @@
 package com.ahscs.eagleengagement
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -16,6 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.text.SimpleDateFormat
 
 class EventActivity : AppCompatActivity() {
+    var eventAddress : String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_event_page)
@@ -54,6 +56,7 @@ class EventActivity : AppCompatActivity() {
 
                         var address : TextView = findViewById(R.id.txtAddress)
                         address.text = data.locationName + "\n" + data.address
+                        eventAddress = data.address
 
                         val dayFormat = SimpleDateFormat("EEEE")
                         val day : TextView = findViewById(R.id.txtDay)
@@ -95,6 +98,14 @@ class EventActivity : AppCompatActivity() {
         val backBtn = findViewById<ImageView>(R.id.eventBackBtn)
         backBtn.setOnClickListener {
             finish()
+        }
+
+        val directionsBtn = findViewById<ImageView>(R.id.btnDirections)
+        directionsBtn.setOnClickListener {
+            val map = "https://maps.google.com/maps?q=$eventAddress"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(map))
+            intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity")
+            startActivity(intent)
         }
     }
 }

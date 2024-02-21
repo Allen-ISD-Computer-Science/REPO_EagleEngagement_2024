@@ -18,12 +18,15 @@
             <FrameLayout android:id="@+id/frameStackeventthumbmail"
                 android:layout_height="@dimen/_186pxv" android:layout_width="match_parent">
                 <ImageView android:id="@+id/imageEventThumbmail"
-                    android:layout_gravity="start"
-                    android:layout_height="@dimen/_186pxh"
+                    android:layout_gravity="center"
+                    android:layout_height="match_parent"
                     android:layout_width="match_parent"
+                    android:layout_marginEnd="-10dp"
+                    android:layout_marginStart="-10dp"
+                    android:layout_marginTop="-10dp"
+                    android:layout_marginBottom="-10dp"
                     android:scaleType="fitXY"
-                    imageRes="@{@drawable/img_eventthumbmail}"
-                    tools:ignore="ContentDescription" tools:src="@drawable/img_eventthumbmail"/>
+                    tools:ignore="ContentDescription" android:src="@drawable/img_eventthumbmail"/>
                 <LinearLayout android:id="@+id/linearColumnarrowleft"
                     android:layout_gravity="top|center"
                     android:layout_height="wrap_content"
@@ -77,12 +80,12 @@
                         android:layout_width="match_parent"
                         android:singleLine="true"
                         android:text=""
-                        style="@style/txt" tools:text="hi"/>
+                        style="@style/txt" tools:text=""/>
                 </LinearLayout>
             </FrameLayout>
             <View android:background="@color/white_A700"
                 android:id="@+id/lineLineOne"
-                android:layout_height="@dimen/_1pxv" android:layout_width="@dimen/_360pxh"/>
+                android:layout_height="@dimen/_1pxv" android:layout_width="match_parent"/>
             <LinearLayout android:gravity="start"
                 android:id="@+id/linearRow1dec"
                 android:layout_height="wrap_content"
@@ -204,7 +207,7 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/imageArrowleftOne"
+                    android:id="@+id/btnDirections"
                     android:layout_width="@dimen/_38pxh"
                     android:layout_height="@dimen/_38pxh"
                     android:scaleType="fitXY"

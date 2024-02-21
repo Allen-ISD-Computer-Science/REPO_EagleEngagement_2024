@@ -90,7 +90,9 @@ class EventsFragment(jwt: String) : Fragment() {
     private fun configureBtns(view: View) {
         val profileBtn = view.findViewById<ImageView>(R.id.eventProfileBtn)
         profileBtn.setOnClickListener {
-            activity?.startActivity(Intent(activity, ProfileActivity::class.java))
+            val intent = Intent(activity, ProfileActivity::class.java)
+            intent.putExtra("jwt", jwt)
+            activity?.startActivity(intent)
         }
 
         val requestBtn = view.findViewById<LinearLayout>(R.id.eventRequestBtn)

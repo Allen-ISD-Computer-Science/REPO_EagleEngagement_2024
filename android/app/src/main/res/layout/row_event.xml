@@ -20,7 +20,7 @@
                 android:layout_gravity="start"
                 android:scaleType="fitXY"
                 tools:ignore="ContentDescription"
-                tools:src="@drawable/img_eventthumbmail_226x306" />
+                android:src="@drawable/img_eventthumbmail_226x306" />
             <LinearLayout android:id="@+id/linearRowvector"
                 android:layout_gravity="top"
                 android:layout_height="wrap_content"
