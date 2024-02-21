@@ -56,7 +56,7 @@ Returns: {name: String, studentID: Int, points: Int, grade: Int, house: Int} - I
 ```
 POST /api/events
 
-Returns: [{id: INT, name: String, eventType: String, locationName: String, pointsWorth: INT, startDate: Date, endDate: Date}]
+Returns: [{id: INT, name: String, description: String, eventType: String, locationName: String, pointsWorth: INT, startDate: Date, endDate: Date}]
 ```
 Note: will not return events that have already passed.
 

@@ -157,6 +157,6 @@ struct TeacherController : RouteCollection {
         try await club.save(on: req.db);
 
         return Msg(success: true, msg: "Updated Club");
-    }    
+    }
     
 }
