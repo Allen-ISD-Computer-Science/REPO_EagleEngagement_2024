@@ -3,10 +3,28 @@ import * as React from "react";
 import { List, ListItemButton, ListItemIcon, ListItemText } from "@mui/material"
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars, faPlus, faUsers } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faPlus, faSliders, faUsers } from '@fortawesome/free-solid-svg-icons'
 
 function TeacherNav(props) {
   const [isHidden, setIsHidden] = React.useState(true);
+  const [isAdmin, setIsAdmin] = React.useState(false);
+
+  React.useEffect(() => {
+    function setAdmin() {
+      setIsAdmin(window.sessionStorage.getItem("isAdmin"));
+    }
+
+    if (window.sessionStorage.getItem("isAdmin") === null) {
+      fetch(`${process.env.PUBLIC_URL}/isAdmin`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json"
+        }
+      }).then(res => res.json()).then(json => {
+        window.sessionStorage.setItem("isAdmin", json.value);
+      }).catch(err => console.error(err));
+    } else setAdmin();
+  }, []);
 
   return (
     <div>
@@ -16,7 +34,7 @@ function TeacherNav(props) {
       >
         <FontAwesomeIcon icon={faBars} size="2xl" />
       </button>
-      <nav className={`h-full items-stretch bg-blue-950 flex max-w-[400px] z-40 w-full flex-col pb-12 ${isHidden ? "max-md:hidden" : "max-md:sticky"} max-md:w-[100vw] max-md:absolute max-md:max-w-full`}>
+      <nav className={`h-full items-stretch bg-blue-950 flex max-w-[400px] z-40 w-full flex-col pb-4 ${isHidden ? "max-md:hidden" : "max-md:sticky"} max-md:w-[100vw] max-md:absolute max-md:max-w-full`}>
         <img
           loading="lazy"
           srcSet={process.env.PUBLIC_URL + "/assets/images/logo.png"}
@@ -38,6 +56,17 @@ function TeacherNav(props) {
             <ListItemText primary="Event Request" />
           </ListItemButton>
         </List>
+        {isAdmin ?
+          <List className="!mt-auto [&_a]:mb-4 [&_span]:text-2xl [&_span]:text-center [&_*]:!text-white [&_*]:!font-semibold">
+            <ListItemButton component="a" href={process.env.PUBLIC_URL + "/admin/users"}>
+              <ListItemIcon className="flex-col items-center">
+                <FontAwesomeIcon icon={faSliders} size="2xl" />
+              </ListItemIcon>
+              <ListItemText primary="Admin" />
+            </ListItemButton>
+          </List>
+          : null
+        }
       </nav>
     </div>
   );

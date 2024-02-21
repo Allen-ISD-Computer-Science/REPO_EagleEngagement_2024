@@ -1,12 +1,14 @@
 import * as React from "react";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEye, faLink } from '@fortawesome/free-solid-svg-icons'
+import { faEdit, faEye, faLink } from '@fortawesome/free-solid-svg-icons'
 import { faInstagram, faXTwitter, faYoutube } from "@fortawesome/free-brands-svg-icons"
 
 import TeacherNav from "../../components/TeacherNav";
+import { Button } from "@mui/material";
 
 function ClubPage(props) {
+  const [clubID, setClubID] = React.useState(-1);
   const [clubObj, setClubObj] = React.useState({
     id: 1,
     name: "Allen Eagle Robotics",
@@ -23,11 +25,12 @@ function ClubPage(props) {
   });
 
   React.useEffect(() => {
-    const clubID = parseInt(window.location.pathname.split("/").pop());
-    if (isNaN(clubID)) throw new Error("Invalid club ID.");
+    const parsedClubID = parseInt(window.location.pathname.split("/").pop());
+    setClubID(parsedClubID);
+    if (isNaN(parsedClubID)) throw new Error("Invalid club ID.");
 
     const getClub = async () => {
-	const res = await fetch("./api/club/" + clubID);
+	const res = await fetch("./api/club/" + parsedClubID);
 	const json = await res.json();
 	if (!json.name) throw new Error("Invalid club?");
 	return json;
@@ -65,7 +68,15 @@ function ClubPage(props) {
               />
               <span className="text-xl">{clubObj.following + " Students Following"}</span>
             </div>
-            <div className="flex flex-col leading-10">
+            <div className="flex flex-col leading-10 relative">    
+              <Button
+                type="a"
+                href={`${process.env.PUBLIC_URL}/club/edit/${clubID}`}
+                className="!absolute top-0 right-0 !text-black"
+              >
+                <FontAwesomeIcon icon={faEdit} size="2xl" />
+              </Button>
+
               <span className="text-4xl font-bold my-6 max-md:text-2xl">{clubObj.name}</span>
               <span className="text-2xl min-h-[96px] pr-10 max-md:text-xl max-md:pr-4">{clubObj.description}</span>
               <div className="flex flex-row gap-5 text-xl max-md:text-l max-md:flex-col">

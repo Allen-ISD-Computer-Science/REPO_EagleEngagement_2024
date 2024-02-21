@@ -12,11 +12,15 @@ function NewEditEventPage(props) {
   const [title, setTitle] = React.useState("New Event");
 
   const [eventInfo, setEventInfo] = React.useState({
-    name: "B.E.S.T. Robotics State Competition", description: "Come visit for the B.E.S.T. Robotics Competition!", eventType: "Robotics", locationName: "Allen Stadium", locationID: 0, startDate: "9/1/2021", pointsWorth: 3, checkinType: "manual"
+    // name: "B.E.S.T. Robotics State Competition", description: "Come visit for the B.E.S.T. Robotics Competition!", eventType: "Robotics", locationName: "Allen Stadium", locationID: 0, startDate: "9/1/2021", pointsWorth: 3, checkinType: "manual"
   });
 
   const [eventTypes, setEventTypes] = React.useState([
     "Football", "Soccer", "Robotics"
+  ]);
+
+  const [locations, setLocations] = React.useState([
+    // { id: 1, name: "AHS PAC" }
   ]);
 
   const [requests, setRequests] = React.useState(0);
@@ -26,6 +30,19 @@ function NewEditEventPage(props) {
       const res = await fetch(`${process.env.PUBLIC_URL}/admin/api/eventTypes`, { headers: { Accept: "application/json" }, method: "POST" });
       return await res.json();
     }
+
+    const getLocations = async () => {
+      const res = await fetch(`${process.env.PUBLIC_URL}/admin/api/locations`, { headers: { Accept: "application/json" }, method: "POST" });
+      return await res.json();
+    }
+
+    setRequests((prev) => prev + 1);
+    getLocations().then((locations) => {
+      setLocations(locations.sort((a, b) => a.name.toUpperCase() - b.name.toUpperCase()));
+      setRequests((prev) => prev - 1);
+    }).catch((err) => {
+      setRequests((prev) => prev - 1);
+    })
 
     setRequests((prev) => prev + 1);
     getEventTypes().then((types) => {
@@ -261,9 +278,9 @@ function NewEditEventPage(props) {
                 })
               }}
             >
-              <MenuItem value="0">Allen Stadium</MenuItem>
-              <MenuItem value="1">AHS PAC</MenuItem>
-              <MenuItem value="2">Plano</MenuItem>
+              {
+                locations?.map(loc => <MenuItem value={loc.id}>{loc.name}</MenuItem>)
+              }
             </Select>
 
             <label className="block text-gray-700 text-sm font-bold mb-2 mt-4" htmlFor="checkInType">

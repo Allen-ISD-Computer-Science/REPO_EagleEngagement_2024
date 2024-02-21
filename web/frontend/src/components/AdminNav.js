@@ -5,7 +5,7 @@ import { Collapse, List, ListItemButton, ListItemIcon, ListItemText } from "@mui
 import { useCookies } from 'react-cookie';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCalendar, faCaretDown, faCaretUp, faImage, faLocationDot, faPlus, faQuestion, faUsers, faBars } from '@fortawesome/free-solid-svg-icons'
+import { faCalendar, faCaretDown, faCaretUp, faImage, faLocationDot, faPlus, faQuestion, faUsers, faBars, faSliders } from '@fortawesome/free-solid-svg-icons'
 
 function AdminNav(props) {
   const [isHidden, setIsHidden] = React.useState(true);
@@ -36,14 +36,19 @@ function AdminNav(props) {
         <List className="[&_a]:mb-4 [&_span]:text-2xl [&_span]:text-center [&_*]:!text-white [&_*]:!font-semibold">
           <ListItemButton component="a" onClick={handleOpenManage}>
             <ListItemIcon className="flex-col items-center">
-              <FontAwesomeIcon icon={faUsers} size="2xl" />
+              <FontAwesomeIcon icon={faSliders} size="2xl" />
             </ListItemIcon>
             <ListItemText primary="Manage" />
             { openCollapse ? <FontAwesomeIcon icon={faCaretUp} size="2xl" /> : <FontAwesomeIcon icon={faCaretDown} size="2xl" /> }
           </ListItemButton>
           <Collapse in={openCollapse} timeout="auto" className="ml-8" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItemButton component="a" href={process.env.PUBLIC_URL + "/admin/event-requests"} selected={props.selected === "event-requests"}>
+              <ListItemButton component="a" href={process.env.PUBLIC_URL + "/admin/users"} selected={props.selected === "users"}>
+                <ListItemIcon className="flex-col items-center">
+                  <FontAwesomeIcon icon={faUsers} size="2xl" />
+                </ListItemIcon>
+                <ListItemText primary="Users" />
+              </ListItemButton>              <ListItemButton component="a" href={process.env.PUBLIC_URL + "/admin/event-requests"} selected={props.selected === "event-requests"}>
                 <ListItemIcon className="flex-col items-center">
                   <FontAwesomeIcon icon={faPlus} size="2xl" />
                 </ListItemIcon>
