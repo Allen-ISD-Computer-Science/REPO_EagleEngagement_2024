@@ -96,7 +96,7 @@
                                 android:layout_marginBottom="@dimen/_12pxv"
                                 android:ellipsize="end"
                                 android:gravity="center_horizontal"
-                                android:inputType="text"
+                                android:inputType="textEmailAddress"
                                 tools:ignore="SpeakableTextPresentCheck" />
                         </LinearLayout>
                     </LinearLayout>
@@ -152,7 +152,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/txtSignUp"
+                android:id="@+id/txtCreateAcct"
                 style="@style/txtKhulaextrabold14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

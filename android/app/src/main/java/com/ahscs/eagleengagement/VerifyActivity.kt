@@ -16,30 +16,28 @@ import android.widget.*
 import java.io.File
 import java.io.FileOutputStream
 
-class LoginActivity : AppCompatActivity() {
+class VerifyActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.activity_account_verify)
 
-        configureBtns()
-    }
-
-    private fun configureBtns() {
-        val createAcctBtn = findViewById<TextView>(R.id.txtCreateAcct)
-        createAcctBtn.setOnClickListener {
-            startActivity(Intent(this, VerifyActivity::class.java))
-        }
-
-        val loginButton = findViewById<Button>(R.id.buttonLogin)
-        loginButton.setOnClickListener {
-            val email = findViewById<EditText>(R.id.inputLoginEmail).text.toString()
-            val password = findViewById<EditText>(R.id.inputLoginPassword).text.toString()
-            var encodedPassword = Base64.encodeToString(password.toByteArray(), Base64.NO_WRAP)
-            postDataUsingRetrofit(email, encodedPassword)
+        val createButton = findViewById<Button>(R.id.buttonCreateAcct)
+        createButton.setOnClickListener {
+            val email = findViewById<EditText>(R.id.inputVerifyEmail).text.toString()
+            val token = findViewById<EditText>(R.id.inputVerifyCode).text.toString()
+            val password = findViewById<EditText>(R.id.inputVerifyPassword).text.toString()
+            val passwordConfirm = findViewById<EditText>(R.id.inputVerifyConfirmPassword).text.toString()
+            if (password == passwordConfirm) {
+                var encodedPassword1 = Base64.encodeToString(password.toByteArray(), Base64.NO_WRAP)
+                var encodedPassword2 = Base64.encodeToString(passwordConfirm.toByteArray(), Base64.NO_WRAP)
+                postDataUsingRetrofit(email, token, encodedPassword1, encodedPassword2)
+            } else {
+                Toast.makeText(applicationContext, "Passwords must match!", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
-    private fun postDataUsingRetrofit(email: String, password: String) {
+    private fun postDataUsingRetrofit(email: String, token: String, password: String, confirmPassword: String) {
         var url = resources.getString(R.string.api_link)
         val retrofit = Retrofit.Builder()
             .baseUrl(url)
@@ -47,8 +45,8 @@ class LoginActivity : AppCompatActivity() {
             .build()
 
         val retrofitAPI = retrofit.create(RetrofitAPI::class.java)
-        val dataModel = AuthDataModel.LoginDataModel(email.lowercase(), password)
-        val call: Call<AuthDataModel.response> = retrofitAPI.postLogin(dataModel)
+        val dataModel = AuthDataModel.VerifyDataModel(email.lowercase(), token, password, confirmPassword)
+        val call: Call<AuthDataModel.response> = retrofitAPI.postVerify(dataModel)
         call!!.enqueue(object: Callback<AuthDataModel.response?> {
             override fun onResponse(
                 call: Call<AuthDataModel.response?>?,
@@ -56,23 +54,28 @@ class LoginActivity : AppCompatActivity() {
             ) {
 
                 if (response.isSuccessful) {
-                    Toast.makeText(applicationContext, "Successfully logged in!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "Account Created!", Toast.LENGTH_SHORT).show()
                     try {
                         val jwt = response.body()!!.msg
+
                         if(!filesDir.exists()) filesDir.mkdir()
                         val jwt_file = getString(R.string.jwt_storage_file_name)
                         val fosSaved: FileOutputStream = openFileOutput(jwt_file, Context.MODE_PRIVATE)
                         fosSaved.write(jwt.toByteArray())
                         fosSaved.close()
                     } catch (e : Exception) {
-                        Toast.makeText(applicationContext, "An error occurred while logging you in, try again later!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, "An error occurred while verifying, try again later!", Toast.LENGTH_SHORT).show()
                     }
 
                     startActivity(Intent(applicationContext, MainActivity::class.java))
                     finish()
                 }else{
-                    println(response.raw().toString())
-                    Toast.makeText(applicationContext, "Invalid login credentials!", Toast.LENGTH_SHORT).show()
+                    println(response.body().toString())
+                    if (response.code().toString() == "400") {
+                        Toast.makeText(applicationContext, "Invalid code or email!", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(applicationContext, "Invalid!", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    tools:context=".SignUpActivity"
+    tools:context=".VerifyActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
@@ -46,7 +46,7 @@
                         android:layout_gravity="start">
 
                         <TextView
-                            android:id="@+id/txtSignUp"
+                            android:id="@+id/txtAcctVerify"
                             style="@style/txt_1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -58,8 +58,8 @@
                             android:ellipsize="end"
                             android:gravity="top|center"
                             android:singleLine="true"
-                            android:text="@string/lbl_sign_up"
-                            tools:text="@string/lbl_sign_up" />
+                            android:text="@string/lbl_account_verification"
+                            tools:text="@string/lbl_account_verification" />
 
 
                         <ImageView
@@ -90,7 +90,7 @@
                 android:layout_marginBottom="0dp"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/txtFirstName"
+                    android:id="@+id/txtEmail"
                     style="@style/txtKhulaextrabold16_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -100,11 +100,11 @@
                     android:layout_marginEnd="@dimen/_56pxh"
                     android:ellipsize="end"
                     android:singleLine="true"
-                    android:text="@string/lbl_first_name"
-                    tools:text="@string/lbl_first_name" />
+                    android:text="@string/lbl_email"
+                    tools:text="@string/lbl_email" />
 
                 <LinearLayout
-                    android:id="@+id/linearColumnFirstname"
+                    android:id="@+id/linearColumnEmail"
                     style="@style/groupStyleindigo_700cornerRadius"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -114,106 +114,7 @@
                     android:orientation="vertical">
 
                     <EditText
-                        android:id="@+id/inputFirstName"
-                        style="@style/txtKhulaextrabold24_1"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/_50pxh"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginEnd="@dimen/_50pxh"
-                        android:layout_marginBottom="2dp"
-                        android:ellipsize="end"
-                        android:gravity="center_horizontal"
-                        android:inputType="text"
-                        tools:ignore="SpeakableTextPresentCheck" />
-                </LinearLayout>
-
-                <TextView android:ellipsize="end"
-                    android:id="@+id/txtLastName"
-                    android:layout_gravity="start"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="40dp"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_width="wrap_content"
-                    android:singleLine="true"
-                    android:text="@string/lbl_last_name"
-                    style="@style/txtKhulaextrabold16_2" tools:text="@string/lbl_last_name"/>
-                <LinearLayout android:gravity="center_horizontal"
-                    android:id="@+id/linearColumnLastname"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="40dp"
-                    android:layout_marginStart="40dp"
-                    android:layout_width="match_parent"
-                    android:orientation="vertical" style="@style/groupStyleindigo_700cornerRadius">
-                    <EditText
-                        android:id="@+id/inputLastName"
-                        style="@style/txtKhulaextrabold24_1"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/_50pxh"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginEnd="@dimen/_50pxh"
-                        android:layout_marginBottom="2dp"
-                        android:ellipsize="end"
-                        android:gravity="center_horizontal"
-                        android:inputType="text"
-                        tools:ignore="SpeakableTextPresentCheck" />
-                </LinearLayout>
-
-                <TextView android:ellipsize="end"
-                    android:id="@+id/txtStudentID"
-                    android:layout_gravity="start"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="40dp"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_width="wrap_content"
-                    android:singleLine="true"
-                    android:text="@string/lbl_student_id"
-                    style="@style/txtKhulaextrabold16_2" tools:text="@string/lbl_student_id"/>
-                <LinearLayout android:gravity="center_horizontal"
-                    android:id="@+id/linearColumnStudentID"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="40dp"
-                    android:layout_marginStart="40dp"
-                    android:layout_width="match_parent"
-                    android:orientation="vertical" style="@style/groupStyleindigo_700cornerRadius">
-                    <EditText
-                        android:id="@+id/inputStudentID"
-                        style="@style/txtKhulaextrabold24_1"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/_50pxh"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginEnd="@dimen/_50pxh"
-                        android:layout_marginBottom="2dp"
-                        android:ellipsize="end"
-                        android:gravity="center_horizontal"
-                        android:inputType="number"
-                        tools:ignore="SpeakableTextPresentCheck" />
-                </LinearLayout>
-
-                <TextView android:ellipsize="end"
-                    android:id="@+id/txtEmail"
-                    android:layout_gravity="start"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="40dp"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_width="wrap_content"
-                    android:singleLine="true"
-                    android:text="@string/lbl_email"
-                    style="@style/txtKhulaextrabold16_2" tools:text="@string/lbl_email"/>
-                <LinearLayout android:gravity="center_horizontal"
-                    android:id="@+id/linearColumnEmail"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="40dp"
-                    android:layout_marginStart="40dp"
-                    android:layout_width="match_parent"
-                    android:orientation="vertical" style="@style/groupStyleindigo_700cornerRadius">
-                    <EditText
-                        android:id="@+id/inputSignUpEmail"
+                        android:id="@+id/inputVerifyEmail"
                         style="@style/txtKhulaextrabold24_1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -227,11 +128,111 @@
                         tools:ignore="SpeakableTextPresentCheck" />
                 </LinearLayout>
 
+                <TextView android:ellipsize="end"
+                    android:id="@+id/txtToken"
+                    android:layout_gravity="start"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="@string/lbl_verification_code"
+                    style="@style/txtKhulaextrabold16_2" tools:text="@string/lbl_verification_code"/>
+                <LinearLayout android:gravity="center_horizontal"
+                    android:id="@+id/linearColumnVerifyCode"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical" style="@style/groupStyleindigo_700cornerRadius">
+
+                    <EditText
+                        android:id="@+id/inputVerifyCode"
+                        style="@style/txtKhulaextrabold24_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/_50pxh"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="@dimen/_50pxh"
+                        android:layout_marginBottom="2dp"
+                        android:ellipsize="end"
+                        android:gravity="center_horizontal"
+                        android:inputType="text"
+                        tools:ignore="SpeakableTextPresentCheck" />
+                </LinearLayout>
+
+                <TextView android:ellipsize="end"
+                    android:id="@+id/txtPassword"
+                    android:layout_gravity="start"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="@string/lbl_password"
+                    style="@style/txtKhulaextrabold16_2" tools:text="@string/lbl_password"/>
+                <LinearLayout android:gravity="center_horizontal"
+                    android:id="@+id/linearColumnPassword"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical" style="@style/groupStyleindigo_700cornerRadius">
+                    <EditText
+                        android:id="@+id/inputVerifyPassword"
+                        style="@style/txtKhulaextrabold24_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/_50pxh"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="@dimen/_50pxh"
+                        android:layout_marginBottom="2dp"
+                        android:ellipsize="end"
+                        android:gravity="center_horizontal"
+                        android:inputType="textPassword"
+                        tools:ignore="SpeakableTextPresentCheck" />
+                </LinearLayout>
+
+                <TextView android:ellipsize="end"
+                    android:id="@+id/txtPasswordConfirm"
+                    android:layout_gravity="start"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="@string/lbl_confirm_password"
+                    style="@style/txtKhulaextrabold16_2" tools:text="@string/lbl_confirm_password"/>
+                <LinearLayout android:gravity="center_horizontal"
+                    android:id="@+id/linearColumnPasswordConfirm"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical" style="@style/groupStyleindigo_700cornerRadius">
+                    <EditText
+                        android:id="@+id/inputVerifyConfirmPassword"
+                        style="@style/txtKhulaextrabold24_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/_50pxh"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="@dimen/_50pxh"
+                        android:layout_marginBottom="2dp"
+                        android:ellipsize="end"
+                        android:gravity="center_horizontal"
+                        android:inputType="textPassword"
+                        tools:ignore="SpeakableTextPresentCheck" />
+                </LinearLayout>
+
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/buttonSignup"
+                    android:id="@+id/buttonCreateAcct"
                     style="@style/btnSolidRounded"
-                    android:layout_width="@dimen/_192pxh"
+                    android:layout_width="wrap_content"
                     android:layout_height="@dimen/_61pxv"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginStart="0dp"
@@ -245,9 +246,9 @@
                     android:paddingEnd="@dimen/_30pxh"
                     android:paddingBottom="@dimen/_11pxv"
                     android:singleLine="true"
-                    android:text="@string/lbl_sign_up"
+                    android:text="@string/lbl_create_account"
                     android:textAllCaps="false"
-                    tools:text="@string/lbl_sign_up" />
+                    tools:text="@string/lbl_create_account" />
             </LinearLayout>
             <ImageView android:id="@+id/imageLock"
                 android:layout_gravity="center_horizontal"

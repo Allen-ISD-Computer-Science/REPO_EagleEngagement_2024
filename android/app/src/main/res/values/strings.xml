@@ -12,6 +12,10 @@
     <string name="lbl_1_dec">1
 Dec</string>
     <string name="lbl_points">Points</string>
+    <string name="lbl_first_name">First Name</string>
+    <string name="lbl_last_name">Last Name</string>
+    <string name="lbl_verification_code">Verification Code</string>
+    <string name="lbl_account_verification">Account Verification</string>
     <string name="lbl_21">21</string>
     <string name="lbl_ranking2">Ranking
 </string>
@@ -43,8 +47,7 @@ Sat 10AM-3PM</string>
     <string name="lbl_grade2">Grade</string>
     <string name="lbl_location">Location: </string>
     <string name="lbl_257385">257385</string>
-    <string name="lbl_ranking_grade">Ranking
-(Grade)</string>
+    <string name="lbl_ranking_grade">Ranking\n(Grade)</string>
     <string name="lbl_cs_forum">CS Forum</string>
     <string name="lbl_read_more">Read More</string>
     <string name="lbl_allen_hs_pac">Allen HS PAC</string>
@@ -101,6 +104,7 @@ Sat 10AM-3PM</string>
     <string name="lbl_events">Events</string>
     <string name="lbl_house">House</string>
     <string name="lbl_password">Password</string>
+    <string name="lbl_confirm_password">Confirm Password</string>
     <string name="lbl_eagle_stadium2">Eagle Stadium</string>
     <string name="lbl_or">OR</string>
     <string name="lbl_upload_image">Upload Image</string>
