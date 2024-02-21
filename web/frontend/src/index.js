@@ -88,6 +88,11 @@ const router = createBrowserRouter([
     path: "/admin/locations/new",
     element: <NewEditLocationPage />,
   },
+    
+  {
+    path: "/admin/locations/edit/*",
+    element: <NewEditLocationPage />,
+  },
   {
     path: "/admin/review-checkins",
     element: <CheckInRequestsPage />,

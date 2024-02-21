@@ -46,6 +46,18 @@ struct StudentSignUp {
 
         try await user.save(on: req.db);
 
+        guard let studentSignUpTemplateID = Environment.get("STUDENT_SIGNUP_TEMPLATE_ID") else {
+            fatalError("Failed to determine STUDENT_SIGNUP_TEMPLATE_ID from environment");
+        }
+
+        let contact = EmailContact(firstName: args.firstName, lastName: args.lastName, emailAddress: user.email)
+        let verifyEmail = TokenURLEmail(token: verificationString).createContent(with: contact)
+        let emailData = EmailData(contact: contact,
+                                  templateExternalID: studentSignUpTemplateID,
+                                  templateParameters: verifyEmail)
+
+        try await GlobalEmailAPI.sendEmail(from: req, with: emailData)
+
         let studentUser = StudentUser(
           userID: user.id!,
           studentID: args.studentID
@@ -56,6 +68,29 @@ struct StudentSignUp {
         print("Created: \(args.email) with verificationToken: \(verificationString)");
 
         return Msg(success: true, msg: "Created User! Check email for verification code!");
+        
     }
-    
+
+    struct TokenURLEmail: EmailContactConsumer {
+        private struct TokenURLEmailWrapper: Encodable {
+            let firstName: String?
+            let lastName: String?
+            let verificationCode: String
+            let name: String
+        }
+
+        let token: String;
+
+        init(token: String) {
+            self.token = token;
+        }
+
+        func createContent(with contact: EmailContact) -> Encodable {
+            return TokenURLEmailWrapper(firstName: contact.firstName,
+                                        lastName: contact.lastName,
+                                        verificationCode: self.token,
+                                        name: "\(contact.firstName!) \(contact.lastName!)"
+            )
+        }
+    }
 }
