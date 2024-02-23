@@ -51,7 +51,18 @@ func routes(_ app: Application) throws {
         return try await teacherSignUp.signUp(req);
     };
 
-    let teacherProtectedRoutes = sessionRoutes.grouped(TeacherMiddleware()); 
+    let teacherProtectedRoutes = sessionRoutes.grouped(TeacherMiddleware());
+
+    struct IsAdmin : Content {
+        var value: Bool;
+    }
+    teacherProtectedRoutes.get("isAdmin") { req in
+        guard let user = req.auth.get(User.self) else {
+            throw Abort(.unauthorized);
+        }
+
+        return IsAdmin(value: user.userType == .admin);
+    }
     
     teacherProtectedRoutes.get("dashboard") { req in
         return try await serveIndex(req)        

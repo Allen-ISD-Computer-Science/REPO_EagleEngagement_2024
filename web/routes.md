@@ -108,6 +108,12 @@ password: String
 
 ### Data
 ```
+POST /isAdmin
+
+Returns {value: Bool}
+```
+
+```
 POST /admin/api/events
 includePast: Bool
 filterByName: String? - Don't have this as a key if no filter

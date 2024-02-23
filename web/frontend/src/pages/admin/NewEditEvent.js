@@ -32,7 +32,7 @@ function NewEditEventPage(props) {
     }
 
     const getLocations = async () => {
-      const res = await fetch(`${process.env.PUBLIC_URL}/admin/api/locations`, { headers: { Accept: "application/json" }, method: "POST" });
+	const res = await fetch(`${process.env.PUBLIC_URL}/admin/api/locations`, { headers: { Accept: "application/json", "Content-Type": "application/json" }, method: "POST", body: JSON.stringify({}) });
       return await res.json();
     }
 
