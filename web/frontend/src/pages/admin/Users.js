@@ -1,23 +1,38 @@
 import * as React from "react";
 
+import { ToastContainer, toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faGear, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons'
 
 import AdminNav from "../../components/AdminNav";
 import LoadingOverlay from "../../components/LoadingOverlay";
+import GroupModifyPointsModal from "../../components/GroupModifyPointsModal";
 
 function UsersPage(props) {
+  const searchRef = React.useRef(null);
+
   const [users, setUsers] = React.useState([
     // { name: "Brett Kaplan", grade: 12, house: 300, points: 78 },
     // { name: "Brett Kaplan", grade: 12, house: 300, points: 78 },
   ]);
+
+  const [filter, setFilter] = React.useState("");
+
+  const [manageModalOpen, setManageModalOpen] = React.useState(false);
 
   const [requests, setRequests] = React.useState(0);
 
   React.useEffect(() => {
 
     const getUsers = async () => {
-      const res = await fetch(`${process.env.PUBLIC_URL}/admin/api/users`, { headers: { Accept: "application/json" }, method: "POST" });
+      const args = {};
+      if (filter) args.filter = filter;
+
+      const res = await fetch(`${process.env.PUBLIC_URL}/admin/api/users`, {
+        headers: { Accept: "application/json", "Content-Type": "application/json" },
+        method: "POST",
+        body: args
+      });
       return await res.json();
     }
 
@@ -29,7 +44,7 @@ function UsersPage(props) {
       setRequests((prev) => prev - 1);
     })
 
-  }, []);
+  }, [filter]);
 
   return (
     <div className="flex flex-row items-stretch min-h-[100vh]">
@@ -38,6 +53,11 @@ function UsersPage(props) {
         isActive={requests !== 0}
         text='Loading...'
       />
+      <GroupModifyPointsModal
+        isOpen={manageModalOpen}
+        setOpen={setManageModalOpen}
+        toast={toast}
+      />
 
       <div className="flex flex-col items-stretch w-full">
         <div className="flex flex-col justify-center text-white text-5xl font-bold bg-blue-950 w-full pl-12 pr-12 items-start max-md:text-4xl max-md:px-5 h-[150px] max-md:max-h-[100px]">
@@ -45,6 +65,18 @@ function UsersPage(props) {
             Manage Students
           </span>
         </div>
+
+        <ToastContainer
+          position="top-right"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          pauseOnFocusLoss
+          pauseOnHover
+          theme="light"
+        />
+
         <div
           className="flex flex-row justify-between items-stretch max-md:flex-col px-16 pt-8 max-md:p-4"
         >
@@ -53,12 +85,19 @@ function UsersPage(props) {
             className="flex flex-row justify-start items-stretch w-1/2 gap-4 [&>*]:self-stretch max-md:w-full max-md:flex-col max-md:gap-2 max-md:p-4"
           >
             <input
+              onKeyDown={(e) => {
+                if (e.key === "Enter") setFilter(e.currentTarget.value)
+              }}
+              ref={searchRef}
               type="text"
               className="border bg-gray-100 border-slate-600 rounded-xl p-2 w-full"
               placeholder="Search"
             />
             <button
               className="bg-blue-950 text-white px-4 py-2 rounded-xl"
+              onClick={() => {
+                setFilter(searchRef.current.value);
+              }}
             >
               <FontAwesomeIcon icon={faSearch} size="xl" />
             </button>
@@ -66,6 +105,7 @@ function UsersPage(props) {
           <div className="max-md:mt-6 max-md:w-full">
             <button
               className="bg-blue-950 text-white px-4 py-2 rounded-xl font-semibold max-md:w-full"
+              onClick={() => setManageModalOpen(true)}
             >
               <FontAwesomeIcon icon={faGear} size="lg" className="mr-2" />
               Group Modify Points
