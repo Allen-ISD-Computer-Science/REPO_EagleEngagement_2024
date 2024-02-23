@@ -12,7 +12,9 @@ function SignInPage(props) {
   const [password, setPassword] = React.useState("");
   const [passwordType, setPasswordType] = React.useState("password");
 
-  const [errorText, setErrorText] = React.useState("");
+    const [errorText, setErrorText] = React.useState("");
+
+    const [didReq, setDidReq] = React.useState(false);
 
   const validateInfo = (email) => {
     if (email !== "" && (!email.includes("@") || !email.includes(".") || email.split("@").pop().length < 2 || email.split(".").pop().length < 2)) {
@@ -36,6 +38,11 @@ function SignInPage(props) {
       return false;
     }
 
+      if (didReq) {
+	  setErrorText("Already sent request! Please wait.");
+	  return false;
+      }
+
     return true;
   }
 
@@ -49,6 +56,8 @@ function SignInPage(props) {
       const res = await fetch("./login", { method: "POST", headers });
       console.log(res);
 
+	setDidReq(false);
+	
       if (res.status === 200) {
         toast.success("Successfully logged in. Redirecting...", {
           position: "top-right",
@@ -57,9 +66,17 @@ function SignInPage(props) {
           pauseOnHover: true,
           theme: "light"
         });
-        setTimeout(() => {
-          window.location.href = process.env.PUBLIC_URL + "/dashboard";
-        }, 2000);
+          setTimeout(() => {
+	      const url = new URL(window.location.href);
+
+	      console.log(url.searchParams);
+
+	      if (url.searchParams.has("redirect")) {
+		  window.location.href = process.env.PUBLIC_URL + url.searchParams.get("redirect");
+	      } else {
+		  window.location.href = process.env.PUBLIC_URL + "/dashboard";
+	      }
+        }, 1000);
       } else {
         toast.error(res.status === 401 ? "Invalid Credentials." : res.statusText, {
           position: "top-right",

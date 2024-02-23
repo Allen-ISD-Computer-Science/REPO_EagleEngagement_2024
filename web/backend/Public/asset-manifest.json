@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/vapor/brett-kaplan/static/css/main.04649b78.css",
-    "main.js": "/vapor/brett-kaplan/static/js/main.e444b5f2.js",
+    "main.css": "/vapor/brett-kaplan/static/css/main.9a9d8c1c.css",
+    "main.js": "/vapor/brett-kaplan/static/js/main.585f42e3.js",
     "index.html": "/vapor/brett-kaplan/index.html",
-    "main.04649b78.css.map": "/vapor/brett-kaplan/static/css/main.04649b78.css.map",
-    "main.e444b5f2.js.map": "/vapor/brett-kaplan/static/js/main.e444b5f2.js.map"
+    "main.9a9d8c1c.css.map": "/vapor/brett-kaplan/static/css/main.9a9d8c1c.css.map",
+    "main.585f42e3.js.map": "/vapor/brett-kaplan/static/js/main.585f42e3.js.map"
   },
   "entrypoints": [
-    "static/css/main.04649b78.css",
-    "static/js/main.e444b5f2.js"
+    "static/css/main.9a9d8c1c.css",
+    "static/js/main.585f42e3.js"
   ]
 }

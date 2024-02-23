@@ -112,7 +112,7 @@ function MissingPointsCarousel(props) {
                             </Marker>
                         : null }
                     </MapContainer>
-                    { !requests[chosenCheckIn].studentLoc || (Object.keys(requests[chosenCheckIn].studentLoc).length == 0) ?
+                    { !requests[chosenCheckIn].studentLoc || (Object.keys(requests[chosenCheckIn].studentLoc).length === 0) ?
                         <div className='absolute right-6 top-4 text-right z-50'>
                             <span className='text-xl font-bold text-red-600'>
                                 No Student Location Data

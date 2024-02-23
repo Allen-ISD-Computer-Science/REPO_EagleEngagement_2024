@@ -1,54 +1,186 @@
 import * as React from "react";
+import dayjs from "dayjs";
 
 import { DateTimePicker, TimePicker } from "@mui/x-date-pickers";
+import { ToastContainer, toast } from 'react-toastify';
 
 import AdminNav from "../../components/AdminNav";
-import { Button, MenuItem, Select, TextField } from "@mui/material";
+import LoadingOverlay from "../../components/LoadingOverlay";
+import { Autocomplete, Button, MenuItem, Select, TextField } from "@mui/material";
 
 function NewEditEventPage(props) {
   const [title, setTitle] = React.useState("New Event");
 
   const [eventInfo, setEventInfo] = React.useState({
-    name: "B.E.S.T. Robotics State Competition", location: "Allen Football Stadium", date: "9/1/2021", checkInType: "manual"
+    name: "B.E.S.T. Robotics State Competition", description: "Come visit for the B.E.S.T. Robotics Competition!", eventType: "Robotics", locationName: "Allen Stadium", locationID: 0, startDate: "9/1/2021", pointsWorth: 3, checkinType: "manual"
   });
 
+  const [eventTypes, setEventTypes] = React.useState([
+    "Football", "Soccer", "Robotics"
+  ]);
+
+  const [requests, setRequests] = React.useState(0);
+
   React.useEffect(() => {
+    const getEventTypes = async () => {
+      const res = await fetch(`${process.env.PUBLIC_URL}/admin/api/eventTypes`, { headers: { Accept: "application/json" }, method: "POST" });
+      return await res.json();
+    }
+
+    setRequests((prev) => prev + 1);
+    getEventTypes().then((types) => {
+      setEventTypes(types);
+      setRequests((prev) => prev - 1);
+    }).catch((err) => {
+      setRequests((prev) => prev - 1);
+    })
+
     const eventID = parseInt(window.location.pathname.split("/").pop());
-    console.log(eventID);
     if (!isNaN(eventID)) {
       setTitle("Edit Event - ...");
 
       const getEvent = async () => {
-        const res = await fetch("./api/event/" + eventID);
+        const res = await fetch(`${process.env.PUBLIC_URL}/admin/api/event/${eventID}`, { headers: { Accept: "application/json" }, method: "POST" });
         return await res.json();
       }
 
-      getEvent().then((event) => {
+      setRequests((prev) => prev + 1);
+	getEvent().then((ev) => {
+	    console.log(ev);
+	    const event = ev;
+	    event.startDate = dayjs(ev.startDate);
+	    event.endDate = dayjs(ev.endDate);
+	    console.log(event);
         document.title = "Edit Event - " + event.name;
-        setTitle("Edit Event - " + event.name);
-        setEventInfo([event]);
+          setTitle("Edit Event - " + event.name);
+        setEventInfo(event);
+        setRequests((prev) => prev - 1);
       }).catch((err) => {
+        setRequests((prev) => prev - 1);
         // console.error(err);
       });
 
       return;
     }
 
-    if (window.location.pathname !== "/admin/events/new") throw new Error("Invalid event ID.");
-    setEventInfo({});
+    if (!window.location.pathname.endsWith("/admin/events/new")) throw new Error("Invalid event ID.");
+    setEventInfo({
+      name: "",
+      description: "",
+      eventType: "",
+      locationName: "",
+      locationID: -1,
+      checkinType: "",
+      pointsWorth: -1,
+      startDate: "",
+      endDate: ""
+    });
   }, []);
+
+    const saveButtonClicked = async () => {
+	var isNew = true;
+    var urlPath = "/admin/api/events/new"
+	if (!window.location.pathname.endsWith("/admin/events/new")) {
+	    isNew = false;
+      const eventID = parseInt(window.location.pathname.split("/").pop());
+      urlPath = `/admin/api/event/${eventID}/edit`
+    }
+
+      const filteredInfo = Object.assign({}, eventInfo);
+    delete filteredInfo.locationName;
+    if (!filteredInfo.customImagePath) delete filteredInfo.customImagePath;
+
+    const keys = Object.keys(filteredInfo);
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i];
+      if ((filteredInfo[key] === "" || filteredInfo[key] === null || filteredInfo[key] === -1) && (key != "customImagePath")) {
+        toast.error(`${key} cannot be empty!`, {
+          position: "top-right",
+          autoClose: 2000,
+          closeOnClick: true,
+          pauseOnHover: true,
+          theme: "light"
+        });
+        return;
+      }
+    }
+
+    filteredInfo.startDate = filteredInfo.startDate.toISOString().split('.')[0] + "Z";
+      filteredInfo.endDate = filteredInfo.startDate.split('T')[0] + "T" + filteredInfo.endDate.toISOString().split("T")[1].split(".")[0] + "Z";
+
+      if (requests > 0) {
+	  toast.error(`Request already made. Please wait!`, {
+	      position: "top-right",
+	      autoClose: 2000,
+	      closeOnClick: true,
+	      pauseOnHover: true,
+	      theme: "light"
+          });
+	  return;
+      }
+      
+      setRequests((prev) => prev + 1);
+      try {
+      const res = await fetch(`${process.env.PUBLIC_URL}${urlPath}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(filteredInfo)
+      });
+
+      setRequests((prev) => prev - 1);
+
+      if (res.status === 200) {
+          toast.success(`${isNew? "Created" : "Updated"} event!`, {
+          position: "top-right",
+          autoClose: 2000,
+          closeOnClick: true,
+          pauseOnHover: true,
+          theme: "light"
+        });
+      } else {
+        toast.error(res.statusText, {
+          position: "top-right",
+          autoClose: 2000,
+          closeOnClick: true,
+          pauseOnHover: true,
+          theme: "light"
+        });
+      }
+    } catch (e) {
+      console.error(e);
+      setRequests((prev) => prev - 1);
+    }
+  }
 
   return (
     <div className="flex flex-row items-stretch min-h-[100vh]">
       <AdminNav selected="events" />
       <div className="flex flex-col items-stretch w-full">
+        <LoadingOverlay
+          isActive={requests !== 0}
+          text='Loading...'
+        />
+
         <div className="flex flex-col justify-center text-white text-5xl font-bold bg-blue-950 w-full pl-12 pr-12 items-start max-md:text-4xl max-md:px-5 h-[150px] max-md:max-h-[100px]">
           <span className="my-auto">
             {title}
           </span>
         </div>
         {/* Start a form, split it into two columns */}
-        <form className="flex flex-row justify-between items-stretch p-10 gap-10 max-md:flex-col max-md:gap-4 max-md:p-4">
+        <form className="flex flex-row relative justify-between items-stretch p-10 gap-10 max-md:flex-col max-md:gap-4 max-md:p-4">
+          <ToastContainer
+            position="top-right"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            pauseOnFocusLoss
+            pauseOnHover
+            theme="light"
+          />
 
           {/* Left column */}
           <div className="flex-1">
@@ -59,19 +191,40 @@ function NewEditEventPage(props) {
               className="border bg-gray-100 rounded-xl w-full"
               placeholder="Event Name"
               name="name"
+              value={eventInfo?.name}
+              onChange={(e) => {
+                setEventInfo({
+                  ...eventInfo,
+                  name: e.currentTarget.value
+                })
+              }}
             />
 
             <label className="block text-gray-700 text-sm font-bold mb-2 mt-4" htmlFor="type">
               Event Type
             </label>
-            <Select
+            <Autocomplete
               className="border bg-gray-100 rounded-xl w-full"
               name="type"
-            >
-              <MenuItem value="football">Football</MenuItem>
-              <MenuItem value="soccer">Soccer</MenuItem>
-              <MenuItem value="basketball">Basketball</MenuItem>
-            </Select>
+              options={eventTypes}
+              value={eventInfo?.eventType}
+              onChange={(e) => {
+                setEventInfo({
+                  ...eventInfo,
+                  eventType: eventTypes[e.target.value]
+                });
+              }}
+              onBlur={(e) => {
+                if (eventInfo.eventType !== e.target.value) {
+                  setEventInfo({
+                    ...eventInfo,
+                    eventType: e.target.value
+                  });
+                }
+              }}
+              freeSolo
+              renderInput={params => <TextField {...params} />}
+            />
 
             <div className="relative">
               <label className="block text-gray-700 text-sm font-bold mb-2 mt-4" htmlFor="description">
@@ -82,8 +235,13 @@ function NewEditEventPage(props) {
                 placeholder="Description"
                 name="description"
                 maxLength={255}
+                value={eventInfo?.description}
                 onChange={(e) => {
-                  // Max length of 255 characters update
+                  setEventInfo({
+                    ...eventInfo,
+                    description: e.currentTarget.value
+                  })
+                  // TODO: add #/255
                 }}
               />
             </div>
@@ -94,10 +252,18 @@ function NewEditEventPage(props) {
             <Select
               className="border bg-gray-100 rounded-xl w-full"
               name="location"
+              value={eventInfo?.locationID}
+              onChange={(e, val) => {
+                setEventInfo({
+                  ...eventInfo,
+                  locationName: val.props.children,
+                  locationID: parseInt(e.target.value)
+                })
+              }}
             >
-              <MenuItem value="ahsfootball">Allen Stadium</MenuItem>
-              <MenuItem value="plano">Plano</MenuItem>
-              <MenuItem value="frisco">Frisco</MenuItem>
+              <MenuItem value="0">Allen Stadium</MenuItem>
+              <MenuItem value="1">AHS PAC</MenuItem>
+              <MenuItem value="2">Plano</MenuItem>
             </Select>
 
             <label className="block text-gray-700 text-sm font-bold mb-2 mt-4" htmlFor="checkInType">
@@ -106,10 +272,17 @@ function NewEditEventPage(props) {
             <Select
               className="border bg-gray-100 rounded-xl w-full"
               name="checkInType"
+              value={eventInfo?.checkinType}
+              onChange={(e) => {
+                setEventInfo({
+                  ...eventInfo,
+                  checkinType: e.target.value
+                })
+              }}
             >
-              <option value="location">Location</option>
-              <option value="manual">Manual</option>
-              <option value="photo">Photo</option>
+              <MenuItem value="location">Location</MenuItem>
+              <MenuItem value="manual">Manual</MenuItem>
+              <MenuItem value="photo">Photo</MenuItem>
             </Select>
 
             <label className="block text-gray-700 text-sm font-bold mb-2 mt-4" htmlFor="points">
@@ -120,6 +293,13 @@ function NewEditEventPage(props) {
               placeholder="Points"
               type="number"
               name="points"
+              value={eventInfo.pointsWorth === -1 ? "" : eventInfo.pointsWorth}
+              onChange={(e) => {
+                setEventInfo({
+                  ...eventInfo,
+                  pointsWorth: parseInt(e.currentTarget.value)
+                })
+              }}
             />
           </div>
 
@@ -130,6 +310,13 @@ function NewEditEventPage(props) {
             </label>
             <DateTimePicker
               className="border bg-gray-100 rounded-xl w-full"
+              value={dayjs(eventInfo.startDate)}
+              onChange={(newValue) => {
+                setEventInfo({
+                  ...eventInfo,
+                  startDate: newValue
+                })
+              }}
             />
 
             <label className="block text-gray-700 text-sm font-bold mb-2 mt-4" htmlFor="endTime">
@@ -137,6 +324,13 @@ function NewEditEventPage(props) {
             </label>
             <TimePicker
               className="border bg-gray-100 rounded-xl w-full"
+              value={dayjs(eventInfo.endDate)}
+              onChange={(newValue) => {
+                setEventInfo({
+                  ...eventInfo,
+                  endDate: newValue
+                })
+              }}
             />
 
             <label className="block text-gray-700 text-sm font-bold mb-2 mt-4" htmlFor="image">
@@ -162,6 +356,7 @@ function NewEditEventPage(props) {
               <Button
                 variant="contained"
                 color="success"
+                onClick={() => { saveButtonClicked(); }}
               >
                 Save
               </Button>
