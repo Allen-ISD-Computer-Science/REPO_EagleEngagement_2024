@@ -31,7 +31,7 @@ function UsersPage(props) {
       const res = await fetch(`${process.env.PUBLIC_URL}/admin/api/users`, {
         headers: { Accept: "application/json", "Content-Type": "application/json" },
         method: "POST",
-        body: args
+          body: JSON.stringify(args)
       });
       return await res.json();
     }

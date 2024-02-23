@@ -106,13 +106,22 @@ struct AdminController : RouteCollection {
         let studentUsers = try await StudentUser.query(on: req.db).with(\.$user);
         var studentUserCount = 0;
         
-        if (args.grade.count || args.house.count) {
-            studentUserCount = studentUsers.group(args.mode == "or" ? .or : .and) { opt in
-                opt.filter(\.$grade ~~ args.grade).filter(\.$house ~~ args.house)
-            }
-            .count();
+        if (args.grade.count > 0 && args.house.count > 0) {
+            studentUserCount = try await studentUsers
+              .group(args.mode == "or" ? .or : .and) { opt in
+                  opt.filter(\.$grade ~~ args.grade).filter(\.$house ~~ args.house)
+              }
+              .count();
+        } else if (args.grade.count > 0) {
+            studentUserCount = try await studentUsers
+              .filter(\.$grade ~~ args.grade)
+              .count();
+        } else if (args.house.count > 0) {
+            studentUserCount = try await studentUsers
+              .filter(\.$house ~~ args.house)
+              .count();
         } else {
-            studentUserCount = studentUsers.count();
+            studentUserCount = try await studentUsers.count();
         }
         
         return Estimation.init(amount: studentUserCount);
@@ -127,15 +136,26 @@ struct AdminController : RouteCollection {
     }
 
     func modifyUsers(_ req: Request) async throws -> Msg {
-        let args = try req.content.decode(ModifyQuert.self);
+        let args = try req.content.decode(ModifyQuery.self);
 
-        var studentUsers = try await StudentUser.query(on: req.db).with(\.$user);
-        if (args.grade.count || args.house.count) {
-           studentUsers = studentUsers.group(args.mode == "or" ? .or : .and) { opt in
-                opt.filter(\.$grade ~~ args.grade).filter(\.$house ~~ args.house)
-           }
+        var studentUsers : [StudentUser];
+        if (args.grade.count > 0 && args.house.count > 0) {
+            studentUsers = try await StudentUser.query(on: req.db).with(\.$user)
+              .group(args.mode == "or" ? .or : .and) { opt in
+                  opt.filter(\.$grade ~~ args.grade).filter(\.$house ~~ args.house)
+              }
+              .all();
+        } else if (args.grade.count > 0) {
+            studentUsers = try await StudentUser.query(on: req.db).with(\.$user)
+              .filter(\.$grade ~~ args.grade)
+              .all();
+        } else if (args.house.count > 0) {
+            studentUsers = try await StudentUser.query(on: req.db).with(\.$user)
+              .filter(\.$house ~~ args.house)
+              .all();
+        } else {
+            studentUsers = try await StudentUser.query(on: req.db).with(\.$user).all();
         }
-        studentUsers = studentUsers.all();
 
         for sUser in studentUsers {
             sUser.points = sUser.points + args.points;

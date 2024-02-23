@@ -22,11 +22,11 @@ function GroupModifyPointsModal(props) {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: {
+                body: JSON.stringify({
                     mode: mode,
                     grade: grade,
                     house: house
-                }
+                })
             })
                 .then(a => a.json())
                 .then(json => {
@@ -43,13 +43,13 @@ function GroupModifyPointsModal(props) {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: {
+            body: JSON.stringify({
                 mode: mode,
                 grade: grade,
                 house: house,
                 points: points,
                 reason: reason
-            }
+            })
         })
             .then(async (res) => {
                 if (props.setOpen) props.setOpen(false);
@@ -113,6 +113,7 @@ function GroupModifyPointsModal(props) {
                         value={grade}
                         label="Grade"
                         onChange={(e) => setGrade(e.target.value)}
+			multiple
                     >
                         <MenuItem value={9}>Freshman</MenuItem>
                         <MenuItem value={10}>Sophomore</MenuItem>
@@ -151,7 +152,7 @@ function GroupModifyPointsModal(props) {
                         value={points}
                         label="Points"
                         type='number'
-                        onChange={(e) => setPoints(e.target.value)}
+                        onChange={(e) => setPoints(parseInt(e.target.value))}
                     />
                 </FormControl>
 
