@@ -17,7 +17,7 @@ struct TeacherController : RouteCollection {
     struct ClubInfo : Content {
         var id: Int;
         var name: String;
-        var descritpion: String;
+        var description: String;
         var studentsFollowing: Int;
         var lastCheckInCount: Int;
         // todo: revisit        var categories: [String];
@@ -34,7 +34,7 @@ struct TeacherController : RouteCollection {
           .filter(\.$user.$id == user.id!)
           .all()
           .map { clubSponsor in
-              ClubInfo.init(id: clubSponsor.club.id!, name: clubSponsor.club.name, descritpion: clubSponsor.club.description, studentsFollowing: 100, lastCheckInCount: 30)
+              ClubInfo.init(id: clubSponsor.club.id!, name: clubSponsor.club.name, description: clubSponsor.club.description, studentsFollowing: 100, lastCheckInCount: 30)
           };
 
         return clubs;
