@@ -59,14 +59,12 @@
                     style="@style/txtKhulaextrabold16" tools:text="@string/lbl_0_applied"/>
             </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView
-                android:gravity="start"
-                android:id="@+id/recyclerClubsPage"
+                android:id="@+id/clubsRecycler"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_26pxv"
                 android:layout_width="match_parent"
                 android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                itemSpace="@{@dimen/_26pxh}" tools:itemCount="2" tools:listitem="@layout/row_club"/>
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

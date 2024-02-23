@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
-    <data/>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".ClubActivity"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <LinearLayout android:gravity="center_horizontal"
         android:id="@+id/linearClubPage"
         android:layout_height="match_parent"
@@ -15,28 +19,34 @@
                 android:layout_height="@dimen/_186pxv" android:layout_width="match_parent">
                 <ImageView android:id="@+id/imageEventThumbmail"
                     android:layout_gravity="start"
-                    android:layout_height="@dimen/_186pxh"
+                    android:layout_height="match_parent"
                     android:layout_width="match_parent"
+                    android:layout_marginEnd="-10dp"
+                    android:layout_marginStart="-10dp"
+                    android:layout_marginTop="-10dp"
+                    android:layout_marginBottom="-10dp"
                     android:scaleType="fitXY"
-                    imageRes="@{@drawable/img_eventthumbmail_186x360}"
-                    tools:ignore="ContentDescription" tools:src="@drawable/img_eventthumbmail_186x360"/>
+                    tools:ignore="ContentDescription" android:src="@drawable/img_eventthumbmail_186x360"/>
                 <LinearLayout android:id="@+id/linearColumnarrowleft"
                     android:layout_gravity="top|center"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_10pxh"
                     android:layout_marginVertical="@dimen/_10pxv"
                     android:layout_width="match_parent" android:orientation="vertical">
-                    <ImageView android:id="@+id/imageArrowleft"
+
+                    <ImageView
+                        android:id="@+id/clubBackBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="start"
-                        android:layout_height="@dimen/_22pxh"
                         android:layout_marginEnd="@dimen/_10pxh"
-                        android:layout_width="@dimen/_13pxh"
                         android:scaleType="fitXY"
                         android:src="@drawable/img_arrowleft_white_a700"
-                        tools:ignore="ContentDescription" tools:src="@drawable/img_arrowleft_white_a700"/>
+                        tools:ignore="ContentDescription"
+                        tools:src="@drawable/img_arrowleft_white_a700" />
 
                     <TextView
-                        android:id="@+id/txtEagleRobotics"
+                        android:id="@+id/txtClubName"
                         style="@style/txt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -53,7 +63,7 @@
             </FrameLayout>
             <View android:background="@color/white_A700"
                 android:id="@+id/lineLineOne"
-                android:layout_height="@dimen/_1pxv" android:layout_width="@dimen/_360pxh"/>
+                android:layout_height="@dimen/_1pxv" android:layout_width="match_parent"/>
             <LinearLayout android:gravity="center_vertical"
                 android:id="@+id/linearRowsponsorgregor"
                 android:layout_height="wrap_content"
@@ -61,36 +71,48 @@
                 android:layout_marginStart="@dimen/_45pxh"
                 android:layout_marginTop="@dimen/_8pxv"
                 android:layout_width="match_parent" android:orientation="horizontal">
-                <TextView android:id="@+id/txtSponsorGregor"
+
+                <TextView
+                    android:id="@+id/txtClubSponsor"
+                    style="@style/txtKhulaextrabold15"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.51"
-                    android:layout_width="0dp"
                     android:text="@string/msg_sponsor_gregor"
-                    style="@style/txtKhulaextrabold15" tools:text="@string/msg_sponsor_gregor"/>
-                <TextView android:id="@+id/txtTime"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_1pxv"
-                    android:layout_marginStart="@dimen/_21pxh"
-                    android:layout_weight="0.49"
+                    tools:ignore="TextSizeCheck"
+                    tools:text="@string/msg_sponsor_gregor" />
+
+                <TextView
+                    android:id="@+id/txtClubTimes"
+                    style="@style/txtKhulaextrabold15"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_21pxh"
+                    android:layout_marginBottom="@dimen/_1pxv"
+                    android:layout_weight="0.49"
                     android:text="@string/msg_times_tues_thu"
-                    style="@style/txtKhulaextrabold15" tools:text="@string/msg_times_tues_thu"/>
+                    tools:ignore="TextSizeCheck"
+                    tools:text="@string/msg_times_tues_thu" />
             </LinearLayout>
-            <TextView android:ellipsize="end"
-                android:id="@+id/txtLocationSTEAM"
-                android:layout_gravity="center_horizontal"
+
+            <TextView
+                android:id="@+id/txtClubLocation"
+                style="@style/txtKhulaextrabold15"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_6pxv"
-                android:layout_marginEnd="@dimen/_45pxh"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginStart="@dimen/_45pxh"
                 android:layout_marginTop="@dimen/_7pxv"
-                android:layout_width="wrap_content"
+                android:layout_marginEnd="@dimen/_45pxh"
+                android:layout_marginBottom="@dimen/_6pxv"
+                android:ellipsize="end"
                 android:singleLine="true"
                 android:text="@string/msg_location_steam"
-                style="@style/txtKhulaextrabold15" tools:text="@string/msg_location_steam"/>
+                tools:ignore="TextSizeCheck"
+                tools:text="@string/msg_location_steam" />
         </LinearLayout>
         <TextView android:gravity="center_horizontal"
-            android:id="@+id/txtDescription"
+            android:id="@+id/txtClubDescription"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_22pxh"
             android:layout_marginStart="@dimen/_22pxh"
@@ -98,16 +120,48 @@
             android:layout_width="match_parent"
             android:text="@string/msg_eagle_robotics"
             style="@style/txtKhulaextrabold16_1" tools:text="@string/msg_eagle_robotics"/>
-        <ImageView android:id="@+id/imageFrameTwentyFive"
+    <LinearLayout android:gravity="center_vertical"
+        android:id="@+id/linearRowLinks"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_45pxh"
+        android:layout_marginStart="@dimen/_45pxh"
+        android:layout_marginTop="40dp"
+        android:layout_width="wrap_content" android:orientation="horizontal">
+        <ImageView android:id="@+id/imageLink"
             android:layout_gravity="center_horizontal"
-            android:layout_height="@dimen/_37pxh"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_22pxh"
             android:layout_marginStart="@dimen/_22pxh"
-            android:layout_marginTop="@dimen/_120pxv"
-            android:layout_width="@dimen/_242pxh"
+            android:layout_marginTop="0dp"
+            android:paddingEnd="-200dp"
+            android:layout_width="wrap_content"
             android:scaleType="fitXY"
-            android:src="@drawable/img_frame25"
-            tools:ignore="ContentDescription" tools:src="@drawable/img_frame25"/>
+            android:src="@drawable/img_link"
+            tools:ignore="ContentDescription" tools:src="@drawable/img_link"/>
+        <ImageView android:id="@+id/imageInsta"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_22pxh"
+            android:layout_marginStart="@dimen/_22pxh"
+            android:layout_marginTop="0dp"
+            android:paddingEnd="-100dp"
+            android:paddingStart="-100dp"
+            android:layout_width="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@drawable/img_insta"
+            tools:ignore="ContentDescription" tools:src="@drawable/img_insta"/>
+        <ImageView android:id="@+id/imageX"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_22pxh"
+            android:layout_marginStart="@dimen/_22pxh"
+            android:layout_marginTop="0dp"
+            android:paddingStart="-200dp"
+            android:layout_width="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@drawable/img_twitterx"
+            tools:ignore="ContentDescription" tools:src="@drawable/img_twitterx"/>
+    </LinearLayout>
         <androidx.appcompat.widget.AppCompatButton
             android:ellipsize="end" android:gravity="center"
             android:id="@+id/btnFollow"
@@ -116,7 +170,7 @@
             android:layout_marginBottom="@dimen/_20pxv"
             android:layout_marginEnd="@dimen/_22pxh"
             android:layout_marginStart="@dimen/_22pxh"
-            android:layout_marginTop="@dimen/_95pxv"
+            android:layout_marginTop="@dimen/_15pxv"
             android:layout_width="@dimen/_192pxh"
             android:paddingBottom="@dimen/_11pxv"
             android:paddingEnd="@dimen/_30pxh"
@@ -125,4 +179,4 @@
             android:text="@string/lbl_follow"
             android:textAllCaps="false" style="@style/btnSolidRounded" tools:text="@string/lbl_follow"/>
     </LinearLayout>
-</layout>
+</RelativeLayout>

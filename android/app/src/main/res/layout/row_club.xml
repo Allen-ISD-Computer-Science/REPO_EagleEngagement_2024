@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
-    <data/>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <LinearLayout android:gravity="start"
         android:id="@+id/linearColumnellipsefiftynine"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_marginBottom="20dp"
         android:orientation="vertical" style="@style/groupStylecornerRadius_2">
         <LinearLayout android:gravity="start"
             android:id="@+id/linearRowellipsefiftynine"
@@ -13,13 +17,12 @@
             android:layout_marginStart="@dimen/_8pxh"
             android:layout_marginTop="@dimen/_3pxv"
             android:layout_width="match_parent" android:orientation="horizontal">
-            <ImageView android:id="@+id/imageEllipseFiftyNine"
+            <ImageView android:id="@+id/imageClubIcon"
                 android:layout_height="@dimen/_66pxh"
                 android:layout_marginTop="@dimen/_1pxv"
                 android:layout_width="@dimen/_66pxh"
-                android:scaleType="centerCrop" circular="@{true}"
-                imageRes="@{@drawable/img_ellipse59}"
-                tools:ignore="ContentDescription" tools:src="@drawable/img_ellipse59"/>
+                android:scaleType="centerCrop"
+                tools:ignore="ContentDescription" android:src="@drawable/img_ellipse59"/>
             <LinearLayout android:gravity="start"
                 android:id="@+id/linearColumneaglerobotics"
                 android:layout_height="wrap_content"
@@ -27,7 +30,7 @@
                 android:layout_marginStart="@dimen/_19pxh"
                 android:layout_weight="0.72" android:layout_width="0dp" android:orientation="vertical">
                 <TextView android:ellipsize="end"
-                    android:id="@+id/txtEagleRobotics"
+                    android:id="@+id/txtClubName"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:singleLine="true"
@@ -44,7 +47,7 @@
             </LinearLayout>
         </LinearLayout>
         <TextView android:gravity="center_horizontal"
-            android:id="@+id/txtDescription"
+            android:id="@+id/txtClubDescription"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_10pxv"
             android:layout_marginEnd="@dimen/_11pxh"
@@ -54,4 +57,4 @@
             android:text="@string/msg_eagle_robotics"
             style="@style/txtKhulabold16_1" tools:text="@string/msg_eagle_robotics"/>
     </LinearLayout>
-</layout>
+</RelativeLayout>
