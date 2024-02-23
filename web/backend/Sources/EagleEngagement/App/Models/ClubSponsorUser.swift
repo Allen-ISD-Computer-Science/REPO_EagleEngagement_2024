@@ -7,8 +7,8 @@ final public class ClubSponsorUser: Model, Content {
     // Name of the table or collection.
     public static let schema = "ClubSponsorUsers"
 
-    @ID(key: .id)
-    public var id: UUID?
+    @ID(custom: "id", generatedBy: .database)
+    public var id: Int?
     
     // UserID of the sponsor
     @Parent(key: "userID")

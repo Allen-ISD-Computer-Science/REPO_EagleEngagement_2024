@@ -26,6 +26,7 @@ struct StudentController : RouteCollection {
         protectedRoutes.post("profile", use: fetchProfile);
         protectedRoutes.post("events", use: fetchEvents);
         protectedRoutes.post("event", ":id", use: fetchEvent);
+//        protectedRoutes.post("event", ":id", "checkIn", use: checkInEvent);
         protectedRoutes.post("clubs", use: fetchClubs);
         protectedRoutes.post("club", ":id", use: fetchClub);
     }
@@ -182,6 +183,13 @@ struct StudentController : RouteCollection {
         // todo: revisit        var categories: [String];
     }
 
+    struct EventCheckinQuery : Content {
+        var latitude: Float;
+        var longitude: Float;
+        var latAccuracy: Float;
+        var longAccuracy: Float;
+    }
+
     func fetchClubs(_ req: Request) async throws -> [ClubInfo] {
         let clubs = try await Club.query(on: req.db)
           .all()
@@ -195,6 +203,7 @@ struct StudentController : RouteCollection {
     struct FullClubInfo : Content {
         var name: String;
         var description: String;
+        var sponsors: String;
         var meetingTimes: String?;
         var locationName: String?;
         var websiteLink: String?;
@@ -208,17 +217,23 @@ struct StudentController : RouteCollection {
             throw Abort(.badRequest)
         }
 
-        let club = try await Club.query(on: req.db)
-          .filter(\.$id == id)
-          .first()
-          .map { club in
-              FullClubInfo.init(name: club.name, description: club.description, meetingTimes: club.meetingTimes, locationName: club.locationName, websiteLink: club.websiteLink, instagramLink: club.instagramLink, twitterLink: club.twitterLink, youtubeLink: club.youtubeLink)
-          };
+        let clubSponsors = try await ClubSponsorUser.query(on: req.db).with(\.$club).with(\.$user)
+          .filter(\.$club.$id == id)
+          .all();
 
-        guard let clubUnwrapped = club else {
+        guard clubSponsors.count > 0 else {
             throw Abort(.badRequest, reason: "Club not found");
         }
 
-        return clubUnwrapped; 
+        let club = clubSponsors[0].club;
+       
+        let clubInfo = FullClubInfo.init(name: club.name, description: club.description,
+                                     sponsors: clubSponsors.map{ cS in
+                                                           cS.user.name
+                                     }.joined(separator: ", "),
+                                     meetingTimes: club.meetingTimes, locationName: club.locationName,
+                                     websiteLink: club.websiteLink, instagramLink: club.instagramLink, twitterLink: club.twitterLink, youtubeLink: club.youtubeLink);
+
+        return clubInfo; 
     }    
 }
