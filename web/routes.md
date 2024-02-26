@@ -228,3 +228,15 @@ reason: String
 
 Returns: { success: Bool, msg: String }
 ```
+
+```
+POST /faculty/api/clubs
+
+Returns [{ id: Int, name: String, description: String, studentsFollowing: Int, lastCheckInCount: Int }]
+```
+
+```
+POST /faculty/api/club/:id
+
+Returns: { name: String, description: String, studentsFollowing: Int, meetings: [{ date: Date, numberOfStudents: Int }], meetingTimes: String?, locationName: String?, websiteLink: String?, instagramLink: String?, twitterLink: String?, youtubeLink: String? }
+```

@@ -11,20 +11,26 @@ final public class PointHistory: Model, Content {
     public var id: UUID?
 
     // userID to be associated with the point modification
-    @Field(key: "userID")
-    public var userID: Int
+    @Parent(key: "userID")
+    public var user: StudentUser
 
     // reason for the point modification
     @Field(key: "reason")
-    public var clubID: String
+    public var reason: String
 
     // Amount of points added or removed
     @Field(key: "points")
     public var points: Int
 
     @Timestamp(key: "date", on: .create)
-    var followedAt: Date?
+    var madeAt: Date?
     
     // Creates a new, empty PointHistory
     public init() { }
+
+    public init(user: StudentUser, reason: String, points: Int) {
+        self.$user.id = user.id!;
+        self.reason = reason;
+        self.points = points;
+    }
 }

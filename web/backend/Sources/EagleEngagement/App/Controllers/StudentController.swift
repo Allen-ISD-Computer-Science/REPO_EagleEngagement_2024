@@ -26,7 +26,7 @@ struct StudentController : RouteCollection {
         protectedRoutes.post("profile", use: fetchProfile);
         protectedRoutes.post("events", use: fetchEvents);
         protectedRoutes.post("event", ":id", use: fetchEvent);
-//        protectedRoutes.post("event", ":id", "checkIn", use: checkInEvent);
+        protectedRoutes.post("event", ":id", "checkIn", use: checkInEvent);
         protectedRoutes.post("clubs", use: fetchClubs);
         protectedRoutes.post("club", ":id", use: fetchClub);
     }
@@ -175,19 +175,61 @@ struct StudentController : RouteCollection {
         let both = try event.joined(Location.self);
         return FullEventInfo.init(id: event.id!, name: event.name, description: event.description, eventType: event.eventType, locationName: both.locationName, address: both.address, pointsWorth: event.pointsWorth, startDate: event.startDate, endDate: event.endDate)
     }
+    
+    struct EventCheckinQuery : Content {
+        var latitude: Double;
+        var longitude: Double;
+        var accuracy: Double;
+    }
+
+    func checkInEvent(_ req: Request) async throws -> Msg {
+        guard let id = req.parameters.get("id", as: Int.self) else {
+            throw Abort(.badRequest)
+        }
+
+        let args = try req.content.decode(EventCheckinQuery.self);
+
+        let userToken = try req.jwt.verify(as: UserToken.self);
+
+        guard let studentUser = try await StudentUser.query(on: req.db)
+                .join(User.self, on: \StudentUser.$user.$id == \User.$id)
+                .filter(User.self, \.$id == userToken.userId)
+                .first()
+        else {
+            throw Abort(.unauthorized);
+        }
+
+        guard let event = try await Events.query(on: req.db).with(\.$location)
+          .filter(\.$id == id)
+          .first(), event.checkinType == .location
+        else {
+            throw Abort(.badRequest);
+        }
+
+        guard (LocationHelper.circlesIntersect(
+              lat1: args.latitude,
+              lon1: args.longitude,
+              radius1: args.accuracy,
+              lat2: Double(event.location.latitude),
+              lon2: Double(event.location.longitude),
+              radius2: Double(event.location.radius))) else {
+            return Msg(success: false, msg: "You are not at the specified location!");
+        }
+
+        studentUser.points = studentUser.points + event.pointsWorth;
+        try await studentUser.save(on: req.db);
+
+        let pointHistory = PointHistory(user: studentUser, reason: event.name, points: event.pointsWorth);
+        try await pointHistory.save(on: req.db);
+
+        return Msg(success: true, msg: "Checked into \(event.name)!");
+    }
 
     struct ClubInfo : Content {
         var id: Int;
         var name: String;
         var descritpion: String;
         // todo: revisit        var categories: [String];
-    }
-
-    struct EventCheckinQuery : Content {
-        var latitude: Float;
-        var longitude: Float;
-        var latAccuracy: Float;
-        var longAccuracy: Float;
     }
 
     func fetchClubs(_ req: Request) async throws -> [ClubInfo] {
