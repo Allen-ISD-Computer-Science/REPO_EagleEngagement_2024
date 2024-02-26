@@ -248,5 +248,5 @@ Returns [{ id: Int, name: String, description: String, studentsFollowing: Int, l
 ```
 POST /faculty/api/club/:id
 
-Returns: { name: String, description: String, studentsFollowing: Int, meetings: [{ date: Date, numberOfStudents: Int }], meetingTimes: String?, locationName: String?, websiteLink: String?, instagramLink: String?, twitterLink: String?, youtubeLink: String? }
+Returns: { name: String, description: String, studentsFollowing: Int, meetingLogs: [{ date: Date, numberOfStudents: Int }], meetingTimes: String?, locationName: String?, websiteLink: String?, instagramLink: String?, twitterLink: String?, youtubeLink: String? }
 ```
