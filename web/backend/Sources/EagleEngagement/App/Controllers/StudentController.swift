@@ -24,6 +24,7 @@ struct StudentController : RouteCollection {
         
         // Data
         protectedRoutes.post("profile", use: fetchProfile);
+        protectedRoutes.post("profile", "edit", use: editProfile);
         protectedRoutes.post("events", use: fetchEvents);
         protectedRoutes.post("event", ":id", use: fetchEvent);
         protectedRoutes.post("event", ":id", "checkIn", use: checkInEvent);
@@ -112,6 +113,36 @@ struct StudentController : RouteCollection {
 //          rankingNum: Int(1), rankingPercent: Int(1), rankingNumGrade: Int(1), rankingPercentGrade: 1,
           grade: (studentUser.grade ?? -1), house: (studentUser.house ?? -1)
         )
+    }
+
+    struct EditProfileInfo : Content {
+        var name: String;
+        var studentID: Int;
+        var grade: Int;
+        var house: Int;
+    }
+
+    func editProfile(_ req: Request) async throws -> Msg {
+        let args = try req.content.decode(EditProfileInfo.self);
+        
+        let userToken = try req.jwt.verify(as: UserToken.self);
+        
+        guard let studentUser = try await StudentUser.query(on: req.db)
+                .with(\.$user)
+                .filter(\.$user.$id == userToken.userId)
+                .first()
+        else {
+            throw Abort(.unauthorized);
+        }
+
+        studentUser.name = args.name;
+        studentUser.studentID = args.studentID;
+        studentUser.grade = args.grade;
+        studentUser.house = args.house;
+
+        try await studentUser.save(on: req.db);
+
+        return Msg(success: true, msg: "Edited Profile!")
     }
 
     struct EventInfo : Content {

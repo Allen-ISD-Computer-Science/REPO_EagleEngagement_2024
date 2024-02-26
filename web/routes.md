@@ -57,6 +57,16 @@ Returns: {name: String, studentID: Int, points: Int, grade: Int, house: Int} - I
 ```
 
 ```
+POST /api/profile/edit
+name: String
+studentID: Int
+grade: Int
+house: Int
+
+Returns { success: Bool, msg: String }
+```
+
+```
 POST /api/events
 
 Returns: [{id: INT, name: String, description: String, eventType: String, locationName: String, pointsWorth: INT, startDate: Date, endDate: Date}]
