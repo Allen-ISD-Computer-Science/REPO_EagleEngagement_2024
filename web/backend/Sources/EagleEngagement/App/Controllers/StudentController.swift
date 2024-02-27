@@ -253,6 +253,35 @@ struct StudentController : RouteCollection {
             return Msg(success: false, msg: "You are not at the specified location!");
         }
 
+        let eventCheckIns = try await EventCheckIns.query(on: req.db)
+             .with(\.$user).with(\.$event)
+             .filter(\.$event.id == event.id!)
+             .all();
+
+        if (eventCheckIns.filter { $0.user.id == studentUser.user.id! }.size > 0) {
+            return Msg(success: false, msg: "You have already checked into this event!");
+        }
+
+        if (eventCheckIns.filter { $0.deviceUUID == args.deviceUUID }.size > 0) {
+            return Msg(success: false, msg: "This device already checked into this event. Don't spoof for your friends!");
+        }
+
+        let sixHoursAgo = Date(timeIntervalSinceNow: TimeInterval(6 * 60 * 60));
+
+        if let deviceCheckIn = try await EventCheckIns.query(on: req.db)
+          .with(\.$event)
+          .filter(\.$deviceUUID == args.deviceUUID)
+          .filter(\.$date < sixHoursAgo)
+          .first() {
+            let maxSpeed = 31.2928 // 70mph to meters per second
+            let timeBetween = Date().timeIntervalSince(deviceCheckIn.date);
+            let maxDistanceCouldHaveTravelled = timeBetween * maxSpeed;
+            
+            if (LocationHelper.haversine(lat1: deviceCheckIn.latitude, lon1: deviceCheckIn.longitude, lat2: args.latitude, lon2: args.longitude) > maxDistanceCouldHaveTravelled) {
+                return Msg(success: false, msg: "You could not have feasibly checked into this event and the last one considering the time difference. No spoofing!");
+            }
+        }
+
         studentUser.points = studentUser.points + event.pointsWorth;
         try await studentUser.save(on: req.db);
 
