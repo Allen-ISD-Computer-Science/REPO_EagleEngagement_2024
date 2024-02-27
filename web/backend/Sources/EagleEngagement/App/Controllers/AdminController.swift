@@ -38,6 +38,7 @@ struct AdminController : RouteCollection {
         apiRoutes.post("users", use: fetchUsers);
         apiRoutes.post("users", "modify", use: modifyUsers);
         apiRoutes.post("users", "estimateCount", use: estimateCount);
+        apiRoutes.post("user", ":id", "modifyPoints", use: modifyUser);
     }
 
     func serveIndex(_ req: Request) async throws -> View {
@@ -158,12 +159,41 @@ struct AdminController : RouteCollection {
         }
 
         for sUser in studentUsers {
+            let pointHistory = PointHistory(user: sUser, reason: args.reason, points: args.points);
+            try await pointHistory.save(on: req.db);
+            
             sUser.points = sUser.points + args.points;
-            // TODO: ADD TO POINT LOG
             try await sUser.save(on: req.db);
         }
 
         return Msg(success: true, msg: "Updated \(studentUsers.count) users.");
+    }
+
+    struct ModifyUserQuery : Content {
+        var points: Int;
+        var reason: String;
+    }
+
+    func modifyUser(_ req: Request) async throws -> Msg {
+        guard let userID = req.parameters.get("id", as: Int.self) else {
+            throw Abort(.badRequest)
+        }
+
+        let args = try req.content.decode(ModifyUserQuery.self);
+
+        guard let studentUser = try await StudentUser.query(on: req.db).with(\.$user)
+          .filter(\.$user.id == userID)
+          .first() else {
+            throw Abort(.badRequest);
+        }
+
+        let pointHistory = PointHistory(user: studentUser, reason: args.reason, points: args.points);
+        try await pointHistory.save(on: req.db);
+        
+        studentUser.points = studentUser.points + args.points;
+        try await studentUser.save(on: req.db);
+
+        return Msg(success: true, msg: "Updated \(studentUser.user.name)!");
     }
 
     struct EventsQuery : Content {
