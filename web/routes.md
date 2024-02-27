@@ -88,7 +88,7 @@ Returns: [{id: INT, name: String, descritpion: String}]
 ```
 POST /api/club/:id
 
-Returns { name: String, description: String, meetingTimes: String?, locationName: String?, websiteLink: String?, instagramLink: String?, twitterLink: String?, youtubeLink: String? }
+Returns { name: String, description: String, sponsors: String, meetingTimes: String?, locationName: String?, websiteLink: String?, instagramLink: String?, twitterLink: String?, youtubeLink: String? }
 ```
 
 ## Web
