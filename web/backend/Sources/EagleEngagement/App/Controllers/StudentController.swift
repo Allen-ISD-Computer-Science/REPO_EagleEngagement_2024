@@ -255,14 +255,14 @@ struct StudentController : RouteCollection {
 
         let eventCheckIns = try await EventCheckIns.query(on: req.db)
              .with(\.$user).with(\.$event)
-             .filter(\.$event.id == event.id!)
+             .filter(\.$event.$id == event.id!)
              .all();
 
-        if (eventCheckIns.filter { $0.user.id == studentUser.user.id! }.size > 0) {
+        if (eventCheckIns.filter { $0.user.id == studentUser.user.id! }.count > 0) {
             return Msg(success: false, msg: "You have already checked into this event!");
         }
 
-        if (eventCheckIns.filter { $0.deviceUUID == args.deviceUUID }.size > 0) {
+        if (eventCheckIns.filter { $0.deviceUUID == args.deviceUUID }.count > 0) {
             return Msg(success: false, msg: "This device already checked into this event. Don't spoof for your friends!");
         }
 
@@ -274,7 +274,7 @@ struct StudentController : RouteCollection {
           .filter(\.$date < sixHoursAgo)
           .first() {
             let maxSpeed = 31.2928 // 70mph to meters per second
-            let timeBetween = Date().timeIntervalSince(deviceCheckIn.date);
+            let timeBetween = Date().timeIntervalSince(deviceCheckIn.date!);
             let maxDistanceCouldHaveTravelled = timeBetween * maxSpeed;
             
             if (LocationHelper.haversine(lat1: deviceCheckIn.latitude, lon1: deviceCheckIn.longitude, lat2: args.latitude, lon2: args.longitude) > maxDistanceCouldHaveTravelled) {
