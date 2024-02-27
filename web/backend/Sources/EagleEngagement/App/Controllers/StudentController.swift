@@ -222,6 +222,10 @@ struct StudentController : RouteCollection {
 
         let args = try req.content.decode(EventCheckinQuery.self);
 
+        if (args.accuracy > 1000) {
+            return Msg(success: false, msg: "Location is too inacurate.");
+        }
+
         let userToken = try req.jwt.verify(as: UserToken.self);
 
         guard let studentUser = try await StudentUser.query(on: req.db)
