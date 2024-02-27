@@ -135,11 +135,12 @@ struct StudentController : RouteCollection {
             throw Abort(.unauthorized);
         }
 
-        studentUser.name = args.name;
+        studentUser.user.name = args.name;
         studentUser.studentID = args.studentID;
         studentUser.grade = args.grade;
         studentUser.house = args.house;
 
+        try await studentUser.user.save(on: req.db);
         try await studentUser.save(on: req.db);
 
         return Msg(success: true, msg: "Edited Profile!")
@@ -211,6 +212,7 @@ struct StudentController : RouteCollection {
         var latitude: Double;
         var longitude: Double;
         var accuracy: Double;
+        var deviceUUID: String;
     }
 
     func checkInEvent(_ req: Request) async throws -> Msg {
@@ -223,8 +225,8 @@ struct StudentController : RouteCollection {
         let userToken = try req.jwt.verify(as: UserToken.self);
 
         guard let studentUser = try await StudentUser.query(on: req.db)
-                .join(User.self, on: \StudentUser.$user.$id == \User.$id)
-                .filter(User.self, \.$id == userToken.userId)
+                .with(\.$user)
+                .filter(\.$user.$id == userToken.userId)
                 .first()
         else {
             throw Abort(.unauthorized);
@@ -235,6 +237,10 @@ struct StudentController : RouteCollection {
           .first(), event.checkinType == .location
         else {
             throw Abort(.badRequest);
+        }
+
+        guard event.checkinType == .location else {
+            return Msg(success: false, msg: "CheckInType is not location.");
         }
 
         guard (LocationHelper.circlesIntersect(
@@ -252,6 +258,9 @@ struct StudentController : RouteCollection {
 
         let pointHistory = PointHistory(user: studentUser, reason: event.name, points: event.pointsWorth);
         try await pointHistory.save(on: req.db);
+
+        let eventCheckIn = EventCheckIns(user: studentUser.user, event: event, deviceUUID: args.deviceUUID, latitude: args.latitude, longitude: args.longitude);
+        try await eventCheckIn.save(on: req.db);
 
         return Msg(success: true, msg: "Checked into \(event.name)!");
     }
