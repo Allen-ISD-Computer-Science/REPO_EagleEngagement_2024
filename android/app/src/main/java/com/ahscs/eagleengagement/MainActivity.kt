@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         val eventsList = EventsFragment(jwt!!)
-        val clubsList = ClubsFragment()
+        val clubsList = ClubsFragment(jwt!!)
         val rewardsList = RewardsFragment()
 
         loadFragment(eventsList)

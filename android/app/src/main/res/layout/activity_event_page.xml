@@ -176,8 +176,8 @@
                     android:layout_marginTop="@dimen/_13pxv"
                     android:layout_width="@dimen/_21pxh"
                     android:scaleType="fitXY"
-                    android:src="@drawable/img_linkedin"
-                    tools:ignore="ContentDescription" tools:src="@drawable/img_linkedin"/>
+                    android:src="@drawable/img_locationpin"
+                    tools:ignore="ContentDescription" tools:src="@drawable/img_locationpin"/>
                 <TextView android:id="@+id/txtAddress"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_20pxh"

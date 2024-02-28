@@ -29,4 +29,10 @@ interface RetrofitAPI {
 
     @POST("event/{id}")
     fun postEventContent(@Header ("Authorization") authToken: String, @Path("id") eventId: String): Call<DataModel.EventContentResponse>
+
+    @POST("clubs")
+    fun postClubs(@Header("Authorization") authToken: String): Call<MutableList<DataModel.ClubResponse>>
+
+    @POST("club/{id}")
+    fun postClubContent(@Header ("Authorization") authToken: String, @Path("id") clubId: String): Call<DataModel.ClubContentResponse>
 }

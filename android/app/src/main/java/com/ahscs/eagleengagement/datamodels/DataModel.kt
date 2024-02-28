@@ -32,4 +32,21 @@ sealed class DataModel {
         var startDate: Date,
         var endDate: Date
     ) : DataModel()
+
+    data class ClubResponse(
+        var id: Int,
+        var name: String,
+        var description: String
+    ) : DataModel()
+
+    data class ClubContentResponse(
+        var name: String,
+        var description: String,
+        var meetingTimes: String?,
+        var locationName: String?,
+        var websiteLink: String?,
+        var instagramLink: String?,
+        var twitterLink: String?,
+        var youtubeLink: String?
+    ) : DataModel()
 }
