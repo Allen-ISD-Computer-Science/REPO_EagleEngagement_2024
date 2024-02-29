@@ -13,7 +13,7 @@ function UsersPage(props) {
   const searchRef = React.useRef(null);
 
   const [users, setUsers] = React.useState([
-    { name: "Brett Kaplan", grade: 12, house: 300, points: 78 },
+//    { name: "Brett Kaplan", grade: 12, house: 300, points: 78 },
     // { name: "Brett Kaplan", grade: 12, house: 300, points: 78 },
   ]);
   
