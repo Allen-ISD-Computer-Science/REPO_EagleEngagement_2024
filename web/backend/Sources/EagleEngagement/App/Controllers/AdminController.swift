@@ -9,6 +9,8 @@ struct AdminController : RouteCollection {
         let sessionRoutes = adminRoutes.grouped([User.sessionAuthenticator(), UserAuthenticator()])
         let adminProtectedRoutes = sessionRoutes.grouped(AdminMiddleware());
 
+        adminProtectedRoutes.get("users", use: serveIndex);
+        
         adminProtectedRoutes.get("events", use: serveIndex);
         adminProtectedRoutes.get("events", "new", use: serveIndex);
         adminProtectedRoutes.get("events", "edit", ":id", use:serveIndex);
@@ -32,6 +34,11 @@ struct AdminController : RouteCollection {
         apiRoutes.post("location", ":id", use: fetchLocation);
         apiRoutes.post("location", ":id", "edit", use: editLocation);
         apiRoutes.post("locations", "new", use: newLocation);
+
+        apiRoutes.post("users", use: fetchUsers);
+        apiRoutes.post("users", "modify", use: modifyUsers);
+        apiRoutes.post("users", "estimateCount", use: estimateCount);
+        apiRoutes.post("user", ":id", "modifyPoints", use: modifyUser);
     }
 
     func serveIndex(_ req: Request) async throws -> View {
@@ -47,6 +54,146 @@ struct AdminController : RouteCollection {
           };
 
         return Array<String>(Set<String>(eventTypes));
+    }
+
+    struct UsersQuery : Content {
+        var filter: String?;
+    }
+
+    struct StudentUserInfo : Content {
+        var id: Int;
+        var studentID: Int;
+        var name: String;
+        var grade: Int?;
+        var house: Int?;
+        var points: Int;
+    }
+    
+    func fetchUsers(_ req: Request) async throws -> [StudentUserInfo] {
+        let args = try req.content.decode(UsersQuery.self);
+
+        let studentUsers = try await StudentUser.query(on: req.db).with(\.$user)
+          .all()
+          .map { studentUser in
+              StudentUserInfo.init(id: studentUser.user.id!, studentID: studentUser.studentID, name: studentUser.user.name, grade: studentUser.grade, house: studentUser.house, points: studentUser.points);
+          }
+
+        if let fil = args.filter {
+            let filter = fil.uppercased();
+            let filteredUsers = studentUsers.filter {
+                $0.name.uppercased().contains(filter) ||
+                  String($0.studentID).contains(filter)
+            }
+
+            return filteredUsers;
+        }
+
+        return studentUsers;
+    }
+
+    struct EstimationQuery : Content {
+        var mode: String;
+        var grade: [Int];
+        var house: [Int];
+    }
+
+    struct Estimation : Content {
+        var amount: Int
+    }
+    
+    func estimateCount(_ req: Request) async throws -> Estimation {
+        let args = try req.content.decode(EstimationQuery.self);
+        
+        let studentUsers = try await StudentUser.query(on: req.db).with(\.$user);
+        var studentUserCount = 0;
+        
+        if (args.grade.count > 0 && args.house.count > 0) {
+            studentUserCount = try await studentUsers
+              .group(args.mode == "or" ? .or : .and) { opt in
+                  opt.filter(\.$grade ~~ args.grade).filter(\.$house ~~ args.house)
+              }
+              .count();
+        } else if (args.grade.count > 0) {
+            studentUserCount = try await studentUsers
+              .filter(\.$grade ~~ args.grade)
+              .count();
+        } else if (args.house.count > 0) {
+            studentUserCount = try await studentUsers
+              .filter(\.$house ~~ args.house)
+              .count();
+        } else {
+            studentUserCount = try await studentUsers.count();
+        }
+        
+        return Estimation.init(amount: studentUserCount);
+    }
+
+    struct ModifyQuery : Content {
+        var mode: String;
+        var grade: [Int];
+        var house: [Int];
+        var points: Int;
+        var reason: String;
+    }
+
+    func modifyUsers(_ req: Request) async throws -> Msg {
+        let args = try req.content.decode(ModifyQuery.self);
+
+        var studentUsers : [StudentUser];
+        if (args.grade.count > 0 && args.house.count > 0) {
+            studentUsers = try await StudentUser.query(on: req.db).with(\.$user)
+              .group(args.mode == "or" ? .or : .and) { opt in
+                  opt.filter(\.$grade ~~ args.grade).filter(\.$house ~~ args.house)
+              }
+              .all();
+        } else if (args.grade.count > 0) {
+            studentUsers = try await StudentUser.query(on: req.db).with(\.$user)
+              .filter(\.$grade ~~ args.grade)
+              .all();
+        } else if (args.house.count > 0) {
+            studentUsers = try await StudentUser.query(on: req.db).with(\.$user)
+              .filter(\.$house ~~ args.house)
+              .all();
+        } else {
+            studentUsers = try await StudentUser.query(on: req.db).with(\.$user).all();
+        }
+
+        for sUser in studentUsers {
+            let pointHistory = PointHistory(user: sUser, reason: args.reason, points: args.points);
+            try await pointHistory.save(on: req.db);
+            
+            sUser.points = sUser.points + args.points;
+            try await sUser.save(on: req.db);
+        }
+
+        return Msg(success: true, msg: "Updated \(studentUsers.count) users.");
+    }
+
+    struct ModifyUserQuery : Content {
+        var points: Int;
+        var reason: String;
+    }
+
+    func modifyUser(_ req: Request) async throws -> Msg {
+        guard let userID = req.parameters.get("id", as: Int.self) else {
+            throw Abort(.badRequest)
+        }
+
+        let args = try req.content.decode(ModifyUserQuery.self);
+
+        guard let studentUser = try await StudentUser.query(on: req.db).with(\.$user)
+          .filter(\.$user.id == userID)
+          .first() else {
+            throw Abort(.badRequest);
+        }
+
+        let pointHistory = PointHistory(user: studentUser, reason: args.reason, points: args.points);
+        try await pointHistory.save(on: req.db);
+        
+        studentUser.points = studentUser.points + args.points;
+        try await studentUser.save(on: req.db);
+
+        return Msg(success: true, msg: "Updated \(studentUser.user.name)!");
     }
 
     struct EventsQuery : Content {

@@ -15,10 +15,12 @@ import SignUpPage from "./pages/SignUp.js"
 // Teacher Pages
 import ClubsDashboard from './pages/teacher/ClubsDashboard.js';
 import ClubPage from './pages/teacher/Club.js';
+import NewEditClubPage from './pages/teacher/NewEditClub.js';
 import EventRequestPage from './pages/teacher/EventRequest.js';
 
 // Admin Pages
 import CheckInRequestsPage from './pages/admin/CheckInRequests.js';
+import UsersPage from './pages/admin/Users.js';
 
 import EventRequestsPage from './pages/admin/EventRequests.js';
 import EventsPage from './pages/admin/Events.js';
@@ -57,8 +59,20 @@ const router = createBrowserRouter([
     element: <ClubPage />,
   },
   {
+    path: "/clubs/new",
+    element: <NewEditClubPage />,
+  },
+  {
+    path: "/club/edit/*",
+    element: <NewEditClubPage />,
+  },
+  {
     path: "/event-request",
     element: <EventRequestPage />,
+  },
+  {
+    path: "/admin/users",
+    element: <UsersPage />,
   },
   {
     path: "/admin/event-requests",

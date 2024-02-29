@@ -1,20 +1,49 @@
 html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 8rem;
+    scroll-behavior: smooth;
+    scroll-padding-top: 8rem;
 }
 
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+        "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+        monospace;
+}
+
+/*
+  text-black table-fixed text-center
+  border-slate-400 [&_th]:border-slate-400 [&_td]:border-slate-400
+  [&_th]:border-r [&_td]:border-r [&_td]:border-b [&_th]:p-2 [&_td]:p-2 */
+.inner-table {
+    width: 100%;
+    color: black;
+    display: table;
+    table-layout: auto;
+    text-align: center;
+    border-color: rgb(148 163 184 / var(--tw-border-opacity));
+}
+
+.inner-table td {
+    padding: 0.25rem;
+}
+
+.inner-table th:not(:last-child),
+.inner-table td:not(:last-child) {
+    border-right-width: 1px;
+    border-color: rgb(148 163 184 / var(--tw-border-opacity));
+}
+
+.inner-table th,
+.inner-table tr:not(:last-child) {
+    border-bottom-width: 1px;
+    border-color: rgb(148 163 184 / var(--tw-border-opacity));
 }
 
 @tailwind base;

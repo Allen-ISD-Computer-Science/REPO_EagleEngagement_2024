@@ -17,7 +17,7 @@ struct TeacherController : RouteCollection {
     struct ClubInfo : Content {
         var id: Int;
         var name: String;
-        var descritpion: String;
+        var description: String;
         var studentsFollowing: Int;
         var lastCheckInCount: Int;
         // todo: revisit        var categories: [String];
@@ -34,7 +34,7 @@ struct TeacherController : RouteCollection {
           .filter(\.$user.$id == user.id!)
           .all()
           .map { clubSponsor in
-              ClubInfo.init(id: clubSponsor.club.id!, name: clubSponsor.club.name, descritpion: clubSponsor.club.description, studentsFollowing: 100, lastCheckInCount: 30)
+              ClubInfo.init(id: clubSponsor.club.id!, name: clubSponsor.club.name, description: clubSponsor.club.description, studentsFollowing: 100, lastCheckInCount: 30)
           };
 
         return clubs;
@@ -44,7 +44,7 @@ struct TeacherController : RouteCollection {
         var name: String;
         var description: String;
         var studentsFollowing: Int;
-        var meetings: [MeetingInfo];
+        var meetingLogs: [MeetingInfo];
         var meetingTimes: String?;
         var locationName: String?;
         var websiteLink: String?;
@@ -55,7 +55,7 @@ struct TeacherController : RouteCollection {
 
     struct MeetingInfo : Content {
         var date: Date;
-        var numberOfStudentsCheckedIn: Int;
+        var numberOfStudents: Int;
     }
 
     func fetchClub(_ req: Request) async throws -> FullClubInfo {
@@ -76,7 +76,7 @@ struct TeacherController : RouteCollection {
           .map { cS in // clubSponsor
               FullClubInfo.init(
                 name: cS.club.name, description: cS.club.description,
-                studentsFollowing: 100, meetings: [],
+                studentsFollowing: 100, meetingLogs: [],
                 meetingTimes: cS.club.meetingTimes, locationName: cS.club.locationName,
                 websiteLink: cS.club.websiteLink, instagramLink: cS.club.instagramLink,
                 twitterLink: cS.club.twitterLink, youtubeLink: cS.club.youtubeLink
@@ -157,6 +157,6 @@ struct TeacherController : RouteCollection {
         try await club.save(on: req.db);
 
         return Msg(success: true, msg: "Updated Club");
-    }    
+    }
     
 }

@@ -24,8 +24,10 @@ struct StudentController : RouteCollection {
         
         // Data
         protectedRoutes.post("profile", use: fetchProfile);
+        protectedRoutes.post("profile", "edit", use: editProfile);
         protectedRoutes.post("events", use: fetchEvents);
         protectedRoutes.post("event", ":id", use: fetchEvent);
+        protectedRoutes.post("event", ":id", "checkIn", use: checkInEvent);
         protectedRoutes.post("clubs", use: fetchClubs);
         protectedRoutes.post("club", ":id", use: fetchClub);
     }
@@ -113,6 +115,37 @@ struct StudentController : RouteCollection {
         )
     }
 
+    struct EditProfileInfo : Content {
+        var name: String;
+        var studentID: Int;
+        var grade: Int;
+        var house: Int;
+    }
+
+    func editProfile(_ req: Request) async throws -> Msg {
+        let args = try req.content.decode(EditProfileInfo.self);
+        
+        let userToken = try req.jwt.verify(as: UserToken.self);
+        
+        guard let studentUser = try await StudentUser.query(on: req.db)
+                .with(\.$user)
+                .filter(\.$user.$id == userToken.userId)
+                .first()
+        else {
+            throw Abort(.unauthorized);
+        }
+
+        studentUser.user.name = args.name;
+        studentUser.studentID = args.studentID;
+        studentUser.grade = args.grade;
+        studentUser.house = args.house;
+
+        try await studentUser.user.save(on: req.db);
+        try await studentUser.save(on: req.db);
+
+        return Msg(success: true, msg: "Edited Profile!")
+    }
+
     struct EventInfo : Content {
         var id: Int;
         var name: String;
@@ -174,6 +207,96 @@ struct StudentController : RouteCollection {
         let both = try event.joined(Location.self);
         return FullEventInfo.init(id: event.id!, name: event.name, description: event.description, eventType: event.eventType, locationName: both.locationName, address: both.address, pointsWorth: event.pointsWorth, startDate: event.startDate, endDate: event.endDate)
     }
+    
+    struct EventCheckinQuery : Content {
+        var latitude: Double;
+        var longitude: Double;
+        var accuracy: Double;
+        var deviceUUID: String;
+    }
+
+    func checkInEvent(_ req: Request) async throws -> Msg {
+        guard let id = req.parameters.get("id", as: Int.self) else {
+            throw Abort(.badRequest)
+        }
+
+        let args = try req.content.decode(EventCheckinQuery.self);
+
+        if (args.accuracy > 1000) {
+            return Msg(success: false, msg: "Location is too inacurate.");
+        }
+
+        let userToken = try req.jwt.verify(as: UserToken.self);
+
+        guard let studentUser = try await StudentUser.query(on: req.db)
+                .with(\.$user)
+                .filter(\.$user.$id == userToken.userId)
+                .first()
+        else {
+            throw Abort(.unauthorized);
+        }
+
+        guard let event = try await Events.query(on: req.db).with(\.$location)
+          .filter(\.$id == id)
+          .first(), event.checkinType == .location
+        else {
+            throw Abort(.badRequest);
+        }
+
+        guard event.checkinType == .location else {
+            return Msg(success: false, msg: "CheckInType is not location.");
+        }
+
+        guard (LocationHelper.circlesIntersect(
+              lat1: args.latitude,
+              lon1: args.longitude,
+              radius1: args.accuracy,
+              lat2: Double(event.location.latitude),
+              lon2: Double(event.location.longitude),
+              radius2: Double(event.location.radius))) else {
+            return Msg(success: false, msg: "You are not at the specified location!");
+        }
+
+        let eventCheckIns = try await EventCheckIns.query(on: req.db)
+             .with(\.$user).with(\.$event)
+             .filter(\.$event.$id == event.id!)
+             .all();
+
+        if (eventCheckIns.filter { $0.user.id == studentUser.user.id! }.count > 0) {
+            return Msg(success: false, msg: "You have already checked into this event!");
+        }
+
+        if (eventCheckIns.filter { $0.deviceUUID == args.deviceUUID }.count > 0) {
+            return Msg(success: false, msg: "This device already checked into this event. Don't spoof for your friends!");
+        }
+
+        let sixHoursAgo = Date(timeIntervalSinceNow: TimeInterval(6 * 60 * 60));
+
+        if let deviceCheckIn = try await EventCheckIns.query(on: req.db)
+          .with(\.$event)
+          .filter(\.$deviceUUID == args.deviceUUID)
+          .filter(\.$date < sixHoursAgo)
+          .first() {
+            let maxSpeed = 31.2928 // 70mph to meters per second
+            let timeBetween = Date().timeIntervalSince(deviceCheckIn.date!);
+            let maxDistanceCouldHaveTravelled = timeBetween * maxSpeed;
+            
+            if (LocationHelper.haversine(lat1: deviceCheckIn.latitude, lon1: deviceCheckIn.longitude, lat2: args.latitude, lon2: args.longitude) > maxDistanceCouldHaveTravelled) {
+                return Msg(success: false, msg: "You could not have feasibly checked into this event and the last one considering the time difference. No spoofing!");
+            }
+        }
+
+        studentUser.points = studentUser.points + event.pointsWorth;
+        try await studentUser.save(on: req.db);
+
+        let pointHistory = PointHistory(user: studentUser, reason: event.name, points: event.pointsWorth);
+        try await pointHistory.save(on: req.db);
+
+        let eventCheckIn = EventCheckIns(user: studentUser.user, event: event, deviceUUID: args.deviceUUID, latitude: args.latitude, longitude: args.longitude);
+        try await eventCheckIn.save(on: req.db);
+
+        return Msg(success: true, msg: "Checked into \(event.name)!");
+    }
 
     struct ClubInfo : Content {
         var id: Int;
@@ -195,6 +318,7 @@ struct StudentController : RouteCollection {
     struct FullClubInfo : Content {
         var name: String;
         var description: String;
+        var sponsors: String;
         var meetingTimes: String?;
         var locationName: String?;
         var websiteLink: String?;
@@ -208,17 +332,23 @@ struct StudentController : RouteCollection {
             throw Abort(.badRequest)
         }
 
-        let club = try await Club.query(on: req.db)
-          .filter(\.$id == id)
-          .first()
-          .map { club in
-              FullClubInfo.init(name: club.name, description: club.description, meetingTimes: club.meetingTimes, locationName: club.locationName, websiteLink: club.websiteLink, instagramLink: club.instagramLink, twitterLink: club.twitterLink, youtubeLink: club.youtubeLink)
-          };
+        let clubSponsors = try await ClubSponsorUser.query(on: req.db).with(\.$club).with(\.$user)
+          .filter(\.$club.$id == id)
+          .all();
 
-        guard let clubUnwrapped = club else {
+        guard clubSponsors.count > 0 else {
             throw Abort(.badRequest, reason: "Club not found");
         }
 
-        return clubUnwrapped; 
+        let club = clubSponsors[0].club;
+       
+        let clubInfo = FullClubInfo.init(name: club.name, description: club.description,
+                                     sponsors: clubSponsors.map{ cS in
+                                                           cS.user.name
+                                     }.joined(separator: ", "),
+                                     meetingTimes: club.meetingTimes, locationName: club.locationName,
+                                     websiteLink: club.websiteLink, instagramLink: club.instagramLink, twitterLink: club.twitterLink, youtubeLink: club.youtubeLink);
+
+        return clubInfo; 
     }    
 }

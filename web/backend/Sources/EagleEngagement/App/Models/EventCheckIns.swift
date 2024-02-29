@@ -18,12 +18,12 @@ final public class EventCheckIns: Model, Content {
     public var id: Int?
 
     /// ID of user that checked in
-    @Field(key: "userID")
-    public var userID: Int
+    @Parent(key: "userID")
+    public var user: User
 
     /// ID of event checked in to
-    @Field(key: "eventID")
-    public var eventID: Int
+    @Parent(key: "eventID")
+    public var event: Events
 
     /// uuid of device used to check in
     @Field(key: "deviceUUID")
@@ -31,11 +31,11 @@ final public class EventCheckIns: Model, Content {
 
     /// latitude of check in
     @Field(key: "latitude")
-    public var latitude: Float
+    public var latitude: Double
     
     /// longitude of check in
     @Field(key: "longitude")
-    public var longitude: Float
+    public var longitude: Double
 
     /// date of check in
     @Timestamp(key: "date", on: .create)
@@ -47,5 +47,14 @@ final public class EventCheckIns: Model, Content {
 
     // Creates a new, empty EventCheckIn.
     public init() { }
+
+    public init(user: User, event: Events, deviceUUID: String, latitude: Double, longitude: Double) {
+        self.$user.id = user.id!;
+        self.$event.id = event.id!;
+        self.deviceUUID = deviceUUID;
+        self.latitude = latitude;
+        self.longitude = longitude;
+        self.checkinType = .location;
+    }
 }
 
