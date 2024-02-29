@@ -24,7 +24,7 @@ struct StudentController : RouteCollection {
         apiRoutes.post("signup", use: studentSignUp.signUp);
         apiRoutes.post("verify", use: verification.verifyUser);
         apiRoutes.post("login", use: login);
-        apiRoutes.post("forgotpass", use: forgotPassword);
+        apiRoutes.post("forgotPassword", use: forgotPassword);
         protectedRoutes.post("logOutAll", use: logOutAllDevices);
         
         // Data
@@ -314,13 +314,21 @@ struct StudentController : RouteCollection {
 
         guard let event = try await Events.query(on: req.db).with(\.$location)
           .filter(\.$id == id)
-          .first(), event.checkinType == .location
+          .first()
         else {
-            throw Abort(.badRequest);
+            throw Abort(.badRequest, reason: "Invalid Event ID.");
         }
 
         guard event.checkinType == .location else {
             return Msg(success: false, msg: "CheckInType is not location.");
+        }
+
+        guard event.startDate > Date() else {
+            return Msg(success: false, msg: "Event has not started yet.")
+        }
+
+        guard event.endDate < Date() else {
+            return Msg(success: false, msg: "Event has already ended.");
         }
 
         guard (LocationHelper.circlesIntersect(

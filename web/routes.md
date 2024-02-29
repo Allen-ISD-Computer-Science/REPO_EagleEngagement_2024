@@ -33,6 +33,14 @@ Returns: {success: Bool, msg: String} - if success is true, msg is a JWT
 ```
 
 ```
+POST /api/forgotPassword
+email: String
+studentID: Int
+
+Returns { success: Bool, msg: String }
+```
+
+```
 POST /api/login
 email: String
 password: String
@@ -111,13 +119,22 @@ token: String
 password: String
 passwordConfirm: String
 
-Returns: {success: Bool, msg: String}
+Returns: { success: Bool, msg: String }
 ```
 
 ```
 POST /login
 email: String
 password: String
+
+Returns { success: Bool, msg: String }
+```
+
+```
+POST /forgotPassword
+email: String
+
+Returns { success: Bool, msg: String }
 ```
 
 ### Data
