@@ -1,52 +1,25 @@
 import * as React from 'react';
 
-import { Modal, Select, FormControl, InputLabel, MenuItem, TextField, Button } from '@mui/material';
+import { Modal, FormControl,
+    // InputLabel, MenuItem, Select,
+    TextField, Button } from '@mui/material';
 
-function GroupModifyPointsModal(props) {
-    const [mode, setMode] = React.useState('and')
-    const [grade, setGrade] = React.useState([])
-    const [house, setHouse] = React.useState([]);
+function ModifyUserModal(props) {
+    // const [grade, setGrade] = React.useState([])
+    // const [house, setHouse] = React.useState([]);
     const [points, setPoints] = React.useState(0);
     const [reason, setReason] = React.useState("Adjusted by an Administrator");
-    const [affectedNum, setAffectedNum] = React.useState(0);
 
-    const numberAffectedAPI = React.useRef(null);
-
-    React.useEffect(() => {
-        if (numberAffectedAPI.current) clearTimeout(numberAffectedAPI.current);
-
-        numberAffectedAPI.current = setTimeout(() => {
-            fetch(`${process.env.PUBLIC_URL}/admin/api/users/estimateCount`, {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    mode: mode,
-                    grade: grade,
-                    house: house
-                })
-            })
-                .then(a => a.json())
-                .then(json => {
-                    setAffectedNum(json.amount);
-                })
-                .catch(e => console.error(e));
-        }, 3000);
-    }, [mode, grade, house]);
-
-    const updateUsers = () => {
-        fetch(`${process.env.PUBLIC_URL}/admin/api/users/modify`, {
+    const updateUser = () => {
+        fetch(`${process.env.PUBLIC_URL}/admin/api/user/${props.user?.id}/modifyPoints`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                mode: mode,
-                grade: grade,
-                house: house,
+                // grade: grade,
+                // house: house,
                 points: points,
                 reason: reason
             })
@@ -64,7 +37,7 @@ function GroupModifyPointsModal(props) {
                             pauseOnHover: true,
                             theme: "light"
                         });
-
+                        
                         if (props.onSuccess) {
                             props.onSuccess((val) => val + 1);
                         }
@@ -93,22 +66,9 @@ function GroupModifyPointsModal(props) {
             }}
         >
             <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-4 rounded min-w-[400px] max-w-full shadow'>
-                <h2 className='text-2xl font-bold text-center'>Modify Points</h2>
-                <br />
-                <FormControl fullWidth>
-                    <InputLabel id="mode-label">Mode</InputLabel>
-                    <Select
-                        labelId="mode-label"
-                        value={mode}
-                        label="Mode"
-                        onChange={(e) => setMode(e.target.value)}
-                    >
-                        <MenuItem value={'and'}>AND</MenuItem>
-                        <MenuItem value={'or'}>OR</MenuItem>
-                    </Select>
-                </FormControl>
+                <h2 className='text-2xl font-bold text-center'>Modify {props.user?.name}</h2>
 
-                <div className='p-2'></div>
+                {/* <div className='p-2'></div>
 
                 <FormControl fullWidth>
                     <InputLabel id="grade-label">Grade</InputLabel>
@@ -117,7 +77,6 @@ function GroupModifyPointsModal(props) {
                         value={grade}
                         label="Grade"
                         onChange={(e) => setGrade(e.target.value)}
-			multiple
                     >
                         <MenuItem value={9}>Freshman</MenuItem>
                         <MenuItem value={10}>Sophomore</MenuItem>
@@ -135,7 +94,6 @@ function GroupModifyPointsModal(props) {
                         value={house}
                         label="House"
                         onChange={(e) => setHouse(e.target.value)}
-                        multiple
                     >
                         <MenuItem value={100}>House 100</MenuItem>
                         <MenuItem value={200}>House 200</MenuItem>
@@ -145,7 +103,7 @@ function GroupModifyPointsModal(props) {
                         <MenuItem value={600}>House 600</MenuItem>
                         <MenuItem value={700}>House 700</MenuItem>
                     </Select>
-                </FormControl>
+                </FormControl> */}
 
                 <div className='p-2'></div>
 
@@ -154,7 +112,7 @@ function GroupModifyPointsModal(props) {
                         variant='outlined'
                         labelId="points-label"
                         value={points}
-                        label="Points"
+                        label="Add Points"
                         type='number'
                         onChange={(e) => setPoints(parseInt(e.target.value))}
                     />
@@ -174,16 +132,12 @@ function GroupModifyPointsModal(props) {
 
                 <div className='p-2'></div>
 
-                <span className='italic text-sm'>Note: Applies to ~{affectedNum} students.</span>
-
-                <div className='p-2'></div>
-
                 <div className='flex flex-row justify-center align-center gap-4'>
                     {/* Submit button */}
                     <Button
                         variant="contained"
                         color="success"
-                        onClick={() => updateUsers()}
+                        onClick={() => updateUser()}
                     >
                         Submit
                     </Button>
@@ -205,4 +159,4 @@ function GroupModifyPointsModal(props) {
     )
 }
 
-export default GroupModifyPointsModal;
+export default ModifyUserModal;

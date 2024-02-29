@@ -6,24 +6,25 @@ import { faEdit, faGear, faSearch, faTrash } from '@fortawesome/free-solid-svg-i
 
 import AdminNav from "../../components/AdminNav";
 import LoadingOverlay from "../../components/LoadingOverlay";
+import ModifyUserModal from "../../components/ModifyUserModal";
 import GroupModifyPointsModal from "../../components/GroupModifyPointsModal";
 
 function UsersPage(props) {
   const searchRef = React.useRef(null);
 
   const [users, setUsers] = React.useState([
-    // { name: "Brett Kaplan", grade: 12, house: 300, points: 78 },
+    { name: "Brett Kaplan", grade: 12, house: 300, points: 78 },
     // { name: "Brett Kaplan", grade: 12, house: 300, points: 78 },
   ]);
-
+  
+  const [changedNum, setChangedNum] = React.useState(0);
   const [filter, setFilter] = React.useState("");
-
   const [manageModalOpen, setManageModalOpen] = React.useState(false);
-
+  const [manageUserModalOpen, setManageUserModalOpen] = React.useState(false);
+  const [activeUser, setActiveUser] = React.useState(null);
   const [requests, setRequests] = React.useState(0);
 
   React.useEffect(() => {
-
     const getUsers = async () => {
       const args = {};
       if (filter) args.filter = filter;
@@ -31,7 +32,7 @@ function UsersPage(props) {
       const res = await fetch(`${process.env.PUBLIC_URL}/admin/api/users`, {
         headers: { Accept: "application/json", "Content-Type": "application/json" },
         method: "POST",
-          body: JSON.stringify(args)
+        body: JSON.stringify(args)
       });
       return await res.json();
     }
@@ -44,7 +45,7 @@ function UsersPage(props) {
       setRequests((prev) => prev - 1);
     })
 
-  }, [filter]);
+  }, [filter, changedNum]);
 
   return (
     <div className="flex flex-row items-stretch min-h-[100vh]">
@@ -56,6 +57,14 @@ function UsersPage(props) {
       <GroupModifyPointsModal
         isOpen={manageModalOpen}
         setOpen={setManageModalOpen}
+        onSuccess={setChangedNum}
+        toast={toast}
+      />
+      <ModifyUserModal
+        isOpen={manageUserModalOpen}
+        setOpen={setManageUserModalOpen}
+        onSuccess={setChangedNum}
+        user={activeUser}
         toast={toast}
       />
 
@@ -135,7 +144,15 @@ function UsersPage(props) {
                     <td>{user.house}</td>
                     <td>{user.points}</td>
                     <td className="[&_button]:mx-4">
-                      <button className="bg-blue-950 text-white px-4 py-2 rounded-xl max-md:px-[6px]"><FontAwesomeIcon icon={faEdit} size="lg" /></button>
+                      <button
+                        className="bg-blue-950 text-white px-4 py-2 rounded-xl max-md:px-[6px]"
+                        onClick={() => {
+                          setActiveUser(user);
+                          setManageUserModalOpen(true);
+                        }}
+                      >
+                        <FontAwesomeIcon icon={faEdit} size="lg" />
+                      </button>
                       <button className="bg-blue-950 text-white px-4 py-2 rounded-xl max-md:px-[6px] max-md:my-[2px]"><FontAwesomeIcon icon={faTrash} size="lg" /></button>
                     </td>
                   </tr>

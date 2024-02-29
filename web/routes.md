@@ -143,6 +143,16 @@ Returns: {id: Int, name: String, description: String, eventType: String, locatio
 ```
 
 ```
+POST /admin/api/event/:id/checkIn
+latitude: Double;
+longitude: Double;
+accuracy: Double;
+deviceUUID: String;
+
+Returns: { success: Bool, msg: String }
+```
+
+```
 POST /admin/api/events/new
 name: String
 description: String
@@ -239,6 +249,12 @@ reason: String
 Returns: { success: Bool, msg: String }
 ```
 
+```
+POST /admin/api/user/:id/modifyPoints
+points: Int;
+var reason: String;
+
+Returns { success: Bool, msg: String }
 ```
 POST /faculty/api/clubs
 
