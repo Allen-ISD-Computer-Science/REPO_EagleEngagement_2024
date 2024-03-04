@@ -11,6 +11,11 @@
     <string name="lbl_0_applied">0 Applied</string>
     <string name="lbl_1_dec">1
 Dec</string>
+    <string-array name="grades">
+        <item>Senior</item>
+        <item>Junior</item>
+        <item>Sophomore</item>
+    </string-array>
     <string name="lbl_points">Points</string>
     <string name="lbl_first_name">First Name</string>
     <string name="lbl_last_name">Last Name</string>

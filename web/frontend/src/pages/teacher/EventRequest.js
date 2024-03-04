@@ -1,15 +1,91 @@
 import * as React from "react";
+import dayjs from "dayjs";
 
 import { DateTimePicker, TimePicker } from "@mui/x-date-pickers";
+import { ToastContainer, toast } from 'react-toastify';
 
 import TeacherNav from "../../components/TeacherNav";
-import { Button, MenuItem, Select, TextField } from "@mui/material";
+import { Button, MenuItem, Select, TextField, Autocomplete } from "@mui/material";
 
 function EventRequestPage(props) {
+    const [requestInfo, setRequestInfo] = React.useState({});
+    const [isDisabled, setDisabled] = React.useState(false);
+    const [eventTypes, setEventTypes] = React.useState([]);
+
+    const submitRequest = async () => {
+	const urlPath = `${process.env.PUBLIC_URL}/faculty/api/requestEvent`
+	
+	const filteredInfo = Object.assign({}, requestInfo);
+	
+	const keys = ["name", "eventType", "description", "location", "startDate", "endDate"];
+	for (let i = 0; i < keys.length; i++) {
+	    const key = keys[i];
+	    if ((filteredInfo[key] === "" || filteredInfo[key] === null || filteredInfo[key] === -1)) {
+		toast.error(`${key} cannot be empty!`, {
+		    position: "top-right",
+		    autoClose: 2000,
+		    closeOnClick: true,
+		    pauseOnHover: true,
+		    theme: "light"
+		});
+		return;
+	    }
+	}
+
+	console.log(filteredInfo.startDate.toISOString());
+	console.log(filteredInfo.endDate.toISOString());
+	
+	filteredInfo.startDate = filteredInfo.startDate.toISOString().split('.')[0] + "Z";
+	filteredInfo.endDate = filteredInfo.startDate.split('T')[0] + "T" + filteredInfo.endDate.toISOString().split("T")[1].split(".")[0] + "Z";
+
+	try {
+	    setDisabled(true);
+	    const res = await fetch(urlPath, {
+		method: "POST",
+		headers: {
+		    "Content-Type": "application/json",
+		    "Accept": "application/json"
+		},
+		body: JSON.stringify(filteredInfo)
+	    });
+
+	    if (res.status === 200) {
+		toast.success(`Requested event!`, {
+		    position: "top-right",
+		    autoClose: 2000,
+		    closeOnClick: true,
+		    pauseOnHover: true,
+		    theme: "light"
+		});
+	    } else {
+		toast.error(res.statusText, {
+		    position: "top-right",
+		    autoClose: 2000,
+		    closeOnClick: true,
+		    pauseOnHover: true,
+		    theme: "light"
+		});
+		setDisabled(false);
+	    }
+	} catch (e) {
+	    console.error(e);	    
+	}
+    }
+    
   return (
     <div className="flex flex-row items-stretch min-h-[100vh]">
-      <TeacherNav selected="event-request" />
-      <div className="flex flex-col items-stretch w-full">
+	<TeacherNav selected="event-request" />
+	<ToastContainer
+            position="top-right"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            pauseOnFocusLoss
+            pauseOnHover
+            theme="light"
+          />
+	<div className="flex flex-col items-stretch w-full">
         <div className="flex flex-col justify-center text-white text-5xl font-bold bg-blue-950 w-full pl-12 pr-12 items-start max-md:text-4xl max-md:px-5 h-[150px] max-md:max-h-[100px]">
           <span className="my-auto">
             Event Request
@@ -26,20 +102,42 @@ function EventRequestPage(props) {
             <TextField
               className="border bg-gray-100 rounded-xl w-full"
               placeholder="Event Name"
-              name="name"
+		name="name"
+		value={requestInfo?.name}
+		onChange={(e) => {
+                setRequestInfo({
+                  ...requestInfo,
+                  name: e.currentTarget.value
+                })
+              }}
+
             />
 
             <label className="block text-gray-700 text-sm font-bold mb-2 mt-4" htmlFor="type">
               Event Type
             </label>
-            <Select
+            <Autocomplete
               className="border bg-gray-100 rounded-xl w-full"
               name="type"
-            >
-              <MenuItem value="football">Football</MenuItem>
-              <MenuItem value="soccer">Soccer</MenuItem>
-              <MenuItem value="basketball">Basketball</MenuItem>
-            </Select>
+              options={eventTypes}
+              value={requestInfo?.eventType}
+              onChange={(e) => {
+                setRequestInfo({
+                  ...requestInfo,
+                  eventType: eventTypes[e.target.value]
+                });
+              }}
+              onBlur={(e) => {
+                if (requestInfo.eventType !== e.target.value) {
+                  setRequestInfo({
+                    ...requestInfo,
+                    eventType: e.target.value
+                  });
+                }
+              }}
+              freeSolo
+              renderInput={params => <TextField {...params} />}
+            />
 
             <div className="relative">
               <label className="block text-gray-700 text-sm font-bold mb-2 mt-4" htmlFor="description">
@@ -49,10 +147,16 @@ function EventRequestPage(props) {
                 className="border bg-gray-100 rounded-xl w-full"
                 placeholder="Description"
                 name="description"
-                maxLength={255}
-                onChange={(e) => {
-                  // Max length of 255 characters update
+                  maxLength={255}
+		  value={requestInfo?.description}
+                  onChange={(e) => {
+                  setRequestInfo({
+                    ...requestInfo,
+                    description: e.currentTarget.value
+                  })
+                  // TODO: add #/255
                 }}
+
               />
             </div>
               
@@ -68,20 +172,43 @@ function EventRequestPage(props) {
                 placeholder="Location Description"
                 name="location-description"
                 maxLength={1000}
+		value={requestInfo?.location}
+                onChange={(e) => {
+                  setRequestInfo({
+                    ...requestInfo,
+                    location: e.currentTarget.value
+                  })
+                }}
+
             />
 
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="startDate">
               Start Date & Time
             </label>
             <DateTimePicker
-              className="border bg-gray-100 rounded-xl w-full"
+		className="border bg-gray-100 rounded-xl w-full"
+		value={dayjs(requestInfo?.startDate)}
+		onChange={(newValue) => {
+                    setRequestInfo({
+			...requestInfo,
+			startDate: newValue
+                    })
+		}}
             />
 
             <label className="block text-gray-700 text-sm font-bold mb-2 mt-4" htmlFor="endTime">
               End Time
             </label>
             <TimePicker
-              className="border bg-gray-100 rounded-xl w-full"
+		className="border bg-gray-100 rounded-xl w-full"
+		value={dayjs(requestInfo?.endDate)}
+              onChange={(newValue) => {
+                setRequestInfo({
+                  ...requestInfo,
+                  endDate: newValue
+                })
+              }}
+
             />
 
             <br />
@@ -92,7 +219,9 @@ function EventRequestPage(props) {
               {/* Submit button */}
               <Button
                 variant="contained"
-                color="success"
+                  color="success"
+		  onClick={() => submitRequest() }
+		  disabled={isDisabled}
               >
                 Submit
               </Button>

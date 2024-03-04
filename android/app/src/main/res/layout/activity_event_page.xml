@@ -65,8 +65,8 @@
                                 android:paddingStart="@dimen/_4pxh"
                                 android:paddingTop="@dimen/_1pxv"
                                 android:singleLine="true"
-                                android:text="@string/lbl_10"
-                                style="@style/txtGradientRounded" tools:text="@string/lbl_10"/>
+                                android:text=""
+                                style="@style/txtGradientRounded" tools:text=""/>
 
 
                         </LinearLayout>
@@ -90,8 +90,8 @@
                 android:id="@+id/linearRow1dec"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_19pxv"
-                android:layout_marginEnd="@dimen/_32pxh"
-                android:layout_marginStart="@dimen/_32pxh"
+                android:layout_marginEnd="@dimen/_20pxh"
+                android:layout_marginStart="@dimen/_20pxh"
                 android:layout_marginTop="@dimen/_18pxv"
                 android:layout_width="match_parent" android:orientation="horizontal">
                 <LinearLayout android:gravity="center_horizontal"
@@ -99,7 +99,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/_12pxv"
                     android:layout_marginTop="@dimen/_12pxv"
-                    android:layout_weight="0.23"
                     android:layout_width="wrap_content"
                     android:orientation="vertical" style="@style/groupStylegray_100cornerRadius">
                     <TextView android:gravity="center_horizontal"
@@ -138,8 +137,8 @@
                         android:layout_marginTop="@dimen/_10pxv"
                         android:layout_weight="0.45"
                         android:layout_width="wrap_content"
-                        android:text="Friday"
-                        style="@style/txtKhulaextrabold20" tools:text="Friday"/>
+                        android:text=""
+                        style="@style/txtKhulaextrabold20" tools:text=""/>
                     <TextView android:id="@+id/txtTime"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_18pxv"
@@ -147,13 +146,13 @@
                         android:layout_marginTop="0dp"
                         android:layout_weight="0.45"
                         android:layout_width="wrap_content"
-                        android:text="@string/msg_friday_6_00_9_0"
-                        style="@style/txtKhulaextrabold20gray" tools:text="6:00PM - 9:00PM"/>
+                        android:text=""
+                        style="@style/txtKhulaextrabold20gray" tools:text=""/>
                 </LinearLayout>
                 <ImageView android:id="@+id/imageClose"
-                    android:layout_height="@dimen/_82pxh"
+                    android:layout_height="@dimen/_75pxh"
                     android:layout_marginStart="@dimen/_18pxh"
-                    android:layout_width="@dimen/_82pxh"
+                    android:layout_width="@dimen/_75pxh"
                     android:scaleType="fitXY"
                     android:src="@drawable/img_close"
                     tools:ignore="ContentDescription" tools:src="@drawable/img_close"/>

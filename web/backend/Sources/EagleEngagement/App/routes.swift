@@ -14,7 +14,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 import Vapor
-
 import Fluent
 import FluentMySQLDriver
 
@@ -51,11 +50,17 @@ func routes(_ app: Application) throws {
         return try await teacherSignUp.signUp(req);
     };
 
+    let teacherForgot = TeacherForgotPassword();
+    sessionRoutes.post("forgotPassword") { req -> Msg in
+        return try await teacherForgot.forgotPassword(req);
+    }
+
     let teacherProtectedRoutes = sessionRoutes.grouped(TeacherMiddleware());
 
     struct IsAdmin : Content {
         var value: Bool;
     }
+    
     teacherProtectedRoutes.get("isAdmin") { req in
         guard let user = req.auth.get(User.self) else {
             throw Abort(.unauthorized);
@@ -68,7 +73,15 @@ func routes(_ app: Application) throws {
         return try await serveIndex(req)        
     }
 
+    teacherProtectedRoutes.get("clubs", "new") { req in
+        return try await serveIndex(req)        
+    }
+
     teacherProtectedRoutes.get("club", ":clubId") { req in
+        return try await serveIndex(req)        
+    }
+
+    teacherProtectedRoutes.get("club", "edit", ":clubId") { req in
         return try await serveIndex(req)        
     }
 

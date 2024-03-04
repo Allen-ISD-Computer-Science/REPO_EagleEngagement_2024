@@ -11,7 +11,7 @@ function TeacherNav(props) {
 
   React.useEffect(() => {
     function setAdmin() {
-      setIsAdmin(window.sessionStorage.getItem("isAdmin"));
+      setIsAdmin(window.sessionStorage.getItem("isAdmin") === "true");
     }
 
     if (window.sessionStorage.getItem("isAdmin") === null) {

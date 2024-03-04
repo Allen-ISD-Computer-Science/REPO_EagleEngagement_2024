@@ -52,8 +52,8 @@ class ClubActivity : AppCompatActivity() {
                         var name : TextView = findViewById(R.id.txtClubName)
                         name.text = data.name
 
-//                        var sponsor : TextView = findViewById(R.id.txtClubSponsor)
-//                        sponsor.text = "Sponsor: " + data.sponsor
+                        var sponsor : TextView = findViewById(R.id.txtClubSponsor)
+                        sponsor.text = "Sponsors: " + data.sponsors
 
                         var location : TextView = findViewById(R.id.txtClubLocation)
                         if (data.locationName == null) {

@@ -33,6 +33,18 @@ sealed class DataModel {
         var endDate: Date
     ) : DataModel()
 
+    data class EventCheckIn(
+        var latitude: Double,
+        var longitude: Double,
+        var accuracy: Double,
+        var deviceUUID: String
+    ) : DataModel ()
+
+    data class EventCheckInResponse(
+        var success: Boolean,
+        var msg: String
+    ) : DataModel()
+
     data class ClubResponse(
         var id: Int,
         var name: String,
@@ -42,6 +54,7 @@ sealed class DataModel {
     data class ClubContentResponse(
         var name: String,
         var description: String,
+        var sponsors: String,
         var meetingTimes: String?,
         var locationName: String?,
         var websiteLink: String?,
