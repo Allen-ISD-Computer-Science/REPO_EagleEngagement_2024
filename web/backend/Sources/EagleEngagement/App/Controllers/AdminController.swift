@@ -182,7 +182,7 @@ struct AdminController : RouteCollection {
         let args = try req.content.decode(ModifyUserQuery.self);
 
         guard let studentUser = try await StudentUser.query(on: req.db).with(\.$user)
-          .filter(\.$user.id == userID)
+          .filter(\.$user.$id == userID)
           .first() else {
             throw Abort(.badRequest);
         }

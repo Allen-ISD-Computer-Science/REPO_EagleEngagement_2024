@@ -8,6 +8,10 @@ struct StudentLoginParams : Content {
 }
 
 struct StudentController : RouteCollection {
+    func randomString(length: Int) -> String {
+        let letters = "123456789"
+        return String((0..<length).map{ _ in letters.randomElement()! })
+    }
 
     func boot(routes: RoutesBuilder) throws {
         let apiRoutes = routes.grouped("api");
@@ -20,6 +24,7 @@ struct StudentController : RouteCollection {
         apiRoutes.post("signup", use: studentSignUp.signUp);
         apiRoutes.post("verify", use: verification.verifyUser);
         apiRoutes.post("login", use: login);
+        apiRoutes.post("forgotPassword", use: forgotPassword);
         protectedRoutes.post("logOutAll", use: logOutAllDevices);
         
         // Data
@@ -82,6 +87,77 @@ struct StudentController : RouteCollection {
 
         try await studentUser.save(on: req.db);
         return Msg(success: true, msg: "Logged out of all devices!");
+    }
+
+    struct ForgotQuery : Content {
+        var email: String;
+        var studentID: Int;
+    }
+
+    func forgotPassword(_ req: Request) async throws -> Msg {
+        let args = try req.content.decode(ForgotQuery.self);
+
+        if (args.email.isEmpty || args.studentID < 0) {
+            throw Abort(.badRequest);
+        }
+
+        if (!args.email.hasSuffix("@student.allenisd.org") || Array(args.email.split(separator: "@")).count > 2) {
+            throw Abort(.badRequest, reason: "Email invalid.");
+        }
+
+        guard let studentUser = try await StudentUser.query(on: req.db)
+                .join(User.self, on: \StudentUser.$user.$id == \User.$id)
+                .filter(\.$studentID == args.studentID)
+                .filter(User.self, \.$email == args.email)
+                .first() else {
+            throw Abort(.badRequest, reason: "Account not found or invalid.");
+        }
+
+        let verificationString = randomString(length: 8);
+        
+        studentUser.user.verificationToken = verificationString;
+        try await studentUser.user.save(on: req.db);
+
+        guard let studentForgotTemplateID = Environment.get("STUDENT_FORGOT_TEMPLATE_ID") else {
+            fatalError("Failed to determine STUDENT_FORGOT_TEMPLATE_ID from environment");
+        }
+
+        let name = studentUser.user.name.split(separator: " ", maxSplits: 1).map(String.init);
+        let firstName = name[0];
+        let lastName = name[1];
+
+        let contact = EmailContact(firstName: firstName, lastName: lastName, emailAddress: studentUser.user.email)
+        let verifyEmail = TokenURLEmail(token: verificationString).createContent(with: contact)
+        let emailData = EmailData(contact: contact,
+                                  templateExternalID: studentForgotTemplateID,
+                                  templateParameters: verifyEmail)
+
+        try await GlobalEmailAPI.sendEmail(from: req, with: emailData)
+
+        return Msg(success: true, msg: "Send forgot code to your email!");
+    }
+
+    struct TokenURLEmail: EmailContactConsumer {
+        private struct TokenURLEmailWrapper: Encodable {
+            let firstName: String?
+            let lastName: String?
+            let verificationCode: String
+            let name: String
+        }
+
+        let token: String;
+
+        init(token: String) {
+            self.token = token;
+        }
+
+        func createContent(with contact: EmailContact) -> Encodable {
+            return TokenURLEmailWrapper(firstName: contact.firstName,
+                                        lastName: contact.lastName,
+                                        verificationCode: self.token,
+                                        name: "\(contact.firstName!) \(contact.lastName!)"
+            )
+        }
     }
 
     struct ProfileInfo : Content {
@@ -238,13 +314,21 @@ struct StudentController : RouteCollection {
 
         guard let event = try await Events.query(on: req.db).with(\.$location)
           .filter(\.$id == id)
-          .first(), event.checkinType == .location
+          .first()
         else {
-            throw Abort(.badRequest);
+            throw Abort(.badRequest, reason: "Invalid Event ID.");
         }
 
         guard event.checkinType == .location else {
             return Msg(success: false, msg: "CheckInType is not location.");
+        }
+
+        guard event.startDate > Date() else {
+            return Msg(success: false, msg: "Event has not started yet.")
+        }
+
+        guard event.endDate < Date() else {
+            return Msg(success: false, msg: "Event has already ended.");
         }
 
         guard (LocationHelper.circlesIntersect(

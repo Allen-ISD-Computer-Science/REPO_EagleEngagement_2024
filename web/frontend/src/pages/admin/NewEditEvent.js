@@ -60,24 +60,24 @@ function NewEditEventPage(props) {
         const res = await fetch(`${process.env.PUBLIC_URL}/admin/api/event/${eventID}`, { headers: { Accept: "application/json" }, method: "POST" });
         return await res.json();
       }
-
-      setRequests((prev) => prev + 1);
+	
+	setRequests((prev) => prev + 1);
 	getEvent().then((ev) => {
 	    console.log(ev);
 	    const event = ev;
 	    event.startDate = dayjs(ev.startDate);
 	    event.endDate = dayjs(ev.endDate);
 	    console.log(event);
-        document.title = "Edit Event - " + event.name;
-          setTitle("Edit Event - " + event.name);
-        setEventInfo(event);
-        setRequests((prev) => prev - 1);
-      }).catch((err) => {
-        setRequests((prev) => prev - 1);
-        // console.error(err);
-      });
-
-      return;
+            document.title = "Edit Event - " + event.name;
+            setTitle("Edit Event - " + event.name);
+            setEventInfo(event);
+            setRequests((prev) => prev - 1);
+	}).catch((err) => {
+            setRequests((prev) => prev - 1);
+            // console.error(err);
+	});
+	
+	return;
     }
 
     if (!window.location.pathname.endsWith("/admin/events/new")) throw new Error("Invalid event ID.");
@@ -96,46 +96,49 @@ function NewEditEventPage(props) {
 
     const saveButtonClicked = async () => {
 	var isNew = true;
-    var urlPath = "/admin/api/events/new"
+	var urlPath = "/admin/api/events/new"
 	if (!window.location.pathname.endsWith("/admin/events/new")) {
 	    isNew = false;
-      const eventID = parseInt(window.location.pathname.split("/").pop());
-      urlPath = `/admin/api/event/${eventID}/edit`
-    }
+	    const eventID = parseInt(window.location.pathname.split("/").pop());
+	    urlPath = `/admin/api/event/${eventID}/edit`
+	}
 
-      const filteredInfo = Object.assign({}, eventInfo);
-    delete filteredInfo.locationName;
-    if (!filteredInfo.customImagePath) delete filteredInfo.customImagePath;
+	const filteredInfo = Object.assign({}, eventInfo);
+	delete filteredInfo.locationName;
+	if (!filteredInfo.customImagePath) delete filteredInfo.customImagePath;
+	
+	const keys = Object.keys(filteredInfo);
+	for (let i = 0; i < keys.length; i++) {
+	    const key = keys[i];
+	    if ((filteredInfo[key] === "" || filteredInfo[key] === null || filteredInfo[key] === -1) && (key != "customImagePath")) {
+		toast.error(`${key} cannot be empty!`, {
+		    position: "top-right",
+		    autoClose: 2000,
+		    closeOnClick: true,
+		    pauseOnHover: true,
+		    theme: "light"
+		});
+		return;
+	    }
+	}
 
-    const keys = Object.keys(filteredInfo);
-    for (let i = 0; i < keys.length; i++) {
-      const key = keys[i];
-      if ((filteredInfo[key] === "" || filteredInfo[key] === null || filteredInfo[key] === -1) && (key != "customImagePath")) {
-        toast.error(`${key} cannot be empty!`, {
-          position: "top-right",
-          autoClose: 2000,
-          closeOnClick: true,
-          pauseOnHover: true,
-          theme: "light"
-        });
-        return;
-      }
-    }
-
-    filteredInfo.startDate = filteredInfo.startDate.toISOString().split('.')[0] + "Z";
-      filteredInfo.endDate = filteredInfo.startDate.split('T')[0] + "T" + filteredInfo.endDate.toISOString().split("T")[1].split(".")[0] + "Z";
-
-      if (requests > 0) {
-	  toast.error(`Request already made. Please wait!`, {
-	      position: "top-right",
-	      autoClose: 2000,
-	      closeOnClick: true,
-	      pauseOnHover: true,
-	      theme: "light"
-          });
-	  return;
-      }
-      
+	console.log(filteredInfo.startDate.toISOString());
+	console.log(filteredInfo.endDate.toISOString());
+	
+	filteredInfo.startDate = filteredInfo.startDate.toISOString().split('.')[0] + "Z";
+	filteredInfo.endDate = filteredInfo.startDate.split('T')[0] + "T" + filteredInfo.endDate.toISOString().split("T")[1].split(".")[0] + "Z";
+	
+	if (requests > 0) {
+	    toast.error(`Request already made. Please wait!`, {
+		position: "top-right",
+		autoClose: 2000,
+		closeOnClick: true,
+		pauseOnHover: true,
+		theme: "light"
+            });
+	    return;
+	}
+	
       setRequests((prev) => prev + 1);
       try {
       const res = await fetch(`${process.env.PUBLIC_URL}${urlPath}`, {
@@ -327,15 +330,15 @@ function NewEditEventPage(props) {
             </label>
             <DateTimePicker
               className="border bg-gray-100 rounded-xl w-full"
-              value={dayjs(eventInfo.startDate)}
-              onChange={(newValue) => {
-                setEventInfo({
-                  ...eventInfo,
-                  startDate: newValue
-                })
-              }}
+		value={dayjs(eventInfo.startDate)}
+		onChange={(newValue) => {
+                    setEventInfo({
+			...eventInfo,
+			startDate: newValue
+                    })
+		}}
             />
-
+	      
             <label className="block text-gray-700 text-sm font-bold mb-2 mt-4" htmlFor="endTime">
               End Time
             </label>

@@ -53,7 +53,7 @@ function MapSelector(props) {
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
                 <Circle
-                    center={{lat: props.lat, lng: props.lng}}
+                    center={{lat: props.lat || 33.1097, lng: props.lng || -96.6608}}
                     radius={props.radius}
                     fillColor='blue'
                 />
