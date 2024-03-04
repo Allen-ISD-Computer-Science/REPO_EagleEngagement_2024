@@ -1,10 +1,15 @@
 package com.ahscs.eagleengagement
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.ImageView
+import android.widget.Spinner
 import android.widget.TextView
 import com.ahscs.eagleengagement.datamodels.DataModel
 import retrofit2.Call
@@ -21,6 +26,22 @@ class ProfileActivity : AppCompatActivity() {
 
         val jwt = intent.getStringExtra("jwt")
         updateProfile(jwt!!)
+
+        val gradeSpinner : Spinner = findViewById(R.id.gradeSpinner)
+        val gradeAdapter = ArrayAdapter.createFromResource(this, R.array.grades, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
+        gradeSpinner.adapter = gradeAdapter
+        gradeSpinner.isClickable = false
+        gradeSpinner.isEnabled = false
+        gradeSpinner.onItemSelectedListener = (object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                (gradeSpinner.getChildAt(0) as TextView).setTextColor(Color.WHITE)
+                (gradeSpinner.getChildAt(0) as TextView).textSize = 24f
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                return
+            }
+        })
     }
 
     fun updateProfile(jwt: String) {
@@ -47,19 +68,17 @@ class ProfileActivity : AppCompatActivity() {
                         val studentId : TextView = findViewById(R.id.txtInfoStudentId)
                         studentId.text = data.studentID.toString()
 
-                        val grade : TextView = findViewById(R.id.txtInfoGrade)
-                        if (data.grade == 9) {
-                            grade.text = "Freshman"
-                        } else if (data.grade == 10) {
-                            grade.text = "Sophomore"
+                        val gradeSpinner : Spinner = findViewById(R.id.gradeSpinner)
+                        if (data.grade == 10) {
+                            gradeSpinner.setSelection(2)
                         } else if (data.grade == 11) {
-                            grade.text = "Junior"
+                            gradeSpinner.setSelection(1)
                         } else if (data.grade == 12) {
-                            grade.text = "Senior"
+                            gradeSpinner.setSelection(0)
                         } else if (data.grade == -1) {
-                            grade.text = "N/A"
+//                            grade.text = "N/A"
                         } else {
-                            grade.text = data.grade.toString()
+//                            grade.text = data.grade.toString()
                         }
 
                         val house : TextView = findViewById(R.id.txtInfoHouse)
