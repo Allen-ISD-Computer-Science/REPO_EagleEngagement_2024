@@ -60,6 +60,7 @@ func routes(_ app: Application) throws {
     struct IsAdmin : Content {
         var value: Bool;
     }
+    
     teacherProtectedRoutes.get("isAdmin") { req in
         guard let user = req.auth.get(User.self) else {
             throw Abort(.unauthorized);
