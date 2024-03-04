@@ -1,0 +1,11 @@
+//
+//  Staging-Environment.xcconfig
+//  ConnectEDU
+//
+//  Created by Logan Rohlfs on 2024-03-01.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+VAPOR_SERVER_PUBLIC_URL = "https://stg.codermerlin.academy/vapor/logan-rohlfs"
