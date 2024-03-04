@@ -148,14 +148,20 @@ function SignInPage(props) {
               placeholder=""
               aria-label="Password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+		onChange={(e) => setPassword(e.target.value)}
+		onKeyDown={(e) => {
+		    if (e.key === "Enter") {
+			submitLogin();
+		    }
+		}}
+
             />
             <button
               id="togglePassword"
               type="button"
               onClick={() => {
                 setPasswordType(passwordType === "password" ? "text" : "password");
-              }}
+		}}
             >
               <FontAwesomeIcon
                 icon={passwordType === "password" ? faEyeSlash : faEye}

@@ -12,6 +12,8 @@ struct TeacherController : RouteCollection {
         let apiRoutes = teacherProtectedRoutes.grouped("api"); // /faculty/api
         apiRoutes.post("clubs", use: fetchClubs);
         apiRoutes.post("club", ":id", use: fetchClub);
+
+        apiRoutes.post("requestEvent", use: requestEvent);
     }
 
     struct ClubInfo : Content {
@@ -157,6 +159,29 @@ struct TeacherController : RouteCollection {
         try await club.save(on: req.db);
 
         return Msg(success: true, msg: "Updated Club");
+    }
+
+    struct RequestQuery : Content {
+        var name: String;
+        var eventType: String;
+        var description: String;
+        var location: String;
+        var startDate: Date;
+        var endDate: Date;
+    }
+
+    func requestEvent(_ req: Request) async throws -> Msg {
+        guard let user = req.auth.get(User.self) else {
+            throw Abort(.unauthorized);
+        }
+
+        let args = try req.content.decode(RequestQuery.self);
+
+        let eventRequest = EventRequest(name: args.name, description: args.description, eventType: args.eventType, location: args.location, startDate: args.startDate, endDate: args.endDate);
+
+        try await eventRequest.save(on: req.db);
+
+        return Msg(success: true, msg: "Make request!");
     }
     
 }

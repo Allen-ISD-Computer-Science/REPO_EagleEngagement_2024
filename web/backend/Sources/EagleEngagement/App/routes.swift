@@ -73,7 +73,15 @@ func routes(_ app: Application) throws {
         return try await serveIndex(req)        
     }
 
+    teacherProtectedRoutes.get("clubs", "new") { req in
+        return try await serveIndex(req)        
+    }
+
     teacherProtectedRoutes.get("club", ":clubId") { req in
+        return try await serveIndex(req)        
+    }
+
+    teacherProtectedRoutes.get("club", "edit", ":clubId") { req in
         return try await serveIndex(req)        
     }
 
