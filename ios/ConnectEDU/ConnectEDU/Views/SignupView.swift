@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SignupView: View {
     @StateObject var viewModel = SignupViewModel()
-
+    
     
     
     var body: some View {
@@ -28,7 +28,7 @@ struct SignupView: View {
                             .overlay(LinearGradient(colors: [.clear, .indigoPrimary], startPoint: .top, endPoint: .bottom))
                         
                         Rectangle()
-                        .foregroundColor(.indigoPrimary)
+                            .foregroundColor(.indigoPrimary)
                     }
                     .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
                     
@@ -67,27 +67,24 @@ struct SignupView: View {
                                 .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
                                 .padding()
                             
-                            Button("Sign Up") {
-                                viewModel.signup()
-                                
-                                
-                            }
-                            .padding()
-                            .background(.indigoSecondary)
-                            .foregroundColor(Color("txt-primary"))
-                            .font(.title2)
-                            .bold()
-                            .cornerRadius(10)
-                            .padding()
-                            
-//                            if viewModel.signupAuthResult {
-                                NavigationLink("Verify", destination: VerifyView())
-//                            }
-                            
-                            Text(viewModel.signupMessage)
-                                .foregroundColor(viewModel.signupAuthResult ? .green : .red)
+                            // Sign Up button + Error Message
+                            VStack {
+                                Button("Sign Up") {
+                                    viewModel.signup()
+                                    
+                                    
+                                }
                                 .padding()
-                            
+                                .background(.indigoSecondary)
+                                .foregroundColor(Color("txt-primary"))
+                                .font(.title2)
+                                .bold()
+                                .cornerRadius(10)
+                                .padding()
+                                
+                                Text(viewModel.signupMessage)
+                                    .foregroundColor(viewModel.signupAuthResult ? .green : .red)
+                            }
                             
                         }
                         .padding()

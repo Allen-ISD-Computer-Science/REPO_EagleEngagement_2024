@@ -27,10 +27,10 @@ class SignupViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     if result == true {
                         self.signupAuthResult = true
-                        self.signupMessage = "Sign Up successful! Redirecting... \(message ?? "no message")"
+                        self.signupMessage = "Sign Up successful! Redirecting..."
                     } else {
                         self.signupAuthResult = false
-                        self.signupMessage = "Sign Up Failed"
+                        self.signupMessage = "Sign Up Failed Message: \(message ?? "No Message")"
                     }
                 }
             }
