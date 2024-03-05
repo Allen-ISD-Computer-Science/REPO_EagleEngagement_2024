@@ -14,12 +14,20 @@ struct HomeView: View {
         GeometryReader { geometry in
             ZStack {
                 
-                List {
-                    ForEach(viewModel.events) { event in
-                        EventCard(event: event)
+                ScrollView (showsIndicators: false) {
+                    VStack(spacing: 0) {
+                        Spacer().frame(height: 20) // Adjust this value to control the initial gap
+
+                        ForEach(viewModel.events) { event in
+                            EventCard(event: event)
+                                .padding(.top, event == viewModel.events.first ? 55 : 10) // Adjust this value to match the initial gap
+                                .padding(.bottom, event == viewModel.events.last ? 75 : 0)
+                        }
                     }
                 }
-                .frame(height: geometry.size.height * 0.8)
+                .frame(width: geometry.size.width, height: geometry.size.height * 0.85)
+                .background(.white)
+                
                 
                 .navigationBarTitle("Events")
                 .onAppear {
@@ -28,10 +36,17 @@ struct HomeView: View {
                 
                 // Nav group
                 VStack {
+                    
+                    // Upper Navbar
                     HStack {
-                        Image(systemName: "flag.fill")
-                            .font(.system(size: geometry.size.height * 0.05))
-                            .padding(.leading, 40)
+                        VStack {
+                            Image(systemName: "flag.fill")
+                                .font(.system(size: geometry.size.height * 0.05))
+                            
+                            Text("Request")
+                                .font(.subheadline)
+                        }
+                        .padding(.leading, 40)
                         
                         Spacer()
                         
@@ -44,9 +59,14 @@ struct HomeView: View {
                         
                         Spacer()
                         
-                        Image(systemName: "person.circle")
-                            .font(.system(size: geometry.size.height * 0.05))
-                            .padding(.trailing, 40)
+                        VStack {
+                            Image(systemName: "person.circle")
+                                .font(.system(size: geometry.size.height * 0.05))
+                            
+                            Text("Profile")
+                                .font(.subheadline)
+                        }
+                        .padding(.trailing, 40)
                     }
                     .frame(width: geometry.size.width, height: geometry.size.height * 0.15)
                     .foregroundColor(.txtPrimary)
@@ -55,6 +75,7 @@ struct HomeView: View {
                     
                     Spacer()
                     
+                    // Lower Navbar
                     HStack {
                         VStack(alignment: .center) {
                             Image(systemName: "person.2.fill")
@@ -91,6 +112,7 @@ struct HomeView: View {
                     .background(.indigoPrimary)
                     .cornerRadius(44)
                 }
+                .shadow(color: .black, radius: 10)
                 
             }
         }

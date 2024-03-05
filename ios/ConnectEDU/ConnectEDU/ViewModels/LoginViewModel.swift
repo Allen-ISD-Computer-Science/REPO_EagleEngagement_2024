@@ -14,24 +14,24 @@ class LoginViewModel: ObservableObject {
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var loginMessage: String = ""
-    var authResult: Bool
+    var loginAuthResult: Bool
     
     
     
     init() {
-        self.authResult = false
+        self.loginAuthResult = false
     }
     
     func login() {
         APIService.login(email: email, password: password) { result, message in
             DispatchQueue.main.async {
                 if result == true {
-                    self.authResult = true
+                    self.loginAuthResult = true
                     self.isUserAuthenticated = true
                     KeychainService.shared.saveToken(message ?? "")
                     self.loginMessage = "Login successful! Redirecting..."
                 } else {
-                    self.authResult = false
+                    self.loginAuthResult = false
                     self.loginMessage = "Invalid Email and or Password"
                 }
             }

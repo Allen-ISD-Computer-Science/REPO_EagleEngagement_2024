@@ -10,7 +10,7 @@ import Foundation
 class HomeViewModel: ObservableObject {
     @Published var events: [Event] = [Event]()
     
-    
+   
     
     
     func getEvents() {

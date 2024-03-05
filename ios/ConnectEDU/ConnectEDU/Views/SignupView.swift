@@ -1,19 +1,22 @@
 //
-//  LoginView.swift
+//  SignupView.swift
 //  ConnectEDU
 //
-//  Created by Logan Rohlfs on 2024-03-03.
+//  Created by Logan Rohlfs on 2024-03-05.
 //
 
 import SwiftUI
 
-struct LoginView: View {
-    @StateObject var viewModel = LoginViewModel()
+struct SignupView: View {
+    @StateObject var viewModel = SignupViewModel()
+
+    
     
     var body: some View {
         NavigationView {
             GeometryReader { geometry in
                 ZStack {
+                    
                     // Background
                     VStack(spacing: 0){
                         Image("ae-stadium")
@@ -29,6 +32,7 @@ struct LoginView: View {
                     }
                     .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
                     
+                    // Content
                     VStack {
                         Image("cedu-logo-full")
                             .resizable()
@@ -37,38 +41,60 @@ struct LoginView: View {
                         
                         Spacer()
                         
+                        // Input Boxes
                         VStack {
+                            TextField("First Name", text: $viewModel.firstName)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .autocorrectionDisabled(true)
+                                .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
+                                .padding()
+                            
+                            TextField("Last Name", text: $viewModel.lastName)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .autocorrectionDisabled(true)
+                                .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
+                                .padding()
+                            
                             TextField("Email", text: $viewModel.email)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .autocorrectionDisabled(true)
                                 .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
                                 .padding()
                             
-                            SecureField("Password", text: $viewModel.password)
+                            TextField("Student ID", text: $viewModel.str_studentID)
+                                .autocorrectionDisabled(true)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                                 .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
                                 .padding()
                             
-                            Button("Login") {
-                                viewModel.login()
+                            Button("Sign Up") {
+                                viewModel.signup()
                                 
                                 
                             }
                             .padding()
                             .background(.indigoSecondary)
-                            .foregroundColor(.white)
+                            .foregroundColor(Color("txt-primary"))
                             .font(.title2)
                             .bold()
                             .cornerRadius(10)
                             .padding()
                             
-                            Text(viewModel.loginMessage)
-                                .foregroundColor(viewModel.loginAuthResult ? .green : .red)
+//                            if viewModel.signupAuthResult {
+                                NavigationLink("Verify", destination: VerifyView())
+//                            }
+                            
+                            Text(viewModel.signupMessage)
+                                .foregroundColor(viewModel.signupAuthResult ? .green : .red)
                                 .padding()
                             
-                            Spacer()
-                                
+                            
                         }
                         .padding()
+                        
+                        Spacer()
+                        
+                        NavigationLink("Already have an account? Login", destination: LoginView())
                     }
                 }
             }
@@ -77,7 +103,6 @@ struct LoginView: View {
     }
 }
 
-
 #Preview {
-    LoginView(viewModel: LoginViewModel())
+    SignupView(viewModel: SignupViewModel())
 }

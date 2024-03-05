@@ -9,6 +9,8 @@ import Foundation
 
 struct APIService {
     
+    // LOGIN
+    
     static let loginURLString = Endpoints.login
     
     static func login(email: String, password: String, completion: @escaping (Bool, String?) -> Void) {
@@ -43,6 +45,50 @@ struct APIService {
         
         task.resume()
     }
+    
+    // SIGN UP
+    
+    static let signupURLString = Endpoints.signup
+    
+    static func signup(firstName: String, lastName: String, email: String, studentID: String, completion: @escaping (Bool, String?) -> Void) {
+        let url = URL(string: signupURLString)!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        
+        
+        let body: [String: Any] = [
+            "firstName": firstName,
+            "lastName": lastName,
+            "email": email,
+            // TODO: THIS IS A VERY WRONG WAY TO DO IT AND NEEDS FIX
+            "studentID": Int(studentID)!
+        ]
+        
+        request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                completion(false, nil)
+                return
+            }
+            
+            do {
+                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any], let success = json["success"] as? Bool, let msg = json["msg"] as? String {
+                    completion(success, msg)
+                } else {
+                    completion(false, nil)
+                }
+            } catch {
+                completion(false, nil)
+            }
+        }
+        
+        task.resume()
+    }
+    
+    // EVENTS
     
     static let eventsURLString = Endpoints.events
     
