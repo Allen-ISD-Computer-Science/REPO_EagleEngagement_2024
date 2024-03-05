@@ -77,14 +77,14 @@ Returns { success: Bool, msg: String }
 ```
 POST /api/events
 
-Returns: [{id: INT, name: String, description: String, eventType: String, locationName: String, pointsWorth: INT, startDate: Date, endDate: Date}]
+Returns: [{id: INT, name: String, eventType: String, locationName: String, pointsWorth: INT, startDate: Date, endDate: Date}]
 ```
 ^ Note: will not return events that have already passed.
 
 ```
 POST /api/event/:id
 
-Returns: {id: INT, name: String, eventType: String, locationName: String, address: String, pointsWorth: INT, startDate: Date, endDate: Date}
+Returns: {id: INT, name: String, eventType: String, descrition: String, locationName: String, address: String, pointsWorth: INT, startDate: Date, endDate: Date}
 ```
 
 ```
