@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct SignupView: View {
-    @StateObject var viewModel = SignupViewModel()
+    @EnvironmentObject var navigationManager: NavigationManager
+    @StateObject var viewModel: SignupViewModel
     
     var body: some View {
         NavigationView {
@@ -71,7 +72,7 @@ struct SignupView: View {
                                     viewModel.signup()
                                     
                                     if viewModel.signupAuthResult {
-                                        NavigationManager.shared.navigate(to: .verify)
+                                        navigationManager.navigate(to: .verify)
                                     }
                                     
                                 }
@@ -91,8 +92,9 @@ struct SignupView: View {
                         .padding()
                         
                         Spacer()
-                        
-                        NavigationLink("Already have an account? Login", destination: LoginView())
+                        Button("Already have an account? Sign in") {
+                            navigationManager.navigate(to: .login)
+                        }
                     }
                 }
             }
@@ -101,6 +103,16 @@ struct SignupView: View {
     }
 }
 
-#Preview {
-    SignupView(viewModel: SignupViewModel())
+// Create a sample or mock NavigationManager for preview purposes
+let signupPreviewNavigationManager = NavigationManager()
+
+// Initialize LoginViewModel with the preview NavigationManager
+let signupPreviewViewModel = LoginViewModel(navigationManager: signupPreviewNavigationManager)
+
+struct signupView_Previews: PreviewProvider {
+    static var previews: some View {
+        // Inject the preview ViewModel into LoginView
+        LoginView(viewModel: signupPreviewViewModel)
+            .environmentObject(signupPreviewNavigationManager) // If your LoginView still uses NavigationManager as an @EnvironmentObject
+    }
 }

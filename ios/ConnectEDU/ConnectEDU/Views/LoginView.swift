@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct LoginView: View {
-    @StateObject var viewModel = LoginViewModel()
+    @EnvironmentObject var navigationManager: NavigationManager
+    @StateObject var viewModel: LoginViewModel
     
     var body: some View {
         NavigationView {
@@ -53,7 +54,7 @@ struct LoginView: View {
                                     viewModel.login()
                                     
                                     if viewModel.loginAuthResult {
-                                        NavigationManager.shared.navigate(to: .home)
+                                        navigationManager.navigate(to: .home)
                                     }
                                 }
                                 .padding()
@@ -73,7 +74,8 @@ struct LoginView: View {
                             Spacer()
                             
                             Button("Don't have an account? Sign Up") {
-                                NavigationManager.shared.navigate(to: .signup)
+                                navigationManager.navigate(to: .signup)
+                                print("Should have navigated to .signup")
                             }
                             
                         }
@@ -87,6 +89,17 @@ struct LoginView: View {
 }
 
 
-#Preview {
-    LoginView(viewModel: LoginViewModel())
+
+// Create a sample or mock NavigationManager for preview purposes
+let loginPreviewNavigationManager = NavigationManager()
+
+// Initialize LoginViewModel with the preview NavigationManager
+let loginPreviewViewModel = LoginViewModel(navigationManager: loginPreviewNavigationManager)
+
+struct LoginView_Previews: PreviewProvider {
+    static var previews: some View {
+        // Inject the preview ViewModel into LoginView
+        LoginView(viewModel: loginPreviewViewModel)
+            .environmentObject(loginPreviewNavigationManager) // If your LoginView still uses NavigationManager as an @EnvironmentObject
+    }
 }

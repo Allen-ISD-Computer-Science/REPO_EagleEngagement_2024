@@ -8,7 +8,8 @@
 import Foundation
 
 class NavigationManager: ObservableObject {
-    static let shared = NavigationManager()
+    // Old way of using shared object (Didnt work for built in swift reactivity)
+//    static let shared = NavigationManager()
     
     @Published var currentPage: Page = .login
 
@@ -28,18 +29,19 @@ class NavigationManager: ObservableObject {
         case signup
         case verify
         case home
+        case dev
         // Add other pages as needed
     }
 
     func navigate(to page: Page) {
-        currentPage = page
+            currentPage = page
         // Additional logic if needed
     }
 
     func updateAuthenticationState(withToken token: String?) {
         if let token = token {
             KeychainService.shared.saveToken(token)
-            currentPage = .home
+                currentPage = .home
             isUserAuthenticated = true
         } else {
             KeychainService.shared.deleteToken()

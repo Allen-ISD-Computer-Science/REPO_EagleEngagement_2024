@@ -8,6 +8,7 @@
 import Foundation
 
 class SignupViewModel: ObservableObject {
+    private var navigationManager: NavigationManager
     
     @Published var firstName: String = ""
     @Published var lastName: String = ""
@@ -15,10 +16,10 @@ class SignupViewModel: ObservableObject {
     @Published var str_studentID: String = ""
     @Published var signupMessage: String = ""
     
-    var signupAuthResult: Bool
+    var signupAuthResult: Bool = false
     
-    init() {
-        self.signupAuthResult = false
+    init(navigationManager: NavigationManager) {
+        self.navigationManager = navigationManager
     }
     
     func signup() {

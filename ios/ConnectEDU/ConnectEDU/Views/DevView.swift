@@ -7,15 +7,17 @@
 
 import SwiftUI
 
-struct devView: View {
+struct DevView: View {
+    @EnvironmentObject var navigationManager: NavigationManager
+    
     var body: some View {
             NavigationView {
                 List {
                     Section(header: Text("Navigation State")) {
-                        Text("Current Page: \(NavigationManager.shared.currentPage.rawValue)")
+                        Text("Current Page: \(navigationManager.currentPage.rawValue)")
                         ForEach(NavigationManager.Page.allCases, id: \.self) { page in
                             Button("Set Page to \(page.rawValue)") {
-                                NavigationManager.shared.navigate(to: page)
+                                navigationManager.navigate(to: page)
                             }
                         }
                     }
@@ -32,5 +34,6 @@ struct devView: View {
 }
 
 #Preview {
-    devView()
+    DevView()
+        .environment(NavigationManager())
 }

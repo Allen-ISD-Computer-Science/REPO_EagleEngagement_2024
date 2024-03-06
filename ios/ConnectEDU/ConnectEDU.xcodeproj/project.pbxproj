@@ -33,7 +33,7 @@
 		78E46DF02B977D7C00E7D7F4 /* VerifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E46DEF2B977D7C00E7D7F4 /* VerifyView.swift */; };
 		78E46DF22B97E2F500E7D7F4 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E46DF12B97E2F500E7D7F4 /* ViewExtension.swift */; };
 		78E46DF42B97EBD400E7D7F4 /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E46DF32B97EBD400E7D7F4 /* NavigationManager.swift */; };
-		78E46DF72B97F8ED00E7D7F4 /* devView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E46DF62B97F8ED00E7D7F4 /* devView.swift */; };
+		78E46DF92B980E4900E7D7F4 /* DevView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E46DF82B980E4900E7D7F4 /* DevView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,7 +83,7 @@
 		78E46DEF2B977D7C00E7D7F4 /* VerifyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyView.swift; sourceTree = "<group>"; };
 		78E46DF12B97E2F500E7D7F4 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		78E46DF32B97EBD400E7D7F4 /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
-		78E46DF62B97F8ED00E7D7F4 /* devView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = devView.swift; sourceTree = "<group>"; };
+		78E46DF82B980E4900E7D7F4 /* DevView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,7 +191,7 @@
 				78B7BDB82B94F19E00F36936 /* HomeView.swift */,
 				78E46DEB2B9768E700E7D7F4 /* SignupView.swift */,
 				78E46DEF2B977D7C00E7D7F4 /* VerifyView.swift */,
-				78E46DF62B97F8ED00E7D7F4 /* devView.swift */,
+				78E46DF82B980E4900E7D7F4 /* DevView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -393,9 +393,9 @@
 				78E46DF02B977D7C00E7D7F4 /* VerifyView.swift in Sources */,
 				78B7BDAB2B94EA5C00F36936 /* APIClient.swift in Sources */,
 				78B7BDBB2B94F30300F36936 /* KeychainService.swift in Sources */,
+				78E46DF92B980E4900E7D7F4 /* DevView.swift in Sources */,
 				78B7BDC02B9546E000F36936 /* StringExtension.swift in Sources */,
 				78E46DE82B967F8900E7D7F4 /* DateExtension.swift in Sources */,
-				78E46DF72B97F8ED00E7D7F4 /* devView.swift in Sources */,
 				78B7BDAF2B94EB2100F36936 /* Event.swift in Sources */,
 				78E46DF22B97E2F500E7D7F4 /* ViewExtension.swift in Sources */,
 				78E46DE12B9634EF00E7D7F4 /* HomeViewModel.swift in Sources */,

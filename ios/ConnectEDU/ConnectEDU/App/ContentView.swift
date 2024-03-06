@@ -8,18 +8,30 @@
 import SwiftUI
 
 struct ContentView: View {
-
+    @EnvironmentObject var navigationManager: NavigationManager
+    
+    
     var body: some View {
-        switch NavigationManager.shared.currentPage {
-        case .login:
-            LoginView()
-        case .signup:
-            SignupView()
-        case .verify:
-            VerifyView()
-        case .home:
-            HomeView()
-        // Add other cases as needed
+        Group {
+            switch self.navigationManager.currentPage {
+            case .login:
+                LoginView(viewModel: LoginViewModel(navigationManager: navigationManager))
+            case .signup:
+                SignupView(viewModel: SignupViewModel(navigationManager: navigationManager))
+            case .verify:
+                VerifyView()
+            case .home:
+                HomeView()
+            case .dev:
+                DevView()
+                // Add other cases as needed
+            }
+        }
+        .onTapGesture(count: 3) {
+            // WIP: Make it such that when in dev view doing the triple tap gesture brings you back to the page you were on before switching to dev view. REQUIRES: navigationManager must keep track of views in a stack of some sort
+//            navigationManager.currentPage == .dev ? navigationManager.navigate(to: .login) : navigationManager.navigate(to: .dev)
+            navigationManager.navigate(to: .dev)
+            
         }
     }
 }

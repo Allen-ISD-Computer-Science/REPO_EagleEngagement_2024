@@ -6,18 +6,18 @@
 //
 
 import Foundation
-import SwiftUI
 
 class LoginViewModel: ObservableObject {
+    private var navigationManager: NavigationManager
+    
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var loginMessage: String = ""
-    var loginAuthResult: Bool
     
+    var loginAuthResult: Bool = false
     
-    
-    init() {
-        self.loginAuthResult = false
+    init(navigationManager: NavigationManager) {
+        self.navigationManager = navigationManager
     }
     
     func login() {
@@ -25,7 +25,7 @@ class LoginViewModel: ObservableObject {
             DispatchQueue.main.async {
                 if result == true {
                     self.loginAuthResult = true
-                    NavigationManager.shared.updateAuthenticationState(withToken: message)
+                    self.navigationManager.updateAuthenticationState(withToken: message)
                     self.loginMessage = "Login successful! Redirecting..."
                 } else {
                     self.loginAuthResult = false
