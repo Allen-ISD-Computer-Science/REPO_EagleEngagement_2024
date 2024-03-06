@@ -30,11 +30,15 @@ struct StudentController : RouteCollection {
         // Data
         protectedRoutes.post("profile", use: fetchProfile);
         protectedRoutes.post("profile", "edit", use: editProfile);
+        
         protectedRoutes.post("events", use: fetchEvents);
         protectedRoutes.post("event", ":id", use: fetchEvent);
         protectedRoutes.post("event", ":id", "checkIn", use: checkInEvent);
+        
         protectedRoutes.post("clubs", use: fetchClubs);
         protectedRoutes.post("club", ":id", use: fetchClub);
+
+        protectedRoutes.post("rewards", use: fetchRewards);
     }
 
     func login(_ req: Request) async throws -> Msg {
@@ -427,12 +431,47 @@ struct StudentController : RouteCollection {
         let club = clubSponsors[0].club;
        
         let clubInfo = FullClubInfo.init(name: club.name, description: club.description,
-                                     sponsors: clubSponsors.map{ cS in
-                                                           cS.user.name
-                                     }.joined(separator: ", "),
-                                     meetingTimes: club.meetingTimes, locationName: club.locationName,
-                                     websiteLink: club.websiteLink, instagramLink: club.instagramLink, twitterLink: club.twitterLink, youtubeLink: club.youtubeLink);
-
+                                         sponsors: clubSponsors.map{ cS in
+                                             cS.user.name
+                                         }.joined(separator: ", "),
+                                         meetingTimes: club.meetingTimes, locationName: club.locationName,
+                                         websiteLink: club.websiteLink, instagramLink: club.instagramLink, twitterLink: club.twitterLink, youtubeLink: club.youtubeLink);
+        
         return clubInfo; 
-    }    
+    }
+
+    struct RewardInfo : Content {
+        var id: Int;
+        var name: String;
+        var description: String;
+        var cost: Int;
+    }
+
+    func fetchRewards(_ req: Request) async throws -> [RewardInfo] {
+        let userToken = try req.jwt.verify(as: UserToken.self);
+
+        guard let studentUser = try await StudentUser.query(on: req.db)
+                .with(\.$user)
+                .filter(\.$user.$id == userToken.userId)
+                .first()
+        else {
+            throw Abort(.unauthorized);
+        }
+
+        
+        let rewards = try await Reward.query(on: req.db).all();
+        
+        if let gradeFilter = studentUser.grade {
+            let gradeFlag = [GradeFlags.freshman, GradeFlags.sophomore, GradeFlags.junior, GradeFlags.senior][gradeFilter - 9];
+            
+            let filteredRewards = rewards.filter { rew in
+                (rew.allowedGrades & gradeFlag) != 0 }
+
+            return filteredRewards.map { r in
+                RewardInfo.init(id: r.id!, name: r.name, description: r.description, cost: r.cost )};
+        }
+
+        return rewards.map { r in
+                RewardInfo.init(id: r.id!, name: r.name, description: r.description, cost: r.cost )};
+    }
 }

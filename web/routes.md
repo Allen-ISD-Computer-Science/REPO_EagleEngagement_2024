@@ -99,6 +99,13 @@ POST /api/club/:id
 Returns { name: String, description: String, sponsors: String, meetingTimes: String?, locationName: String?, websiteLink: String?, instagramLink: String?, twitterLink: String?, youtubeLink: String? }
 ```
 
+```
+POST /api/rewards
+
+Returns: [ { id: Int, name: String, description: String, cost: Int } ]
+```
+^ Note: if user's grade is set, is filtered on it
+
 ## Web
 
 ### Authentication
