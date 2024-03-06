@@ -30,6 +30,9 @@ struct AdminController : RouteCollection {
         apiRoutes.post("event", ":id", "edit", use: editEvent);
         apiRoutes.post("events", "new", use: newEvent);
 
+        apiRoutes.post("eventRequests", use: fetchEventRequests);
+        apiRoutes.post("eventRequest", ":id", use: fetchEventRequest);
+
         apiRoutes.post("locations", use: fetchLocations);
         apiRoutes.post("location", ":id", use: fetchLocation);
         apiRoutes.post("location", ":id", "edit", use: editLocation);
@@ -347,6 +350,54 @@ struct AdminController : RouteCollection {
         try await event.save(on: req.db);
 
         return Msg(success: true, msg: "Updated Event!");
+    }
+
+    struct EventRequestInfo : Content {
+        var id: Int;
+        var name: String;
+        var eventType: String;
+        var location: String;
+        var userRequested: String;
+        var startDate: Date;
+        var endDate: Date;
+    }
+    
+    func fetchEventRequests(_ req: Request) async throws -> [EventRequestInfo] {
+        let requests = try await EventRequest.query(on: req.db).with(\.$user).all().map { eReq in
+            EventRequestInfo.init(id: eReq.id!, name: eReq.name, eventType: eReq.eventType, location: eReq.location, userRequested: eReq.user.name, startDate: eReq.startDate, endDate: eReq.endDate);
+        };
+
+        return requests;
+    }
+
+    struct FullEventRequestInfo : Content {
+        var name: String;
+        var description: String;
+        var eventType: String;
+        var location: String;
+        var userRequested: String;
+        var startDate: Date;
+        var endDate: Date;
+    }
+
+    func fetchEventRequest(_ req: Request) async throws -> FullEventRequestInfo {
+        guard let requestID = req.parameters.get("id", as: Int.self) else {
+            throw Abort(.badRequest)
+        }        
+        
+        guard let request = try await EventRequest.query(on: req.db).with(\.$user).filter(\.$id == requestID).first() else {
+            throw Abort(.badRequest);
+        };
+
+        return FullEventRequestInfo.init(
+          name: request.name,
+          description: request.description,
+          eventType: request.eventType,
+          location: request.location,
+          userRequested: request.user.name,
+          startDate: request.startDate,
+          endDate: request.endDate
+        );
     }
 
     struct LocationQuery : Content {

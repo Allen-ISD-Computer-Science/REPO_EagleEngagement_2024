@@ -200,6 +200,20 @@ Returns {success: Bool, msg: String}
 ---
 
 ```
+POST /admin/api/eventRequests
+
+Returns [{id: Int, name: String, eventType: String, location: String, userRequested: String, startDate: Date, endDate: Date}]
+```
+
+```
+POST /admin/api/eventRequest/:id
+
+Returns {name: String, description: String eventType: String, location: String, userRequested: String, startDate: Date, endDate: Date}
+```
+
+---
+
+```
 POST /admin/api/locations
 filterByName: String? - Don't have this as a key if no filter
 
