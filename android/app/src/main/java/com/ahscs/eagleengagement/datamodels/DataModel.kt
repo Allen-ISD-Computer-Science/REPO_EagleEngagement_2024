@@ -11,6 +11,13 @@ sealed class DataModel {
         var house: Int
     ) : DataModel()
 
+    data class EditProfile(
+        var name: String,
+        var studentID: Int,
+        var grade: Int,
+        var house: Int
+    ) : DataModel()
+
     data class EventResponse(
         var id: Int,
         var name: String,
@@ -61,5 +68,10 @@ sealed class DataModel {
         var instagramLink: String?,
         var twitterLink: String?,
         var youtubeLink: String?
+    ) : DataModel()
+
+    data class Response(
+        var success: Boolean,
+        var msg: String
     ) : DataModel()
 }

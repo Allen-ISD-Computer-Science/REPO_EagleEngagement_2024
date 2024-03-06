@@ -8,9 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
+import com.ahscs.eagleengagement.datamodels.AuthDataModel
 import com.ahscs.eagleengagement.datamodels.DataModel
 import retrofit2.Call
 import retrofit2.Callback
@@ -19,13 +23,24 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class ProfileActivity : AppCompatActivity() {
+    var jwt : String? = null
+    var name : String? = null
+    var studentID : Int? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile_page)
-        configureBtns()
 
-        val jwt = intent.getStringExtra("jwt")
+        jwt = intent.getStringExtra("jwt")
         updateProfile(jwt!!)
+
+        val editCancelBtn : Button = findViewById(R.id.editCancelBtn)
+        val editSaveBtn : Button = findViewById(R.id.editSaveBtn)
+        editCancelBtn.visibility = View.GONE
+        editSaveBtn.visibility = View.GONE
+
+        val nameTxt : EditText = findViewById(R.id.nameTxt)
+        nameTxt.isEnabled = false
 
         val gradeSpinner : Spinner = findViewById(R.id.gradeSpinner)
         val gradeAdapter = ArrayAdapter.createFromResource(this, R.array.grades, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
@@ -42,8 +57,25 @@ class ProfileActivity : AppCompatActivity() {
                 return
             }
         })
+
+        val houseSpinner : Spinner = findViewById(R.id.houseSpinner)
+        val houseAdapter = ArrayAdapter.createFromResource(this, R.array.houses, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
+        houseSpinner.adapter = houseAdapter
+        houseSpinner.isClickable = false
+        houseSpinner.isEnabled = false
+        houseSpinner.onItemSelectedListener = (object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                (houseSpinner.getChildAt(0) as TextView).setTextColor(Color.WHITE)
+                (houseSpinner.getChildAt(0) as TextView).textSize = 24f
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                return
+            }
+        })
     }
 
+    // access API to get profile data and update the fields to be correct
     fun updateProfile(jwt: String) {
         var url = resources.getString(R.string.api_link)
         val retrofit = Retrofit.Builder()
@@ -62,31 +94,50 @@ class ProfileActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     try {
                         val data = response.body()!!
+
+                        val nameTxt : EditText = findViewById(R.id.nameTxt)
+                        nameTxt.setText(data.name)
+
                         val points : TextView = findViewById(R.id.txtInfoPoints)
                         points.text = data.points.toString()
 
                         val studentId : TextView = findViewById(R.id.txtInfoStudentId)
                         studentId.text = data.studentID.toString()
 
+                        name = data.name
+                        studentID = data.studentID
+
                         val gradeSpinner : Spinner = findViewById(R.id.gradeSpinner)
                         if (data.grade == 10) {
-                            gradeSpinner.setSelection(2)
+                            gradeSpinner.setSelection(0)
                         } else if (data.grade == 11) {
                             gradeSpinner.setSelection(1)
                         } else if (data.grade == 12) {
-                            gradeSpinner.setSelection(0)
-                        } else if (data.grade == -1) {
-//                            grade.text = "N/A"
+                            gradeSpinner.setSelection(2)
                         } else {
-//                            grade.text = data.grade.toString()
+                            gradeSpinner.setSelection(3)
                         }
 
-                        val house : TextView = findViewById(R.id.txtInfoHouse)
-                        if (data.house == -1) {
-                            house.text = "N/A"
+                        val houseSpinner : Spinner = findViewById(R.id.houseSpinner)
+                        if (data.house == 100) {
+                            gradeSpinner.setSelection(0)
+                        } else if (data.house == 200) {
+                            houseSpinner.setSelection(1)
+                        } else if (data.house == 300) {
+                            houseSpinner.setSelection(2)
+                        } else if (data.house == 400) {
+                            houseSpinner.setSelection(3)
+                        } else if (data.house == 500) {
+                            houseSpinner.setSelection(4)
+                        } else if (data.house == 600) {
+                            houseSpinner.setSelection(5)
+                        } else if (data.house == 700) {
+                            houseSpinner.setSelection(6)
                         } else {
-                            house.text = data.house.toString()
+                            houseSpinner.setSelection(7)
                         }
+
+                        configureBtns()
                     } catch (e : Exception) {
                         println("Error getting events")
                     }
@@ -103,6 +154,54 @@ class ProfileActivity : AppCompatActivity() {
         })
     }
 
+    // gets current values of editable fields and posts it to API
+    fun saveProfile(jwt: String, name: String, studentID: Int, grade: Int, house: Int) {
+        var url = resources.getString(R.string.api_link)
+        val retrofit = Retrofit.Builder()
+            .baseUrl(url)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val retrofitAPI = retrofit.create(RetrofitAPI::class.java)
+        val dataModel = DataModel.EditProfile(name, studentID, grade, house)
+        val call: Call<DataModel.Response> = retrofitAPI.postEditProfile("Bearer $jwt", dataModel)
+        call!!.enqueue(object: Callback<DataModel.Response?> {
+            override fun onResponse(
+                call: Call<DataModel.Response?>?,
+                response: Response<DataModel.Response?>
+            ) {
+
+                if (response.isSuccessful) {
+                    val nameTxt : EditText = findViewById(R.id.nameTxt)
+                    nameTxt.isEnabled = false
+
+                    val gradeSpinner : Spinner = findViewById(R.id.gradeSpinner)
+                    val houseSpinner : Spinner = findViewById(R.id.houseSpinner)
+                    gradeSpinner.isClickable = false
+                    gradeSpinner.isEnabled = false
+                    houseSpinner.isClickable = false
+                    houseSpinner.isEnabled = false
+
+                    val editCancelBtn : Button = findViewById(R.id.editCancelBtn)
+                    val editSaveBtn : Button = findViewById(R.id.editSaveBtn)
+                    editCancelBtn.visibility = View.GONE
+                    editSaveBtn.visibility = View.GONE
+
+                    val editBtn = findViewById<ImageView>(R.id.btnEditProfile)
+                    editBtn.visibility = View.VISIBLE
+
+                    Toast.makeText(applicationContext, "Profile Saved Successfully!", Toast.LENGTH_SHORT).show()
+                }else{
+                    println(response.raw().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<DataModel.Response?>?, t: Throwable) {
+                println("Error doing API : " + t.message)
+            }
+        })
+    }
+
     private fun configureBtns() {
         val backBtn = findViewById<ImageView>(R.id.profileBackBtn)
         backBtn.setOnClickListener {
@@ -112,6 +211,52 @@ class ProfileActivity : AppCompatActivity() {
         val pointHistoryBtn = findViewById<ImageView>(R.id.profilePointHistoryBtn)
         pointHistoryBtn.setOnClickListener {
             startActivity(Intent(this, PointHistoryActivity::class.java))
+        }
+
+        val nameTxt : EditText = findViewById(R.id.nameTxt)
+
+        val gradeSpinner : Spinner = findViewById(R.id.gradeSpinner)
+        val houseSpinner : Spinner = findViewById(R.id.houseSpinner)
+
+        val editCancelBtn : Button = findViewById(R.id.editCancelBtn)
+        val editSaveBtn : Button = findViewById(R.id.editSaveBtn)
+
+        val editBtn = findViewById<ImageView>(R.id.btnEditProfile)
+        editBtn.setOnClickListener {
+            nameTxt.isEnabled = true
+
+            gradeSpinner.isClickable = true
+            gradeSpinner.isEnabled = true
+            houseSpinner.isClickable = true
+            houseSpinner.isEnabled = true
+
+            editCancelBtn.visibility = View.VISIBLE
+            editSaveBtn.visibility = View.VISIBLE
+
+            editBtn.visibility = View.GONE
+        }
+
+        val cancelBtn = findViewById<Button>(R.id.editCancelBtn)
+        cancelBtn.setOnClickListener {
+            nameTxt.isEnabled = false
+
+            gradeSpinner.isClickable = false
+            gradeSpinner.isEnabled = false
+            houseSpinner.isClickable = false
+            houseSpinner.isEnabled = false
+
+            editCancelBtn.visibility = View.GONE
+            editSaveBtn.visibility = View.GONE
+
+            editBtn.visibility = View.VISIBLE
+        }
+
+        val saveBtn = findViewById<Button>(R.id.editSaveBtn)
+        saveBtn.setOnClickListener {
+            val newName = nameTxt.text.toString()
+            val grade = gradeSpinner.selectedItemPosition + 10
+            val house = (houseSpinner.selectedItemPosition + 1) * 100
+            saveProfile(jwt!!, newName, studentID!!, grade, house)
         }
     }
 }

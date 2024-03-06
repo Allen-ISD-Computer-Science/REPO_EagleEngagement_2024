@@ -1,22 +1,18 @@
 package com.ahscs.eagleengagement
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import com.ahscs.eagleengagement.datamodels.AuthDataModel
+import com.ahscs.eagleengagement.datamodels.DataModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import android.util.Base64
-import java.io.File
-import java.io.FileOutputStream
 
 class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,11 +38,11 @@ class SignUpActivity : AppCompatActivity() {
 
         val retrofitAPI = retrofit.create(RetrofitAPI::class.java)
         val dataModel = AuthDataModel.SignUpDataModel(firstName, lastName, email.lowercase(), studentID.toInt())
-        val call: Call<AuthDataModel.response> = retrofitAPI.postSignUp(dataModel)
-        call!!.enqueue(object: Callback<AuthDataModel.response?> {
+        val call: Call<DataModel.Response> = retrofitAPI.postSignUp(dataModel)
+        call!!.enqueue(object: Callback<DataModel.Response?> {
             override fun onResponse(
-                call: Call<AuthDataModel.response?>?,
-                response: Response<AuthDataModel.response?>
+                call: Call<DataModel.Response?>?,
+                response: Response<DataModel.Response?>
             ) {
 
                 if (response.isSuccessful) {
@@ -60,7 +56,7 @@ class SignUpActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<AuthDataModel.response?>?, t: Throwable) {
+            override fun onFailure(call: Call<DataModel.Response?>?, t: Throwable) {
                 print("Error doing API : " + t.message)
             }
         })
