@@ -10,8 +10,6 @@ import SwiftUI
 struct SignupView: View {
     @StateObject var viewModel = SignupViewModel()
     
-    
-    
     var body: some View {
         NavigationView {
             GeometryReader { geometry in
@@ -72,6 +70,9 @@ struct SignupView: View {
                                 Button("Sign Up") {
                                     viewModel.signup()
                                     
+                                    if viewModel.signupAuthResult {
+                                        NavigationManager.shared.navigate(to: .verify)
+                                    }
                                     
                                 }
                                 .padding()

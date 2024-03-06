@@ -9,8 +9,6 @@ import Foundation
 import SwiftUI
 
 class LoginViewModel: ObservableObject {
-    @AppStorage("isUserAuthenticated") public var isUserAuthenticated: Bool = false
-    
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var loginMessage: String = ""
@@ -27,8 +25,7 @@ class LoginViewModel: ObservableObject {
             DispatchQueue.main.async {
                 if result == true {
                     self.loginAuthResult = true
-                    self.isUserAuthenticated = true
-                    KeychainService.shared.saveToken(message ?? "")
+                    NavigationManager.shared.updateAuthenticationState(withToken: message)
                     self.loginMessage = "Login successful! Redirecting..."
                 } else {
                     self.loginAuthResult = false

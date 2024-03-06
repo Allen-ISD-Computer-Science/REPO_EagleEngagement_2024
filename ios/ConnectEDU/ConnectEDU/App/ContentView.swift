@@ -8,25 +8,27 @@
 import SwiftUI
 
 struct ContentView: View {
-    @AppStorage("isUserAuthenticated") private var isUserAuthenticated: Bool = false
-    
+
     var body: some View {
-        Group {
-            if isUserAuthenticated {
-                HomeView()
-            } else {
-                LoginView()
-            }
+        switch NavigationManager.shared.currentPage {
+        case .login:
+            LoginView()
+        case .signup:
+            SignupView()
+        case .verify:
+            VerifyView()
+        case .home:
+            HomeView()
+        // Add other cases as needed
         }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        // Set the value for the preview
-        UserDefaults.standard.set(true, forKey: "isUserAuthenticated")
-
-        return ContentView()
+        // Create an instance of NavigationManager for previews.
+        // You might need to adjust its initial state depending on the view you want to preview.
+        ContentView()
+            .environmentObject(NavigationManager())
     }
 }
-

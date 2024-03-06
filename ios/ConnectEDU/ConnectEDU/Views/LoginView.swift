@@ -25,7 +25,7 @@ struct LoginView: View {
                             .overlay(LinearGradient(colors: [.clear, .indigoPrimary], startPoint: .top, endPoint: .bottom))
                         
                         Rectangle()
-                        .foregroundColor(.indigoPrimary)
+                            .foregroundColor(.indigoPrimary)
                     }
                     .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
                     
@@ -48,25 +48,34 @@ struct LoginView: View {
                                 .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
                                 .padding()
                             
-                            Button("Login") {
-                                viewModel.login()
-                                
-                                
-                            }
-                            .padding()
-                            .background(.indigoSecondary)
-                            .foregroundColor(.white)
-                            .font(.title2)
-                            .bold()
-                            .cornerRadius(10)
-                            .padding()
-                            
-                            Text(viewModel.loginMessage)
-                                .foregroundColor(viewModel.loginAuthResult ? .green : .red)
+                            VStack {
+                                Button("Login") {
+                                    viewModel.login()
+                                    
+                                    if viewModel.loginAuthResult {
+                                        NavigationManager.shared.navigate(to: .home)
+                                    }
+                                }
                                 .padding()
+                                .background(.indigoSecondary)
+                                .foregroundColor(.white)
+                                .font(.title2)
+                                .bold()
+                                .cornerRadius(10)
+                                .padding()
+                                
+                                
+                                Text(viewModel.loginMessage)
+                                    .foregroundColor(viewModel.loginAuthResult ? .green : .red)
+                                    .padding()
+                            }
                             
                             Spacer()
-                                
+                            
+                            Button("Don't have an account? Sign Up") {
+                                NavigationManager.shared.navigate(to: .signup)
+                            }
+                            
                         }
                         .padding()
                     }
