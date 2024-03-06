@@ -33,6 +33,14 @@ Returns: {success: Bool, msg: String} - if success is true, msg is a JWT
 ```
 
 ```
+POST /api/forgotPassword
+email: String
+studentID: Int
+
+Returns { success: Bool, msg: String }
+```
+
+```
 POST /api/login
 email: String
 password: String
@@ -111,13 +119,22 @@ token: String
 password: String
 passwordConfirm: String
 
-Returns: {success: Bool, msg: String}
+Returns: { success: Bool, msg: String }
 ```
 
 ```
 POST /login
 email: String
 password: String
+
+Returns { success: Bool, msg: String }
+```
+
+```
+POST /forgotPassword
+email: String
+
+Returns { success: Bool, msg: String }
 ```
 
 ### Data
@@ -140,6 +157,16 @@ Returns: [{id: Int, name: String, eventType: String, locationID: Int, locationNa
 POST /admin/api/event/:id
 
 Returns: {id: Int, name: String, description: String, eventType: String, locationID: Int, locationName: String, pointsWorth: Int, startDate: Date, endDate: Date, customImagePath: String}
+```
+
+```
+POST /admin/api/event/:id/checkIn
+latitude: Double;
+longitude: Double;
+accuracy: Double;
+deviceUUID: String;
+
+Returns: { success: Bool, msg: String }
 ```
 
 ```
@@ -240,6 +267,14 @@ Returns: { success: Bool, msg: String }
 ```
 
 ```
+POST /admin/api/user/:id/modifyPoints
+points: Int;
+reason: String;
+
+Returns { success: Bool, msg: String }
+```
+
+```
 POST /faculty/api/clubs
 
 Returns [{ id: Int, name: String, description: String, studentsFollowing: Int, lastCheckInCount: Int }]
@@ -249,4 +284,16 @@ Returns [{ id: Int, name: String, description: String, studentsFollowing: Int, l
 POST /faculty/api/club/:id
 
 Returns: { name: String, description: String, studentsFollowing: Int, meetingLogs: [{ date: Date, numberOfStudents: Int }], meetingTimes: String?, locationName: String?, websiteLink: String?, instagramLink: String?, twitterLink: String?, youtubeLink: String? }
+```
+
+```
+POST /faculty/api/club:id
+name: String
+description: String
+eventType: String
+location: String
+startDate: Date
+endDate: Date
+
+Returns { success: Bool, msg: String }
 ```

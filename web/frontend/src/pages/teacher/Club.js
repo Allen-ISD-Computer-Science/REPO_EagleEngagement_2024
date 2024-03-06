@@ -70,7 +70,7 @@ function ClubPage(props) {
 				alt={clubObj?.name + " Logo"}
 				className="aspect-square object-contain object-center w-[185px] mx-3 overflow-hidden shrink-0 max-w-full rounded-[50%] max-md:mt-10"
 			    />
-			    <span className="text-xl">{clubObj?.following + " Students Following"}</span>
+			    <span className="text-xl">{clubObj?.studentsFollowing + " Students Following"}</span>
 			</div>
 			<div className="flex flex-col leading-10 relative">    
 			    <Button
@@ -84,7 +84,7 @@ function ClubPage(props) {
 			    <span className="text-4xl font-bold my-6 max-md:text-2xl">{clubObj?.name}</span>
 			    <span className="text-2xl min-h-[96px] pr-10 max-md:text-xl max-md:pr-4">{clubObj?.description}</span>
 			    <div className="flex flex-row gap-5 text-xl max-md:text-l max-md:flex-col">
-				{clubObj?.link ? <a href={"https://" + clubObj?.link} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faLink} size="s" /> {clubObj?.link}</a> : ""}
+				{clubObj?.websiteLink ? <a href={clubObj?.websiteLink} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faLink} size="s" /> {clubObj?.link}</a> : ""}
 				{clubObj?.twitter ? <a href={"https://x.com/" + clubObj?.twitter} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faXTwitter} size="s" /> @{clubObj?.twitter}</a> : ""}
 				{clubObj?.instagram ? <a href={"https://instagram.com/" + clubObj?.instagram} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faInstagram} size="s" /> @{clubObj?.instagram}</a> : ""}
 				{clubObj?.youtube ? <a href={"https://youtube.com/" + clubObj?.youtube} target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faYoutube} size="s" /> {clubObj?.youtube}</a> : ""}

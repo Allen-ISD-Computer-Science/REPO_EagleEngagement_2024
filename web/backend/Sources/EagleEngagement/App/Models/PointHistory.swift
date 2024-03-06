@@ -7,8 +7,8 @@ final public class PointHistory: Model, Content {
     // Name of the table or collection.
     public static let schema = "PointHistories"
 
-    @ID(key: .id)
-    public var id: UUID?
+    @ID(custom: "id", generatedBy: .database)
+    public var id: Int?
 
     // userID to be associated with the point modification
     @Parent(key: "userID")

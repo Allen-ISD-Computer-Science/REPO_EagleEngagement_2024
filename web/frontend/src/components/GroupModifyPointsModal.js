@@ -56,7 +56,7 @@ function GroupModifyPointsModal(props) {
                 if (props.toast) {
                     const json = await res.json();
 
-                    if (res.status === 200) {
+                    if (res.status === 200 && json.success) {
                         props.toast.success(json.msg, {
                             position: "top-right",
                             autoClose: 2000,
@@ -64,8 +64,12 @@ function GroupModifyPointsModal(props) {
                             pauseOnHover: true,
                             theme: "light"
                         });
+
+                        if (props.onSuccess) {
+                            props.onSuccess((val) => val + 1);
+                        }
                     } else {
-                        var errorText = res.statusText || json.reason;
+                        var errorText = res.statusText || json.reason || json.msg;
                         if (errorText.includes("Duplicate")) errorText = "Name already exists!";
 
                         props.toast.error(errorText, {

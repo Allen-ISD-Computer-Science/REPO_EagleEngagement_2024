@@ -11,7 +11,7 @@ struct SignUpParams : Content {
 
 struct StudentSignUp {
     func randomString(length: Int) -> String {
-        let letters = "abcdefgh0123456789"
+        let letters = "123456789"
         return String((0..<length).map{ _ in letters.randomElement()! })
     }
     
