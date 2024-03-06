@@ -39,6 +39,10 @@ final public class EventRequest: Model, Content {
     // end date the requested event
     @Field(key: "endDate")
     public var endDate: Date
+
+    // Enables soft delete - for logs.
+    @Timestamp(key: "deleted_at", on: .delete)
+    var deletedAt: Date?
     
     // Creates a new, empty PointRequest.
     public init() { }

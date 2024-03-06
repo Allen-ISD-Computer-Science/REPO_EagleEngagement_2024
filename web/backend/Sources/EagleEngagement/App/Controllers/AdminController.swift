@@ -400,6 +400,23 @@ struct AdminController : RouteCollection {
         );
     }
 
+    /**
+     We do not need an "accept" route because acceptance will be handled by the frontend and then the request will still be removed. This route simply removes the entry.
+     */
+    func removeEventRequest(_ req: Request) async throws -> Msg {
+        guard let requestID = req.parameters.get("id", as: Int.self) else {
+            throw Abort(.badRequest)
+        }
+
+        guard let request = try await EventRequest.query(on: req.db).with(\.$user).filter(\.$id == requestID).first() else {
+            throw Abort(.badRequest);
+        };
+
+        try await request.delete();
+
+        return Msg(success: true, msg: "Removed request \(requestID)");
+    }
+
     struct LocationQuery : Content {
         var filterByName: String?;
     }
