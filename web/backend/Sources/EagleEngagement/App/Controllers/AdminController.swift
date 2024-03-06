@@ -412,7 +412,7 @@ struct AdminController : RouteCollection {
             throw Abort(.badRequest);
         };
 
-        try await request.delete();
+        try await request.delete(on: req.db);
 
         return Msg(success: true, msg: "Removed request \(requestID)");
     }
