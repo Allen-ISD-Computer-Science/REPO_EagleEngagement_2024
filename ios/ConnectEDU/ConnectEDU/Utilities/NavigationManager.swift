@@ -9,9 +9,10 @@ import Foundation
 
 class NavigationManager: ObservableObject {
     // Old way of using shared object (Didnt work for built in swift reactivity)
-//    static let shared = NavigationManager()
-    
-    @Published var currentPage: Page = .login
+    //    static let shared = NavigationManager()
+
+    @Published var currentPage: Page = KeychainService.shared.retrieveToken() != nil ? .home : .login
+    private var pageStack: [Page] = [KeychainService.shared.retrieveToken() != nil ? .home : .login]
 
     private var isUserAuthenticated: Bool {
         didSet {
@@ -30,18 +31,44 @@ class NavigationManager: ObservableObject {
         case verify
         case home
         case dev
+        case missingPoints
+        case clubs
         // Add other pages as needed
     }
 
+    @Published var forceUpdate: Bool = false
+
     func navigate(to page: Page) {
-            currentPage = page
+        pageStack.append(page)
+        currentPage = page
+        forceUpdate.toggle()
         // Additional logic if needed
+    }
+
+    func dump() -> String {
+        return pageStack.map { $0.rawValue }.joined(separator: " -> ")
+    }
+
+    func fetch() -> String {
+        return pageStack.last?.rawValue ?? "stack is empty"
+    }
+
+    func back() {
+        if pageStack.count > 1 {
+            pageStack.removeLast()
+            currentPage = pageStack.last ?? .home
+        }
+    }
+
+    func popToRoot() {
+        pageStack.removeAll()
+        navigate(to: .home)
     }
 
     func updateAuthenticationState(withToken token: String?) {
         if let token = token {
             KeychainService.shared.saveToken(token)
-                currentPage = .home
+            currentPage = .home
             isUserAuthenticated = true
         } else {
             KeychainService.shared.deleteToken()

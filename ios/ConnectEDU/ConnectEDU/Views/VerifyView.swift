@@ -9,7 +9,19 @@ import SwiftUI
 
 struct VerifyView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        GeometryReader { geometry in
+            ZStack {
+                AuthBackground()
+
+                VStack {
+                    Image("cedu-logo-full")
+                        .resizable()
+                        .frame(height: geometry.size.height * 0.3)
+                        .padding()
+                    Spacer()
+                }
+            }
+        }
     }
 }
 

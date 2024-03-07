@@ -17,7 +17,7 @@ class KeychainService {
             kSecValueData: data,
             kSecAttrAccount: "userToken",
             kSecClass: kSecClassGenericPassword,
-            kSecAttrService: "ConnectEDU"
+            kSecAttrService: "ConnectEDU",
         ] as [String: Any]
 
         SecItemDelete(query as CFDictionary)
@@ -30,7 +30,7 @@ class KeychainService {
             kSecClass: kSecClassGenericPassword,
             kSecAttrService: "ConnectEDU",
             kSecReturnData: kCFBooleanTrue!,
-            kSecMatchLimit: kSecMatchLimitOne
+            kSecMatchLimit: kSecMatchLimitOne,
         ] as [String: Any]
 
         var dataTypeRef: AnyObject?
@@ -43,15 +43,14 @@ class KeychainService {
         }
         return nil
     }
-    
+
     func deleteToken() {
         let query = [
             kSecAttrAccount: "userToken",
             kSecClass: kSecClassGenericPassword,
-            kSecAttrService: "ConnectEDU"
+            kSecAttrService: "ConnectEDU",
         ] as [String: Any]
-        
+
         SecItemDelete(query as CFDictionary)
     }
 }
-

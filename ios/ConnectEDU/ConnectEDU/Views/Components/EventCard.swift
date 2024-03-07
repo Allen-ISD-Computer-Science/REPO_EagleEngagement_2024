@@ -5,13 +5,12 @@
 //  Created by Logan Rohlfs on 2024-03-04.
 //
 
-import SwiftUI
 import Foundation
+import SwiftUI
 
 struct EventCard: View {
     var event: Event
-    
-    
+
     var body: some View {
         VStack {
             VStack {
@@ -20,7 +19,7 @@ struct EventCard: View {
                         .resizable()
                         .scaledToFill()
                         .clipped()
-                    
+
                     VStack {
                         HStack {
                             Text("\(event.eventType.capitalized)")
@@ -30,9 +29,9 @@ struct EventCard: View {
                                 .padding(10)
                                 .background(.indigoPrimary)
                                 .cornerRadius(90)
-                            
+
                             Spacer()
-                            
+
                             Text("\(event.pointsWorth)")
                                 .font(.title3)
                                 .bold()
@@ -45,28 +44,24 @@ struct EventCard: View {
                         .padding(.vertical, 10)
                         Spacer()
                     }
-                    
-                    
                 }
-                
+
                 Divider()
                     .overlay(.black)
-                
-                
+
                 VStack {
                     Text(event.name)
                         .font(.title2)
                         .bold()
-                    
+
                     HStack {
-                        
                         Text("\(event.startDate.toMonthDayFormat()) @ \(event.startDate.toHourMinuteFormat())")
                             .truncationMode(.tail)
-                        
+
                         Divider()
                             .overlay(.white)
                             .frame(height: 15)
-                        
+
                         Text("\(event.locationName)")
                     }
                     .font(.title3)
@@ -85,25 +80,22 @@ struct EventCard: View {
     }
 }
 
-
-
 struct EventCard_Previews: PreviewProvider {
     static var previews: some View {
         // Sample event data
         let sampleEvent =
-        Event(
-            id: 1,
-            name: "Coding Workshop",
-            //                description: "Learn the basics of Swift programming.",
-            eventType: "Workshop",
-            locationName: "Room 101",
-            pointsWorth: 5,
-            startDate: Date(),
-            endDate: Date().addingTimeInterval(3600) // 1 hour later
-        )
-        
+            Event(
+                id: 1,
+                name: "Coding Workshop",
+                //                description: "Learn the basics of Swift programming.",
+                eventType: "Workshop",
+                locationName: "Room 101",
+                pointsWorth: 5,
+                startDate: Date(),
+                endDate: Date().addingTimeInterval(3600) // 1 hour later
+            )
+
         // Display the event cards in a list
         EventCard(event: sampleEvent)
     }
 }
-

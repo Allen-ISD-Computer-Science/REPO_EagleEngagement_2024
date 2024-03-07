@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct ConnectEDUApp: App {
     var navigationManager = NavigationManager()
-    
+
     var body: some Scene {
         WindowGroup {
             ContentView()

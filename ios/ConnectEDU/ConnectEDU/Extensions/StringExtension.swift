@@ -8,8 +8,8 @@
 import Foundation
 
 extension String {
-    func base64Encode() -> String{
-        let inputData = self.data(using: .utf8)
+    func base64Encode() -> String {
+        let inputData = data(using: .utf8)
         let encodedData = inputData?.base64EncodedString()
         return encodedData ?? ""
     }

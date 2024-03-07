@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct HomeView: View {
+    @EnvironmentObject var navigationManager: NavigationManager
     @StateObject var viewModel = HomeViewModel()
-    
+
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                
-                ScrollView (showsIndicators: false) {
+                ScrollView(showsIndicators: false) {
                     VStack(spacing: 0) {
                         Spacer().frame(height: 20) // Adjust this value to control the initial gap
 
@@ -27,93 +27,22 @@ struct HomeView: View {
                 }
                 .frame(width: geometry.size.width, height: geometry.size.height * 0.85)
                 .background(.white)
-                
-                
                 .navigationBarTitle("Events")
                 .onAppear {
                     viewModel.getEvents()
                 }
-                
+
                 // Nav group
                 VStack {
-                    
                     // Upper Navbar
-                    HStack {
-                        VStack {
-                            Image(systemName: "flag.fill")
-                                .font(.system(size: geometry.size.height * 0.05))
-                            
-                            Text("Request")
-                                .font(.subheadline)
-                        }
-                        .padding(.leading, 40)
-                        
-                        Spacer()
-                        
-                        
-                        // POINTS PLACEHOLDER INSERT API STUFF HERE
-                        Text("21")
-                            .font(.system(size: geometry.size.height * 0.04))
-                            .bold()
-                            .offset(y: 20)
-                        
-                        Spacer()
-                        
-                        VStack {
-                            Image(systemName: "person.circle")
-                                .font(.system(size: geometry.size.height * 0.05))
-                            
-                            Text("Profile")
-                                .font(.subheadline)
-                        }
-                        .padding(.trailing, 40)
-                    }
-                    .frame(width: geometry.size.width, height: geometry.size.height * 0.15)
-                    .foregroundColor(.txtPrimary)
-                    .background(.indigoPrimary)
-                    .cornerRadius(44)
-                    
+
+                    UpperNav()
+
                     Spacer()
-                    
-                    // Lower Navbar
-                    HStack {
-                        VStack(alignment: .center) {
-                            Image(systemName: "person.2.fill")
-                                .font(.system(size: geometry.size.height * 0.05))
-                            
-                            Text("Clubs")
-                                .font(.subheadline)
-                        }
-                        .padding(.leading, 40)
-                        
-                        Spacer()
-                        
-                        VStack(alignment: .center) {
-                            Image(systemName: "calendar.badge.checkmark")
-                                .font(.system(size: geometry.size.height * 0.05))
-                            
-                            Text("Events")
-                                .font(.subheadline)
-                        }
-                        
-                        Spacer()
-                        
-                        VStack(alignment: .center) {
-                            Image(systemName: "medal.fill")
-                                .font(.system(size: geometry.size.height * 0.05))
-                            
-                            Text("Clubs")
-                                .font(.subheadline)
-                        }
-                        .padding(.trailing, 40)
-                    }
-                    .frame(width: geometry.size.width, height: geometry.size.height * 0.15)
-                    .foregroundColor(.txtPrimary)
-                    .background(.indigoPrimary)
-                    .cornerRadius(44)
+
+                    LowerNav()
                 }
                 .shadow(color: .black, radius: 10)
-                
             }
         }
         .edgesIgnoringSafeArea(.vertical)

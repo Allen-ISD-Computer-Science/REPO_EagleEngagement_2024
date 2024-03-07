@@ -9,17 +9,17 @@ import Foundation
 
 class LoginViewModel: ObservableObject {
     private var navigationManager: NavigationManager
-    
+
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var loginMessage: String = ""
-    
+
     var loginAuthResult: Bool = false
-    
+
     init(navigationManager: NavigationManager) {
         self.navigationManager = navigationManager
     }
-    
+
     func login() {
         APIService.login(email: email, password: password) { result, message in
             DispatchQueue.main.async {
@@ -35,4 +35,3 @@ class LoginViewModel: ObservableObject {
         }
     }
 }
-

@@ -9,8 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var navigationManager: NavigationManager
-    
-    
+
     var body: some View {
         Group {
             switch self.navigationManager.currentPage {
@@ -24,14 +23,15 @@ struct ContentView: View {
                 HomeView()
             case .dev:
                 DevView()
+            case .missingPoints:
+                MissingPointsView()
+            case .clubs:
+                ClubsView()
                 // Add other cases as needed
             }
         }
-        .onTapGesture(count: 3) {
-            // WIP: Make it such that when in dev view doing the triple tap gesture brings you back to the page you were on before switching to dev view. REQUIRES: navigationManager must keep track of views in a stack of some sort
-//            navigationManager.currentPage == .dev ? navigationManager.navigate(to: .login) : navigationManager.navigate(to: .dev)
-            navigationManager.navigate(to: .dev)
-            
+        .onTapGesture(count: 4) {
+            navigationManager.currentPage == .dev ? navigationManager.back() : navigationManager.navigate(to: .dev)
         }
     }
 }

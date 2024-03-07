@@ -8,11 +8,8 @@
 import Foundation
 
 class HomeViewModel: ObservableObject {
-    @Published var events: [Event] = [Event]()
-    
-   
-    
-    
+    @Published var events: [Event] = .init()
+
     func getEvents() {
         APIService.getEvents { events, error in
             if let events = events {
