@@ -27,6 +27,7 @@ class NavigationManager: ObservableObject {
 
     enum Page: String, CaseIterable {
         case login
+        case forgotPassword
         case signup
         case verify
         case home
@@ -47,6 +48,7 @@ class NavigationManager: ObservableObject {
         forceUpdate.toggle()
         forceUpdate.toggle()
         // Additional logic if needed
+        print("Navigated to \nPage: \(page) \nCurrent Stack: \(pageStack)")
     }
 
     func dump() -> String {

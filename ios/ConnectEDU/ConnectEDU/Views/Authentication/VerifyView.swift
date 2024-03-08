@@ -17,10 +17,8 @@ struct VerifyView: View {
                 AuthBackground()
                 
                 VStack {
-                    Image("cedu-logo-full")
-                        .resizable()
-                        .frame(height: geometry.size.height * 0.3)
-                        .padding()
+                    AuthLogo()
+                        .frame(width: geometry.size.width)
                     
                     Text("Verify")
                         .font(.largeTitle)
@@ -86,6 +84,7 @@ struct VerifyView: View {
                         navigationManager.navigate(to: .login)
                     } label: {
                         Text("Already have an account? Sign In")
+                            .foregroundColor(.linkPrimary)
                     }
                     
 //                Reference

@@ -10,61 +10,70 @@ import SwiftUI
 struct LowerNav: View {
     @EnvironmentObject var navigationManager: NavigationManager
     
+    var size: CGSize
+    
+    init(size: CGSize) {
+        self.size = size
+    }
+    
     var body: some View {
-        GeometryReader { geometry in
-                HStack {
-                    Button {
-                        navigationManager.navigate(to: .clubs)
-                    } label: {
-                        VStack(alignment: .center) {
-                            Image(systemName: "person.2.fill")
-                                .font(.system(size: geometry.size.height * 0.05))
-                            
-                            Text("Clubs")
-                                .font(.subheadline)
-                        }
-                        .padding(.leading, 40)
-                    }
+        HStack {
+            Button {
+                navigationManager.navigate(to: .clubs)
+            } label: {
+                VStack(alignment: .center) {
+                    Image(systemName: "person.2.fill")
+                        .font(.system(size: size.height / 3))
                     
-                    Spacer()
-                    
-                    Button {
-                        navigationManager.navigate(to: .events)
-                    } label: {
-                        VStack(alignment: .center) {
-                            Image(systemName: "calendar.badge.checkmark")
-                                .font(.system(size: geometry.size.height * 0.05))
-                            
-                            Text("Events")
-                                .font(.subheadline)
-                        }
-                    }
-                    
-                    
-                    Spacer()
-                    
-                    Button {
-                        navigationManager.navigate(to: .rewards)
-                    } label: {
-                        VStack(alignment: .center) {
-                            Image(systemName: "medal.fill")
-                                .font(.system(size: geometry.size.height * 0.05))
-                            
-                            Text("Clubs")
-                                .font(.subheadline)
-                        }
-                        .padding(.trailing, 40)
-                    }
-                    
+                    Text("Clubs")
+                        .font(.subheadline)
                 }
-                .frame(width: geometry.size.width, height: geometry.size.height * 0.15)
-                .foregroundColor(.txtPrimary)
-                .background(.indigoPrimary)
-                .cornerRadius(44)
+                .padding(.leading, 40)
+            }
+            
+            Spacer()
+            
+            Button {
+                navigationManager.navigate(to: .events)
+            } label: {
+                VStack(alignment: .center) {
+                    Image(systemName: "calendar.badge.checkmark")
+                        .font(.system(size: size.height / 3))
+                    
+                    Text("Events")
+                        .font(.subheadline)
+                }
+            }
+            
+            
+            Spacer()
+            
+            Button {
+                navigationManager.navigate(to: .rewards)
+            } label: {
+                VStack(alignment: .center) {
+                    Image(systemName: "medal.fill")
+                        .font(.system(size: size.height / 3))
+                    
+                    Text("Clubs")
+                        .font(.subheadline)
+                }
+                .padding(.trailing, 40)
+            }
+            
         }
+        .frame(width: size.width, height: size.height)
+        .background(.indigoPrimary)
+        .foregroundColor(.txtPrimary)
+        .cornerRadius(44)
+        .shadow(color: .black, radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+
     }
 }
 
 #Preview {
-    LowerNav()
+    GeometryReader { geometry in
+        LowerNav(size: CGSize(width: geometry.size.width, height: geometry.size.height * 0.15))
+            .environmentObject(loginPreviewNavigationManager)
+    }
 }

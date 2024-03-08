@@ -37,24 +37,23 @@ struct HomeView: View {
                 
                 // Nav group
                 VStack {
-                    // TODO: NEEDS FIX
-                    UpperNav(userProfile: viewModel.userProfile ?? Profile(name: "Error", studentID: 999999, points: 0, grade: 13, house: 900))
+                    UpperNav(size: CGSize(width: geometry.size.width, height: geometry.size.height * 0.15), userProfile: viewModel.userProfile ?? Profile(name: "Error", studentID: 999999, points: 0, grade: 13, house: 900))
+                        
                     Spacer()
                     
-                    LowerNav()
+                    LowerNav(size: CGSize(width: geometry.size.width, height: geometry.size.height * 0.15))
                 }
-                .frame(width: geometry.size.width, height:geometry.size.height)
-                .shadow(color: .black, radius: 10)
-                .edgesIgnoringSafeArea(.all)
                 .onAppear {
                     viewModel.getProfile()
                 }
                 // =========================
             }
         }
+        .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
     }
 }
 
 #Preview {
     HomeView(viewModel: HomeViewModel())
+        .environmentObject(loginPreviewNavigationManager)
 }

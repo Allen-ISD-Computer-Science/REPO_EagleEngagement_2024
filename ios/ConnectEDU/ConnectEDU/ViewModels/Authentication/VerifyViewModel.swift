@@ -27,8 +27,8 @@ class VerifyViewModel: ObservableObject {
             DispatchQueue.main.async {
                 if result == true {
                     self.verifyAuthResult = true
-                    self.verifyNavigationManager.updateAuthenticationState(withToken: message)
                     self.verifyMessage = "Verification successful! Redirecting..."
+                    self.verifyNavigationManager.updateAuthenticationState(withToken: message)
                 } else {
                     self.verifyAuthResult = false
                     self.verifyMessage = "Invalid Email/Token/Password"

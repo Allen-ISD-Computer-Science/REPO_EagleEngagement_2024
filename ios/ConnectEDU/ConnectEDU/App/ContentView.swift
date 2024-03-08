@@ -15,6 +15,8 @@ struct ContentView: View {
             switch self.navigationManager.currentPage {
             case .login:
                 LoginView(viewModel: LoginViewModel(navigationManager: navigationManager))
+            case .forgotPassword:
+                ForgotPasswordView(viewModel: ForgotPasswordViewModel(navigationManager: navigationManager))
             case .signup:
                 SignupView(viewModel: SignupViewModel(navigationManager: navigationManager))
             case .verify:
