@@ -23,18 +23,25 @@ struct LoginView: View {
                             .frame(height: geometry.size.height * 0.3)
                             .padding()
 
+                        Text("Login")
+                            .font(.largeTitle)
+                            .bold()
+                            .foregroundColor(.txtPrimary)
+                        
                         Spacer()
-
+                        
                         VStack {
                             TextField("Email", text: $viewModel.email)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                                 .autocapitalization(/*@START_MENU_TOKEN@*/ .none/*@END_MENU_TOKEN@*/)
-                                .padding()
+                                .padding(.horizontal)
+                                .padding(.vertical, 10)
 
                             SecureField("Password", text: $viewModel.password)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                                 .autocapitalization(/*@START_MENU_TOKEN@*/ .none/*@END_MENU_TOKEN@*/)
-                                .padding()
+                                .padding(.horizontal)
+                                .padding(.vertical, 10)
 
                             VStack {
                                 Button("Login") {
@@ -61,7 +68,6 @@ struct LoginView: View {
 
                             Button("Don't have an account? Sign Up") {
                                 navigationManager.navigate(to: .signup)
-                                print("Should have navigated to .signup")
                             }
                         }
                         .padding()

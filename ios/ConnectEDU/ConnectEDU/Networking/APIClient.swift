@@ -53,8 +53,9 @@ struct APIService {
         let url = URL(string: signupURLString)!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("appalication/json", forHTTPHeaderField: "Content-Type")
 
+        
         let body: [String: Any] = [
             "firstName": firstName,
             "lastName": lastName,
@@ -84,6 +85,96 @@ struct APIService {
 
         task.resume()
     }
+    
+    // VERIFY
+    static let verifyURLString = Endpoints.verify
+
+    static func verify(email: String, token: String, password: String, passwordConfirm: String, completion: @escaping (Bool, String?) -> Void) {
+        guard let url = URL(string: verifyURLString) else {
+            completion(false, "Invalid URL")
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let body: [String: Any] = [
+            "email": email,
+            "token": token,
+            "password": password,
+            "passwordConfirm": passwordConfirm
+        ]
+
+        request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
+
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            guard let data = data, error == nil else {
+                completion(false, "Network error")
+                return
+            }
+
+            do {
+                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any], let success = json["success"] as? Bool {
+                    let msg = json["msg"] as? String
+                    completion(success, msg)
+                } else {
+                    completion(false, "Failed to parse JSON")
+                }
+            } catch {
+                completion(false, "JSON parsing error")
+            }
+        }
+
+        task.resume()
+    }
+
+    
+    // PROFILE
+    
+    static let profileURLString = Endpoints.events
+    
+    static func getProfile(completion: @escaping (Profile?, String?) -> Void) {
+        guard let url = URL(string: Endpoints.profile) else {
+            completion(nil, "Invalid URL")
+            return
+        }
+        
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        
+        // Retrieve the token from Keychain
+        if let token = KeychainService.shared.retrieveToken() {
+            request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        } else {
+            completion(nil, "Authorization token not found")
+            return
+        }
+        
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                completion(nil, "Network error")
+                return
+            }
+
+            do {
+                let profile = try JSONDecoder().decode(Profile.self, from: data)
+                DispatchQueue.main.async {
+                    completion(profile, nil)
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    completion(nil, "Failed to parse JSON")
+                }
+            }
+        }
+
+        task.resume()
+    }
+
 
     // EVENTS
 
@@ -109,14 +200,11 @@ struct APIService {
                 return
             }
 
-            //            print(String(data: data, encoding: .utf8) ?? "No data")
-
             do {
                 if let jsonArray = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] {
                     var events = [Event]()
 
                     for json in jsonArray {
-                        print(json["startDate"] ?? "Value not readable")
                         if let id = json["id"] as? Int,
                            let name = json["name"] as? String,
                            //                           let description = json["description"] as? String,
@@ -160,3 +248,5 @@ struct APIService {
         return encodedData ?? ""
     }
 }
+
+

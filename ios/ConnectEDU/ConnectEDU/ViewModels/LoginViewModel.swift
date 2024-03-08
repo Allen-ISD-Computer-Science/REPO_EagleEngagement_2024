@@ -8,7 +8,7 @@
 import Foundation
 
 class LoginViewModel: ObservableObject {
-    private var navigationManager: NavigationManager
+    private var loginNavigationManager: NavigationManager
 
     @Published var email: String = ""
     @Published var password: String = ""
@@ -17,7 +17,7 @@ class LoginViewModel: ObservableObject {
     var loginAuthResult: Bool = false
 
     init(navigationManager: NavigationManager) {
-        self.navigationManager = navigationManager
+        self.loginNavigationManager = navigationManager
     }
 
     func login() {
@@ -25,7 +25,7 @@ class LoginViewModel: ObservableObject {
             DispatchQueue.main.async {
                 if result == true {
                     self.loginAuthResult = true
-                    self.navigationManager.updateAuthenticationState(withToken: message)
+                    self.loginNavigationManager.updateAuthenticationState(withToken: message)
                     self.loginMessage = "Login successful! Redirecting..."
                 } else {
                     self.loginAuthResult = false

@@ -14,6 +14,7 @@ enum Endpoints {
     static let verify = "\(baseAPIURL)/verify"
     static let login = "\(baseAPIURL)/login"
     static let logOutAll = "\(baseAPIURL)/logOutAll"
+    static let profile = "\(baseAPIURL)/profile"
 
     static let events = "\(baseAPIURL)/events"
     // Other endpoints...

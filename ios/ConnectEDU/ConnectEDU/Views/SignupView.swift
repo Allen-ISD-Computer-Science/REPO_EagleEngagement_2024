@@ -23,7 +23,12 @@ struct SignupView: View {
                             .resizable()
                             .frame(height: geometry.size.height * 0.3)
                             .padding()
-
+                        
+                        Text("Sign Up")
+                            .font(.largeTitle)
+                            .bold()
+                            .foregroundColor(.txtPrimary)
+                        
                         Spacer()
 
                         // Input Boxes
@@ -32,25 +37,29 @@ struct SignupView: View {
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                                 .autocorrectionDisabled(true)
                                 .autocapitalization(/*@START_MENU_TOKEN@*/ .none/*@END_MENU_TOKEN@*/)
-                                .padding()
+                                .padding(.horizontal)
+                                .padding(.vertical, 10)
 
                             TextField("Last Name", text: $viewModel.lastName)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                                 .autocorrectionDisabled(true)
                                 .autocapitalization(/*@START_MENU_TOKEN@*/ .none/*@END_MENU_TOKEN@*/)
-                                .padding()
+                                .padding(.horizontal)
+                                .padding(.vertical, 10)
 
                             TextField("Email", text: $viewModel.email)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                                 .autocorrectionDisabled(true)
                                 .autocapitalization(/*@START_MENU_TOKEN@*/ .none/*@END_MENU_TOKEN@*/)
-                                .padding()
+                                .padding(.horizontal)
+                                .padding(.vertical, 10)
 
                             TextField("Student ID", text: $viewModel.str_studentID)
                                 .autocorrectionDisabled(true)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                                 .autocapitalization(/*@START_MENU_TOKEN@*/ .none/*@END_MENU_TOKEN@*/)
-                                .padding()
+                                .padding(.horizontal)
+                                .padding(.vertical, 10)
 
                             // Sign Up button + Error Message
                             VStack {

@@ -18,15 +18,21 @@ struct ContentView: View {
             case .signup:
                 SignupView(viewModel: SignupViewModel(navigationManager: navigationManager))
             case .verify:
-                VerifyView()
+                VerifyView(viewModel: VerifyViewModel(navigationManager: navigationManager))
             case .home:
                 HomeView()
             case .dev:
                 DevView()
             case .missingPoints:
                 MissingPointsView()
+            case .profile:
+                ProfileView()
             case .clubs:
                 ClubsView()
+            case .events:
+                EventsView()
+            case .rewards:
+                RewardsView()
                 // Add other cases as needed
             }
         }

@@ -14,6 +14,10 @@
 		782155492B9A11910090DB7A /* ClubsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782155482B9A11910090DB7A /* ClubsView.swift */; };
 		7821554B2B9A119C0090DB7A /* RewardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7821554A2B9A119C0090DB7A /* RewardsView.swift */; };
 		7821554D2B9A11A90090DB7A /* EventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7821554C2B9A11A90090DB7A /* EventsView.swift */; };
+		7821554F2B9A16BE0090DB7A /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7821554E2B9A16BE0090DB7A /* ProfileView.swift */; };
+		782155512B9A19050090DB7A /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782155502B9A19050090DB7A /* Profile.swift */; };
+		782155532B9A25330090DB7A /* VerifyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782155522B9A25330090DB7A /* VerifyViewModel.swift */; };
+		782155552B9A28860090DB7A /* VerifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782155542B9A28860090DB7A /* VerifyView.swift */; };
 		783528492B98CD3F0027D26A /* MissingPointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783528482B98CD3F0027D26A /* MissingPointsView.swift */; };
 		78692AF12B98E2F100BCA1E6 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B7BDB62B94EBB000F36936 /* LoginView.swift */; };
 		786B07272B922A85000E425D /* ConnectEDUApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786B07262B922A85000E425D /* ConnectEDUApp.swift */; };
@@ -39,7 +43,6 @@
 		78E46DE82B967F8900E7D7F4 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E46DE72B967F8900E7D7F4 /* DateExtension.swift */; };
 		78E46DEC2B9768E700E7D7F4 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E46DEB2B9768E700E7D7F4 /* SignupView.swift */; };
 		78E46DEE2B9768F400E7D7F4 /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E46DED2B9768F400E7D7F4 /* SignupViewModel.swift */; };
-		78E46DF02B977D7C00E7D7F4 /* VerifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E46DEF2B977D7C00E7D7F4 /* VerifyView.swift */; };
 		78E46DF22B97E2F500E7D7F4 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E46DF12B97E2F500E7D7F4 /* ViewExtension.swift */; };
 		78E46DF42B97EBD400E7D7F4 /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E46DF32B97EBD400E7D7F4 /* NavigationManager.swift */; };
 /* End PBXBuildFile section */
@@ -69,6 +72,10 @@
 		782155482B9A11910090DB7A /* ClubsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubsView.swift; sourceTree = "<group>"; };
 		7821554A2B9A119C0090DB7A /* RewardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardsView.swift; sourceTree = "<group>"; };
 		7821554C2B9A11A90090DB7A /* EventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsView.swift; sourceTree = "<group>"; };
+		7821554E2B9A16BE0090DB7A /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		782155502B9A19050090DB7A /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		782155522B9A25330090DB7A /* VerifyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyViewModel.swift; sourceTree = "<group>"; };
+		782155542B9A28860090DB7A /* VerifyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyView.swift; sourceTree = "<group>"; };
 		783528482B98CD3F0027D26A /* MissingPointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissingPointsView.swift; sourceTree = "<group>"; };
 		78692AEF2B98E21E00BCA1E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		786B07232B922A85000E425D /* ConnectEDU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ConnectEDU.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,7 +105,6 @@
 		78E46DE72B967F8900E7D7F4 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		78E46DEB2B9768E700E7D7F4 /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
 		78E46DED2B9768F400E7D7F4 /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
-		78E46DEF2B977D7C00E7D7F4 /* VerifyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyView.swift; sourceTree = "<group>"; };
 		78E46DF12B97E2F500E7D7F4 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		78E46DF32B97EBD400E7D7F4 /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -197,6 +203,7 @@
 				78B7BDAE2B94EB2100F36936 /* Event.swift */,
 				78B7BDB02B94EB3200F36936 /* Club.swift */,
 				78B7BDB22B94EB4200F36936 /* Reward.swift */,
+				782155502B9A19050090DB7A /* Profile.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -204,17 +211,18 @@
 		78B7BDA12B94E79300F36936 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				782155402B9966970090DB7A /* DevView.swift */,
 				78E46DE22B96357100E7D7F4 /* Components */,
 				78B7BDB62B94EBB000F36936 /* LoginView.swift */,
-				78B7BDB82B94F19E00F36936 /* HomeView.swift */,
 				78E46DEB2B9768E700E7D7F4 /* SignupView.swift */,
-				78E46DEF2B977D7C00E7D7F4 /* VerifyView.swift */,
+				782155542B9A28860090DB7A /* VerifyView.swift */,
+				78B7BDB82B94F19E00F36936 /* HomeView.swift */,
 				783528482B98CD3F0027D26A /* MissingPointsView.swift */,
-				78CDC3142B98E60900F8AAB3 /* EventView.swift */,
-				782155402B9966970090DB7A /* DevView.swift */,
+				7821554E2B9A16BE0090DB7A /* ProfileView.swift */,
 				782155482B9A11910090DB7A /* ClubsView.swift */,
-				7821554A2B9A119C0090DB7A /* RewardsView.swift */,
 				7821554C2B9A11A90090DB7A /* EventsView.swift */,
+				78CDC3142B98E60900F8AAB3 /* EventView.swift */,
+				7821554A2B9A119C0090DB7A /* RewardsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -225,6 +233,7 @@
 				78B7BDB42B94EB9500F36936 /* LoginViewModel.swift */,
 				78E46DE02B9634EF00E7D7F4 /* HomeViewModel.swift */,
 				78E46DED2B9768F400E7D7F4 /* SignupViewModel.swift */,
+				782155522B9A25330090DB7A /* VerifyViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -438,6 +447,7 @@
 				78E46DF42B97EBD400E7D7F4 /* NavigationManager.swift in Sources */,
 				786B07292B922A85000E425D /* ContentView.swift in Sources */,
 				78692AF12B98E2F100BCA1E6 /* LoginView.swift in Sources */,
+				782155552B9A28860090DB7A /* VerifyView.swift in Sources */,
 				786B07272B922A85000E425D /* ConnectEDUApp.swift in Sources */,
 				78B7BDB12B94EB3200F36936 /* Club.swift in Sources */,
 				7821554D2B9A11A90090DB7A /* EventsView.swift in Sources */,
@@ -446,13 +456,15 @@
 				78E46DEC2B9768E700E7D7F4 /* SignupView.swift in Sources */,
 				782155432B9A0EE70090DB7A /* AuthBackground.swift in Sources */,
 				78B7BDA92B94E9E700F36936 /* Endpoints.swift in Sources */,
-				78E46DF02B977D7C00E7D7F4 /* VerifyView.swift in Sources */,
+				7821554F2B9A16BE0090DB7A /* ProfileView.swift in Sources */,
+				782155532B9A25330090DB7A /* VerifyViewModel.swift in Sources */,
 				78B7BDAB2B94EA5C00F36936 /* APIClient.swift in Sources */,
 				78B7BDBB2B94F30300F36936 /* KeychainService.swift in Sources */,
 				78CDC3152B98E60900F8AAB3 /* EventView.swift in Sources */,
 				78B7BDC02B9546E000F36936 /* StringExtension.swift in Sources */,
 				78E46DE82B967F8900E7D7F4 /* DateExtension.swift in Sources */,
 				78B7BDAF2B94EB2100F36936 /* Event.swift in Sources */,
+				782155512B9A19050090DB7A /* Profile.swift in Sources */,
 				782155412B9966970090DB7A /* DevView.swift in Sources */,
 				78E46DF22B97E2F500E7D7F4 /* ViewExtension.swift in Sources */,
 				78E46DE12B9634EF00E7D7F4 /* HomeViewModel.swift in Sources */,

@@ -32,7 +32,10 @@ class NavigationManager: ObservableObject {
         case home
         case dev
         case missingPoints
+        case profile
         case clubs
+        case events
+        case rewards
         // Add other pages as needed
     }
 
@@ -41,6 +44,7 @@ class NavigationManager: ObservableObject {
     func navigate(to page: Page) {
         pageStack.append(page)
         currentPage = page
+        forceUpdate.toggle()
         forceUpdate.toggle()
         // Additional logic if needed
     }
