@@ -106,6 +106,12 @@ Returns: [ { id: Int, name: String, description: String, cost: Int } ]
 ```
 ^ Note: if user's grade is set, is filtered on it
 
+```
+POST /api/reward/:id/purchase
+
+Returns: { success: Bool, msg: String }
+```
+
 ## Web
 
 ### Authentication
