@@ -11,9 +11,8 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import android.util.Base64
-import android.view.View
 import android.widget.*
-import java.io.File
+import com.ahscs.eagleengagement.datamodels.DataModel
 import java.io.FileOutputStream
 
 class VerifyActivity : AppCompatActivity() {
@@ -46,11 +45,11 @@ class VerifyActivity : AppCompatActivity() {
 
         val retrofitAPI = retrofit.create(RetrofitAPI::class.java)
         val dataModel = AuthDataModel.VerifyDataModel(email.lowercase(), token, password, confirmPassword)
-        val call: Call<AuthDataModel.response> = retrofitAPI.postVerify(dataModel)
-        call!!.enqueue(object: Callback<AuthDataModel.response?> {
+        val call: Call<DataModel.Response> = retrofitAPI.postVerify(dataModel)
+        call!!.enqueue(object: Callback<DataModel.Response?> {
             override fun onResponse(
-                call: Call<AuthDataModel.response?>?,
-                response: Response<AuthDataModel.response?>
+                call: Call<DataModel.Response?>?,
+                response: Response<DataModel.Response?>
             ) {
 
                 if (response.isSuccessful) {
@@ -79,7 +78,7 @@ class VerifyActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<AuthDataModel.response?>?, t: Throwable) {
+            override fun onFailure(call: Call<DataModel.Response?>?, t: Throwable) {
                 print("Error doing API : " + t.message)
             }
         })

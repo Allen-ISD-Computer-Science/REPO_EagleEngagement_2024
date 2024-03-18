@@ -5,24 +5,25 @@ import com.ahscs.eagleengagement.datamodels.AuthDataModel.LoginDataModel
 import com.ahscs.eagleengagement.datamodels.DataModel
 import retrofit2.Call
 import retrofit2.http.Body
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface RetrofitAPI {
     @POST("login")
-    fun postLogin(@Body dataModel: LoginDataModel?) : Call<AuthDataModel.response>
+    fun postLogin(@Body dataModel: LoginDataModel?) : Call<DataModel.Response>
 
     @POST("profile")
     fun postProfile(@Header("Authorization") authToken: String) : Call<DataModel.ProfileResponse>
 
+    @POST("profile/edit")
+    fun postEditProfile(@Header("Authorization") authToken: String, @Body dataModel: DataModel.EditProfile?) : Call<DataModel.Response>
+
     @POST("signup")
-    fun postSignUp(@Body dataModel: AuthDataModel.SignUpDataModel?) : Call<AuthDataModel.response>
+    fun postSignUp(@Body dataModel: AuthDataModel.SignUpDataModel?) : Call<DataModel.Response>
 
     @POST("verify")
-    fun postVerify(@Body dataModel: AuthDataModel.VerifyDataModel?) : Call<AuthDataModel.response>
+    fun postVerify(@Body dataModel: AuthDataModel.VerifyDataModel?) : Call<DataModel.Response>
 
     @POST("events")
     fun postEvents(@Header("Authorization") authToken: String): Call<MutableList<DataModel.EventResponse>>

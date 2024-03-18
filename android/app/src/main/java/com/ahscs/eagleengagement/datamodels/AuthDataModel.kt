@@ -20,8 +20,4 @@ sealed class AuthDataModel {
         var passwordConfirm: String
     ) : AuthDataModel()
 
-    data class response(
-        var success: Boolean,
-        var msg: String
-    ) : AuthDataModel()
 }
