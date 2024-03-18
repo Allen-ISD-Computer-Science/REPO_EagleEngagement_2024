@@ -26,6 +26,8 @@ class ProfileActivity : AppCompatActivity() {
     var jwt : String? = null
     var name : String? = null
     var studentID : Int? = null
+    var savedGrade : Int? = null
+    var savedHouse : Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -118,6 +120,8 @@ class ProfileActivity : AppCompatActivity() {
                             gradeSpinner.setSelection(3)
                         }
 
+                        savedGrade = data.grade
+
                         val houseSpinner : Spinner = findViewById(R.id.houseSpinner)
                         if (data.house == 100) {
                             gradeSpinner.setSelection(0)
@@ -136,6 +140,8 @@ class ProfileActivity : AppCompatActivity() {
                         } else {
                             houseSpinner.setSelection(7)
                         }
+
+                        savedHouse = data.house
 
                         configureBtns()
                     } catch (e : Exception) {
@@ -239,11 +245,24 @@ class ProfileActivity : AppCompatActivity() {
         val cancelBtn = findViewById<Button>(R.id.editCancelBtn)
         cancelBtn.setOnClickListener {
             nameTxt.isEnabled = false
+            nameTxt.setText(name)
 
             gradeSpinner.isClickable = false
             gradeSpinner.isEnabled = false
             houseSpinner.isClickable = false
             houseSpinner.isEnabled = false
+
+            if (savedGrade == null) {
+                gradeSpinner.setSelection(3)
+            } else {
+                gradeSpinner.setSelection(savedGrade!! - 10)
+            }
+
+            if (savedHouse == null) {
+                houseSpinner.setSelection(7)
+            } else {
+                houseSpinner.setSelection((savedHouse!! / 100) - 1)
+            }
 
             editCancelBtn.visibility = View.GONE
             editSaveBtn.visibility = View.GONE
@@ -256,6 +275,8 @@ class ProfileActivity : AppCompatActivity() {
             val newName = nameTxt.text.toString()
             val grade = gradeSpinner.selectedItemPosition + 10
             val house = (houseSpinner.selectedItemPosition + 1) * 100
+            savedGrade = grade
+            savedHouse = house
             saveProfile(jwt!!, newName, studentID!!, grade, house)
         }
     }
