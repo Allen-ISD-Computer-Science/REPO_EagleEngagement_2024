@@ -58,12 +58,14 @@ struct VerifyView: View {
                     // Verify Button
                     
                     VStack {
-                        Button("Verify") {
+                        Button {
                             viewModel.verify()
 
                             if viewModel.verifyAuthResult {
-                                navigationManager.navigate(to: .home)
+                                navigationManager.navigate(to: .events)
                             }
+                        } label: {
+                            Text("Verify")
                         }
                         .padding()
                         .background(.indigoSecondary)

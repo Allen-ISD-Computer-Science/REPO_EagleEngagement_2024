@@ -14,6 +14,7 @@ struct DevView: View {
                 Section(header: Text("Navigation State")) {
                     Text("Current Page: \(navigationManager.currentPage.rawValue)")
                     Text("Current PageStack: \(navigationManager.dump())")
+                    Text("Current EventDetailID: \(navigationManager.currentEventID)")
                     Button("Clear Stack") {
                         navigationManager.popToRoot()
                     }

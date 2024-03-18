@@ -28,6 +28,7 @@ struct LowerNav: View {
                     Text("Clubs")
                         .font(.subheadline)
                 }
+                .foregroundColor(navigationManager.currentPage == .clubs ? .txtPrimary : .txtSecondary)
                 .padding(.leading, 40)
             }
             
@@ -43,6 +44,7 @@ struct LowerNav: View {
                     Text("Events")
                         .font(.subheadline)
                 }
+                .foregroundColor(navigationManager.currentPage == .events ? .txtPrimary : .txtSecondary)
             }
             
             
@@ -55,9 +57,10 @@ struct LowerNav: View {
                     Image(systemName: "medal.fill")
                         .font(.system(size: size.height / 3))
                     
-                    Text("Clubs")
+                    Text("Rewards")
                         .font(.subheadline)
                 }
+                .foregroundColor(navigationManager.currentPage == .rewards ? .txtPrimary : .txtSecondary)
                 .padding(.trailing, 40)
             }
             

@@ -10,7 +10,6 @@ import Foundation
 struct Event: Codable, Identifiable, Equatable {
     let id: Int
     let name: String
-//    let description: String
     let eventType: String
     let locationName: String
     let pointsWorth: Int

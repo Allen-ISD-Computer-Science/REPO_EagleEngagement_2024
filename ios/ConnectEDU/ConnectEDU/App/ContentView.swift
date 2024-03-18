@@ -21,8 +21,8 @@ struct ContentView: View {
                 SignupView(viewModel: SignupViewModel(navigationManager: navigationManager))
             case .verify:
                 VerifyView(viewModel: VerifyViewModel(navigationManager: navigationManager))
-            case .home:
-                HomeView()
+            case .events:
+                EventsView()
             case .dev:
                 DevView()
             case .missingPoints:
@@ -31,10 +31,10 @@ struct ContentView: View {
                 ProfileView()
             case .clubs:
                 ClubsView()
-            case .events:
-                EventsView()
             case .rewards:
                 RewardsView()
+            case .eventDetail:
+                EventView(event_id: navigationManager.currentEventID ?? 0)
                 // Add other cases as needed
             }
         }

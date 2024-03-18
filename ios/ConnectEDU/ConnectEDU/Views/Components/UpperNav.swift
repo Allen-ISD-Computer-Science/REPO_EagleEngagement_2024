@@ -30,8 +30,8 @@ struct UpperNav: View {
                     Text("Request")
                         .font(.subheadline)
                 }
+                .foregroundColor(navigationManager.currentPage == .missingPoints ? .txtPrimary : .txtSecondary)
                 .offset(y: -10)
-                //                .padding(.top, 35)
                 .padding(.leading, 40)
             }
             
@@ -55,6 +55,7 @@ struct UpperNav: View {
                     Text("Profile")
                         .font(.subheadline)
                 }
+                .foregroundColor(navigationManager.currentPage == .profile ? .txtPrimary : .txtSecondary)
                 .offset(y: -10)
                 .padding(.trailing, 40)
             }

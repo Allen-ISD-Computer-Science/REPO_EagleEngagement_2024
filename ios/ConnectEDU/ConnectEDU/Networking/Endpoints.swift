@@ -10,13 +10,19 @@ import Foundation
 enum Endpoints {
     static let baseAPIURL = "https://stg.codermerlin.academy/vapor/logan-rohlfs/api"
 
-    static let signup = "\(baseAPIURL)/signup"
-    static let verify = "\(baseAPIURL)/verify"
-    static let login = "\(baseAPIURL)/login"
-    static let logOutAll = "\(baseAPIURL)/logOutAll"
-    static let profile = "\(baseAPIURL)/profile"
-    static let forgotPassword = "\(baseAPIURL)/forgotPassword"
+    // Auth
+    static let login = "\(baseAPIURL)/login/"
+    static let signup = "\(baseAPIURL)/signup/"
+    static let forgotPassword = "\(baseAPIURL)/forgotPassword/"
+    static let verify = "\(baseAPIURL)/verify/"
+    static let logOutAll = "\(baseAPIURL)/logOutAll/"
 
-    static let events = "\(baseAPIURL)/events"
+    // Profile
+    static let profile = "\(baseAPIURL)/profile/"
+    
+    // Events
+    static let events = "\(baseAPIURL)/events/"
+    static let event = "\(baseAPIURL)/event/"
+    
     // Other endpoints...
 }

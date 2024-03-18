@@ -45,12 +45,14 @@ struct ForgotPasswordView: View {
                         .padding(.vertical, 10)
                     
                     VStack {
-                        Button("Verify") {
+                        Button {
                             viewModel.forgotPassword()
 
                             if viewModel.forgotPasswordAuthResult {
-                                navigationManager.navigate(to: .home)
+                                navigationManager.navigate(to: .events)
                             }
+                        } label: {
+                            Text("Verify")
                         }
                         .padding()
                         .background(.indigoSecondary)

@@ -72,7 +72,7 @@ struct APIService {
             "studentID": Int(studentID)! // TODO: Fix this
         ]
         
-        guard let request = createRequest(urlString: Endpoints.forgotPassword, httpMethod: "POST", body: body) else {
+        guard let request = createRequest(urlString: Endpoints.login, httpMethod: "POST", body: body) else {
             completion(false, "Invalid URL")
             return
         }
@@ -281,6 +281,63 @@ struct APIService {
         
         task.resume()
     }
+    
+    // Event
+    
+    // Event
+    static func getEvent(eventId: Int, completion: @escaping (EventFull?, String?) -> Void) {
+        let eventURLString = "\(Endpoints.event)/\(eventId)"
+
+        guard var request = createRequest(urlString: eventURLString, httpMethod: "POST") else {
+            completion(nil, "Invalid URL")
+            return
+        }
+
+        // Retrieve the token from Keychain
+        if let token = KeychainService.shared.retrieveToken() {
+            request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        } else {
+            completion(nil, "Authorization token not found")
+            return
+        }
+
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            guard let data = data, error == nil else {
+                completion(nil, "Network error")
+                return
+            }
+
+            do {
+                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+                   let id = json["id"] as? Int,
+                   let name = json["name"] as? String,
+                   let eventType = json["eventType"] as? String,
+                   let description = json["description"] as? String,
+                   let locationName = json["locationName"] as? String,
+                   let address = json["address"] as? String,
+                   let pointsWorth = json["pointsWorth"] as? Int,
+                   let startDateStr = json["startDate"] as? String,
+                   let endDateStr = json["endDate"] as? String {
+
+                    let formatter = DateFormatter()
+                    formatter.locale = Locale(identifier: "en_US_POSIX")
+                    formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+                    let startDate = formatter.date(from: startDateStr)
+                    let endDate = formatter.date(from: endDateStr)
+
+                    let eventFull = EventFull(id: id, name: name, eventType: eventType, description: description, locationName: locationName, address: address, pointsWorth: pointsWorth, startDate: startDate!, endDate: endDate!)
+                    completion(eventFull, nil)
+                } else {
+                    completion(nil, "Failed to parse JSON")
+                }
+            } catch {
+                completion(nil, "JSON parsing error")
+            }
+        }
+
+        task.resume()
+    }
+
     
     // API Methods
     

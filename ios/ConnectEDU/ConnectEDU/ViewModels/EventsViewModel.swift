@@ -7,7 +7,7 @@
 
 import Foundation
 
-class HomeViewModel: ObservableObject {
+class EventsViewModel: ObservableObject {
     @Published var events: [Event] = .init()
     @Published var userProfile: Profile?
 

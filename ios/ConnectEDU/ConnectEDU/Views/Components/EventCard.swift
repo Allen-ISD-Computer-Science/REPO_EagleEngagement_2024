@@ -74,7 +74,6 @@ struct EventCard: View {
             .frame(width: 300, height: 283)
             .background(.indigoPrimary)
             .foregroundColor(.txtPrimary)
-            .border(.black, width: 4)
             .cornerRadius(10)
             .shadow(radius: 10)
         }

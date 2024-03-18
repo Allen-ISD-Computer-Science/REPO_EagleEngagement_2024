@@ -29,4 +29,22 @@ extension Date {
         formatter.pmSymbol = "pm"
         return formatter.string(from: self).lowercased()
     }
+    
+    func day() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d"
+        return formatter.string(from: self)
+    }
+    
+    func month() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM"
+        return formatter.string(from: self)
+    }
+    
+    func weekday() -> String {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "EEEE"
+            return formatter.string(from: self)
+        }
 }

@@ -53,12 +53,14 @@ struct LoginView: View {
                         }
                         
                         VStack {
-                            Button("Login") {
+                            Button {
                                 viewModel.login()
                                 
                                 if viewModel.loginAuthResult {
-                                    navigationManager.navigate(to: .home)
+                                    navigationManager.navigate(to: .events)
                                 }
+                            } label: {
+                                Text("Login")
                             }
                             .padding()
                             .background(.indigoSecondary)
