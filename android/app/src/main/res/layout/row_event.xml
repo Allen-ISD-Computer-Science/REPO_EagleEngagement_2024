@@ -36,9 +36,9 @@
                     android:layout_marginTop="@dimen/_3pxv"
                     android:layout_width="@dimen/_74pxh"
                     android:paddingHorizontal="@dimen/_12pxh"
-                    android:paddingVertical="@dimen/_12pxv"
+                    android:paddingVertical="@dimen/_15pxv"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/img_vector_white_a700_74x74" tools:ignore="ContentDescription"/>
+                    android:src="@drawable/img_events_icon" tools:ignore="ContentDescription"/>
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="1dp"

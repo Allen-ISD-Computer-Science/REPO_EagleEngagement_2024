@@ -63,7 +63,7 @@
                                 android:layout_marginBottom="@dimen/_10pxv"
                                 android:scaleType="fitXY"
                                 tools:ignore="ContentDescription"
-                                tools:src="@drawable/img_eagle_engagement_logo" />
+                                android:src="@drawable/img_eagle_engagement_logo" />
                         </FrameLayout>
                         <TextView android:ellipsize="end"
                             android:id="@+id/txtEmail"
@@ -90,9 +90,7 @@
                                 style="@style/txtKhulaextrabold24_1"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_marginStart="@dimen/_50pxh"
                                 android:layout_marginTop="@dimen/_12pxv"
-                                android:layout_marginEnd="@dimen/_50pxh"
                                 android:layout_marginBottom="@dimen/_12pxv"
                                 android:ellipsize="end"
                                 android:gravity="center_horizontal"
@@ -141,13 +139,12 @@
                     style="@style/txtKhulaextrabold24_1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/_50pxh"
                     android:layout_marginTop="@dimen/_8pxv"
-                    android:layout_marginEnd="@dimen/_50pxh"
                     android:layout_marginBottom="@dimen/_16pxv"
                     android:ellipsize="end"
                     android:gravity="center_horizontal"
                     android:inputType="textPassword"
+                    android:imeOptions="actionDone"
                     tools:ignore="SpeakableTextPresentCheck" />
             </LinearLayout>
 

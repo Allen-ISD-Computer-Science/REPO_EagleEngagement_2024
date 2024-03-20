@@ -25,6 +25,9 @@ interface RetrofitAPI {
     @POST("verify")
     fun postVerify(@Body dataModel: AuthDataModel.VerifyDataModel?) : Call<DataModel.Response>
 
+    @POST("forgotPassword")
+    fun postForgotPassword(@Body dataModel: AuthDataModel.ForgotPasswordDataModel?) : Call<DataModel.Response>
+
     @POST("events")
     fun postEvents(@Header("Authorization") authToken: String): Call<MutableList<DataModel.EventResponse>>
 

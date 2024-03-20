@@ -55,7 +55,7 @@ sealed class DataModel {
     data class ClubResponse(
         var id: Int,
         var name: String,
-        var description: String
+        var descritpion: String
     ) : DataModel()
 
     data class ClubContentResponse(

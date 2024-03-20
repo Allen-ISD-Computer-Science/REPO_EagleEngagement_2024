@@ -20,4 +20,9 @@ sealed class AuthDataModel {
         var passwordConfirm: String
     ) : AuthDataModel()
 
+    data class ForgotPasswordDataModel(
+        var email: String,
+        var studentID: Int
+    ) : AuthDataModel()
+
 }

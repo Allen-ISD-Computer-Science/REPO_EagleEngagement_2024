@@ -47,7 +47,7 @@
             </LinearLayout>
         </LinearLayout>
         <TextView android:gravity="center_horizontal"
-            android:id="@+id/txtClubDescription"
+            android:id="@+id/txtClubListDescription"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_10pxv"
             android:layout_marginEnd="@dimen/_11pxh"

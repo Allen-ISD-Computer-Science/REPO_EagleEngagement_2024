@@ -24,6 +24,11 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun configureBtns() {
+        val forgotPasswordBtn = findViewById<TextView>(R.id.txtPasswordRecove)
+        forgotPasswordBtn.setOnClickListener {
+            startActivity(Intent(this, ForgotPasswordActivity::class.java))
+        }
+
         val createAcctBtn = findViewById<TextView>(R.id.txtCreateAcct)
         createAcctBtn.setOnClickListener {
             startActivity(Intent(this, VerifyActivity::class.java))

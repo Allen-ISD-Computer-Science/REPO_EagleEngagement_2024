@@ -154,8 +154,8 @@
                     android:layout_marginStart="@dimen/_18pxh"
                     android:layout_width="@dimen/_75pxh"
                     android:scaleType="fitXY"
-                    android:src="@drawable/img_close"
-                    tools:ignore="ContentDescription" tools:src="@drawable/img_close"/>
+                    android:src="@drawable/img_events_icon"
+                    tools:ignore="ContentDescription" />
             </LinearLayout>
         </LinearLayout>
         <LinearLayout android:gravity="top|center"

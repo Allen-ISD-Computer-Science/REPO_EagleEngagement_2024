@@ -12,6 +12,9 @@ class ClubViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun updateInfo(info: DataModel.ClubResponse) {
         var name : TextView = itemView.findViewById(R.id.txtClubName)
         name.text = info.name
+
+        var description : TextView = itemView.findViewById(R.id.txtClubListDescription)
+        description.text = info.descritpion
     }
 
 }
