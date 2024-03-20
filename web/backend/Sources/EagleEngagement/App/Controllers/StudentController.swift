@@ -112,7 +112,7 @@ struct StudentController : RouteCollection {
 
         guard let studentUser = try await StudentUser.query(on: req.db).with(\.$user)
                 .filter(\.$studentID == args.studentID)
-                .filter(\.$user.$email == args.email)
+                .filter(User.self, \.$email == args.email)
                 .first() else {
             throw Abort(.badRequest, reason: "Account not found or invalid.");
         }
