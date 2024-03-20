@@ -55,6 +55,16 @@ func routes(_ app: Application) throws {
         return try await teacherForgot.forgotPassword(req);
     }
 
+    sessionRoutes.get("logout") { req in
+        req.session.destroy();
+
+        guard let vaporPublic = Environment.get("VAPOR_SERVER_PUBLIC_URL") else {
+                fatalError("Failed to determine VAPOR_SERVER_PUBIC_URL from environment");
+        }
+        
+        return req.redirect(to: vaporPublic + "/login")
+    };
+
     let teacherProtectedRoutes = sessionRoutes.grouped(TeacherMiddleware());
 
     struct IsAdmin : Content {
