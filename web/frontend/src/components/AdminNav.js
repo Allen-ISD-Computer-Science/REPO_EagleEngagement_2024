@@ -5,7 +5,7 @@ import { Collapse, List, ListItemButton, ListItemIcon, ListItemText } from "@mui
 import { useCookies } from 'react-cookie';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCalendar, faCaretDown, faCaretUp, faImage, faLocationDot, faPlus, faQuestion, faUsers, faBars, faSliders } from '@fortawesome/free-solid-svg-icons'
+import { faCalendar, faCaretDown, faCaretUp, faImage, faLocationDot, faPlus, faQuestion, faUsers, faBars, faSliders, faTrophy } from '@fortawesome/free-solid-svg-icons'
 
 function AdminNav(props) {
   const [isHidden, setIsHidden] = React.useState(true);
@@ -79,6 +79,12 @@ function AdminNav(props) {
               <FontAwesomeIcon icon={faLocationDot} size="2xl" />
             </ListItemIcon>
             <ListItemText primary="Locations" />
+          </ListItemButton>
+          <ListItemButton component="a" href={process.env.PUBLIC_URL + "/admin/rewards"} selected={props.selected === "rewards"}>
+            <ListItemIcon className="flex-col items-center">
+              <FontAwesomeIcon icon={faTrophy} size="2xl" />
+            </ListItemIcon>
+            <ListItemText primary="Rewards" />
           </ListItemButton>
         </List>
       </nav>

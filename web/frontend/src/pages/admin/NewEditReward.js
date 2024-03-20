@@ -1,37 +1,38 @@
 import * as React from "react";
+import dayjs from "dayjs";
 
-import { Button, TextField } from "@mui/material";
+import { DateTimePicker, TimePicker } from "@mui/x-date-pickers";
 import { ToastContainer, toast } from 'react-toastify';
 
 import AdminNav from "../../components/AdminNav";
-import MapSelector from "../../components/MapSelector";
 import LoadingOverlay from "../../components/LoadingOverlay";
+import { Autocomplete, Button, MenuItem, Select, TextField } from "@mui/material";
 
-function NewEditLocationPage(props) {
-  const [title, setTitle] = React.useState("New Location");
+function NewEditRewardPage(props) {
+  const [title, setTitle] = React.useState("New Reward");
 
-  const [locationInfo, setLocationInfo] = React.useState({
-    locationName: "Allen High School PAC", address: "300...", latitude: 33.1, longitude: -96.6, radius: 100
+  const [rewardInfo, setRewardInfo] = React.useState({
+    // name: "B.E.S.T. Robotics State Competition", description: "Come visit for the B.E.S.T. Robotics Competition!", eventType: "Robotics", locationName: "Allen Stadium", locationID: 0, startDate: "9/1/2021", pointsWorth: 3, checkinType: "manual"
   });
 
   const [requests, setRequests] = React.useState(0);
 
   React.useEffect(() => {
-    const locationID = parseInt(window.location.pathname.split("/").pop());
-    if (!isNaN(locationID)) {
-      setTitle("Edit Location - ...");
+    const rewardID = parseInt(window.location.pathname.split("/").pop());
+    if (!isNaN(rewardID)) {
+      setTitle("Edit Reward - ...");
 
-      const getLocation = async () => {
-        const res = await fetch(`${process.env.PUBLIC_URL}/admin/api/location/${locationID}`, { headers: { Accept: "application/json" }, method: "POST" });
+      const getReward = async () => {
+        const res = await fetch(`${process.env.PUBLIC_URL}/admin/api/reward/${rewardID}`, { headers: { Accept: "application/json" }, method: "POST" });
         return await res.json();
       }
 
       setRequests((prev) => prev + 1);
-      getLocation().then((location) => {
+      getReward().then((reward) => {
+        document.title = "Edit Reward - " + reward.name;
+        setTitle("Edit Reward - " + reward.name);
+        setRewardInfo(reward);
         setRequests((prev) => prev - 1);
-        document.title = "Edit Location - " + location.locationName;
-        setTitle("Edit Location - " + location.locationName);
-        setLocationInfo(location);
       }).catch((err) => {
         setRequests((prev) => prev - 1);
         // console.error(err);
@@ -40,36 +41,30 @@ function NewEditLocationPage(props) {
       return;
     }
 
-    if (!window.location.pathname.endsWith("/admin/locations/new")) throw new Error("Invalid location ID.");
-    setLocationInfo({
-      locationName: "",
-      address: "",
+    if (!window.location.pathname.endsWith("/admin/rewards/new")) throw new Error("Invalid reward ID.");
+    setRewardInfo({
+      name: "",
       description: "",
-      latitude: -1,
-      longitude: -1,
-      radius: 100
+      cost: -1,
+      gradesAllowed: -1
     });
   }, []);
 
   const saveButtonClicked = async () => {
     var isNew = true;
-    var urlPath = "/admin/api/locations/new"
-    if (!window.location.pathname.endsWith("/admin/locations/new")) {
+    var urlPath = "/admin/api/rewards/new"
+    if (!window.location.pathname.endsWith("/admin/rewards/new")) {
       isNew = false;
-      const eventID = parseInt(window.location.pathname.split("/").pop());
-      urlPath = `/admin/api/location/${eventID}/edit`
+      const rewardID = parseInt(window.location.pathname.split("/").pop());
+      urlPath = `/admin/api/reward/${rewardID}/edit`
     }
 
-    const filteredInfo = Object.assign({}, locationInfo);
-    delete filteredInfo.id;
-    filteredInfo.latitude = parseFloat(filteredInfo.latitude);
-    filteredInfo.longitude = parseFloat(filteredInfo.longitude);
-    filteredInfo.radius = parseInt(filteredInfo.radius);
+    const filteredInfo = Object.assign({}, rewardInfo);
 
     const keys = Object.keys(filteredInfo);
     for (let i = 0; i < keys.length; i++) {
       const key = keys[i];
-      if (filteredInfo[key] === "" || filteredInfo[key] === null || filteredInfo[key] === -1) {
+      if ((filteredInfo[key] === "" || filteredInfo[key] === null || filteredInfo[key] === -1)) {
         toast.error(`${key} cannot be empty!`, {
           position: "top-right",
           autoClose: 2000,
@@ -106,7 +101,7 @@ function NewEditLocationPage(props) {
       setRequests((prev) => prev - 1);
 
       if (res.status === 200) {
-        toast.success(`${isNew ? "Created" : "Updated"} location!`, {
+        toast.success(`${isNew ? "Created" : "Updated"} reward!`, {
           position: "top-right",
           autoClose: 2000,
           closeOnClick: true,
@@ -114,11 +109,7 @@ function NewEditLocationPage(props) {
           theme: "light"
         });
       } else {
-        const json = await res.json();
-        var errorText = res.statusText || json.reason;
-        if (errorText.includes("Duplicate")) errorText = "Name already exists!";
-
-        toast.error(errorText, {
+        toast.error(res.statusText, {
           position: "top-right",
           autoClose: 2000,
           closeOnClick: true,
@@ -132,18 +123,9 @@ function NewEditLocationPage(props) {
     }
   }
 
-  const updateMapValues = (latlng, radius) => {
-    setLocationInfo({
-      ...locationInfo,
-      latitude: latlng.lat,
-      longitude: latlng.lng,
-      radius: radius
-    });
-  }
-
   return (
     <div className="flex flex-row items-stretch min-h-[100vh]">
-      <AdminNav selected="locations" />
+      <AdminNav selected="rewards" />
       <div className="flex flex-col items-stretch w-full">
         <LoadingOverlay
           isActive={requests !== 0}
@@ -156,7 +138,7 @@ function NewEditLocationPage(props) {
           </span>
         </div>
         {/* Start a form, split it into two columns */}
-        <form className="flex flex-row justify-between items-stretch p-10 gap-10 max-md:flex-col max-md:gap-4 max-md:p-4" onSubmit={(e) => { e.preventDefault(); }}>
+        <form className="flex flex-row relative justify-between items-stretch p-10 gap-10 max-md:flex-col max-md:gap-4 max-md:p-4">
           <ToastContainer
             position="top-right"
             autoClose={2000}
@@ -171,34 +153,17 @@ function NewEditLocationPage(props) {
           {/* Left column */}
           <div className="flex-1">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
-              Location Name
+              Reward Name
             </label>
             <TextField
               className="border bg-gray-100 rounded-xl w-full"
-              placeholder="Location Name"
+              placeholder="Reward Name"
               name="name"
-              value={locationInfo?.locationName}
+              value={rewardInfo?.name}
               onChange={(e) => {
-                setLocationInfo({
-                  ...locationInfo,
-                  locationName: e.currentTarget.value
-                })
-              }}
-
-            />
-
-            <label className="block text-gray-700 text-sm font-bold mb-2 mt-4" htmlFor="address">
-              Address
-            </label>
-            <TextField
-              className="border bg-gray-100 rounded-xl w-full"
-              placeholder="Address"
-              name="address"
-              value={locationInfo?.address}
-              onChange={(e) => {
-                setLocationInfo({
-                  ...locationInfo,
-                  address: e.currentTarget.value
+                setRewardInfo({
+                  ...rewardInfo,
+                  name: e.currentTarget.value
                 })
               }}
             />
@@ -212,34 +177,43 @@ function NewEditLocationPage(props) {
                 placeholder="Description"
                 name="description"
                 maxLength={255}
+                value={rewardInfo?.description}
                 multiline={true}
-                value={locationInfo?.description}
                 onChange={(e) => {
-                  setLocationInfo({
-                    ...locationInfo,
+                  setRewardInfo({
+                    ...rewardInfo,
                     description: e.currentTarget.value
                   })
+                  // TODO: add #/255
                 }}
               />
             </div>
+
+            <label className="block text-gray-700 text-sm font-bold mb-2 mt-4" htmlFor="points">
+              Point Cost
+            </label>
+            <TextField
+              className="border bg-gray-100 rounded-xl w-full"
+              placeholder="Point Cost"
+              type="number"
+              name="points"
+              value={rewardInfo.pointsWorth === -1 ? "" : rewardInfo.pointsWorth}
+              onChange={(e) => {
+                setRewardInfo({
+                  ...rewardInfo,
+                  cost: parseInt(e.currentTarget.value)
+                })
+              }}
+            />
           </div>
 
           {/* Right column */}
-          <div className="flex-1 flex flex-col">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="map">
-              Choose Location
-            </label>
-            <MapSelector
-              lat={locationInfo?.latitude}
-              lng={locationInfo?.longitude}
-              radius={locationInfo?.radius}
-              onChange={updateMapValues}
-            />
-
+          <div className="flex-1">
+            {/* allowed grades */}
             <br />
 
             <div
-              className="flex-1 flex flex-row-reverse items-end gap-4 mt-4 w-full mt-20"
+              className="flex flex-row-reverse items-end gap-4 mt-4 w-full mt-20"
             >
               {/* Submit button */}
               <Button
@@ -255,7 +229,7 @@ function NewEditLocationPage(props) {
                 variant="contained"
                 color="error"
                 component="a"
-                href={process.env.PUBLIC_URL + "/admin/locations"}
+                href={process.env.PUBLIC_URL + "/admin/events"}
               >
                 Cancel
               </Button>
@@ -267,4 +241,4 @@ function NewEditLocationPage(props) {
   );
 }
 
-export default NewEditLocationPage;
+export default NewEditRewardPage;

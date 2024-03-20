@@ -254,6 +254,7 @@ function NewEditEventPage(props) {
                 className="border bg-gray-100 rounded-xl w-full"
                 placeholder="Description"
                 name="description"
+                multiline={true}
                 maxLength={255}
                 value={eventInfo?.description}
                 onChange={(e) => {
