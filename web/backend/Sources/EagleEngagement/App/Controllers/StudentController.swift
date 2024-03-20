@@ -30,11 +30,16 @@ struct StudentController : RouteCollection {
         // Data
         protectedRoutes.post("profile", use: fetchProfile);
         protectedRoutes.post("profile", "edit", use: editProfile);
+        
         protectedRoutes.post("events", use: fetchEvents);
         protectedRoutes.post("event", ":id", use: fetchEvent);
         protectedRoutes.post("event", ":id", "checkIn", use: checkInEvent);
+        
         protectedRoutes.post("clubs", use: fetchClubs);
         protectedRoutes.post("club", ":id", use: fetchClub);
+
+        protectedRoutes.post("rewards", use: fetchRewards);
+        protectedRoutes.post("reward", ":id", "purchase", use: purchaseReward);
     }
 
     func login(_ req: Request) async throws -> Msg {
@@ -427,12 +432,86 @@ struct StudentController : RouteCollection {
         let club = clubSponsors[0].club;
        
         let clubInfo = FullClubInfo.init(name: club.name, description: club.description,
-                                     sponsors: clubSponsors.map{ cS in
-                                                           cS.user.name
-                                     }.joined(separator: ", "),
-                                     meetingTimes: club.meetingTimes, locationName: club.locationName,
-                                     websiteLink: club.websiteLink, instagramLink: club.instagramLink, twitterLink: club.twitterLink, youtubeLink: club.youtubeLink);
-
+                                         sponsors: clubSponsors.map{ cS in
+                                             cS.user.name
+                                         }.joined(separator: ", "),
+                                         meetingTimes: club.meetingTimes, locationName: club.locationName,
+                                         websiteLink: club.websiteLink, instagramLink: club.instagramLink, twitterLink: club.twitterLink, youtubeLink: club.youtubeLink);
+        
         return clubInfo; 
-    }    
+    }
+
+    struct RewardInfo : Content {
+        var id: Int;
+        var name: String;
+        var description: String;
+        var cost: Int;
+    }
+
+    func fetchRewards(_ req: Request) async throws -> [RewardInfo] {
+        let userToken = try req.jwt.verify(as: UserToken.self);
+
+        guard let studentUser = try await StudentUser.query(on: req.db)
+                .with(\.$user)
+                .filter(\.$user.$id == userToken.userId)
+                .first()
+        else {
+            throw Abort(.unauthorized);
+        }
+
+        
+        let rewards = try await Reward.query(on: req.db).all();
+        
+        if let gradeFilter = studentUser.grade {
+            let gradeFlag = [GradeFlags.freshman, GradeFlags.sophomore, GradeFlags.junior, GradeFlags.senior][gradeFilter - 9];
+            
+            let filteredRewards = rewards.filter { rew in
+                (rew.allowedGrades & gradeFlag) != 0 }
+
+            return filteredRewards.map { r in
+                RewardInfo.init(id: r.id!, name: r.name, description: r.description, cost: r.cost )};
+        }
+
+        return rewards.map { r in
+                RewardInfo.init(id: r.id!, name: r.name, description: r.description, cost: r.cost )};
+    }
+
+    func purchaseReward(_ req: Request) async throws -> Msg {
+        guard let id = req.parameters.get("id", as: Int.self) else {
+            throw Abort(.badRequest)
+        }
+
+        let userToken = try req.jwt.verify(as: UserToken.self);
+
+        guard let studentUser = try await StudentUser.query(on: req.db)
+                .with(\.$user)
+                .filter(\.$user.$id == userToken.userId)
+                .first()
+        else {
+            throw Abort(.unauthorized);
+        }
+        
+        guard let reward = try await Reward.query(on: req.db).filter(\.$id == id).first() else {
+            throw Abort(.badRequest, reason: "Invalid Reward ID.");
+        };
+
+        if (studentUser.points < reward.cost) {
+            return Msg(success: false, msg: "Not enough points to purchase.");
+        }
+
+        if let gradeFilter = studentUser.grade {
+            let gradeFlag = [GradeFlags.freshman, GradeFlags.sophomore, GradeFlags.junior, GradeFlags.senior][gradeFilter - 9];
+            if ((reward.allowedGrades & gradeFlag) == 0) {
+                return Msg(success: false, msg: "Selected grade level cannot purchase this reward.");
+            }
+        }
+
+        studentUser.points = studentUser.points - reward.cost;
+        try await studentUser.save(on: req.db);
+
+        let pointHistory = PointHistory(user: studentUser, reason: "Purchased \(reward.id) \(reward.name)", points: -reward.cost);
+        try await pointHistory.save(on: req.db);
+
+        return Msg(success: true, msg: "Purchased \(reward.name)");
+    }
 }

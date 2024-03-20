@@ -77,14 +77,14 @@ Returns { success: Bool, msg: String }
 ```
 POST /api/events
 
-Returns: [{id: INT, name: String, description: String, eventType: String, locationName: String, pointsWorth: INT, startDate: Date, endDate: Date}]
+Returns: [{id: INT, name: String, eventType: String, locationName: String, pointsWorth: INT, startDate: Date, endDate: Date}]
 ```
 ^ Note: will not return events that have already passed.
 
 ```
 POST /api/event/:id
 
-Returns: {id: INT, name: String, eventType: String, locationName: String, address: String, pointsWorth: INT, startDate: Date, endDate: Date}
+Returns: {id: INT, name: String, eventType: String, descrition: String, locationName: String, address: String, pointsWorth: INT, startDate: Date, endDate: Date}
 ```
 
 ```
@@ -97,6 +97,19 @@ Returns: [{id: INT, name: String, descritpion: String}]
 POST /api/club/:id
 
 Returns { name: String, description: String, sponsors: String, meetingTimes: String?, locationName: String?, websiteLink: String?, instagramLink: String?, twitterLink: String?, youtubeLink: String? }
+```
+
+```
+POST /api/rewards
+
+Returns: [ { id: Int, name: String, description: String, cost: Int } ]
+```
+^ Note: if user's grade is set, is filtered on it
+
+```
+POST /api/reward/:id/purchase
+
+Returns: { success: Bool, msg: String }
 ```
 
 ## Web
@@ -195,6 +208,20 @@ endDate: Date
 customImagePath: String? - Don't have this key if no custom path
 
 Returns {success: Bool, msg: String}
+```
+
+---
+
+```
+POST /admin/api/eventRequests
+
+Returns [{id: Int, name: String, eventType: String, location: String, userRequested: String, startDate: Date, endDate: Date}]
+```
+
+```
+POST /admin/api/eventRequest/:id
+
+Returns {name: String, description: String eventType: String, location: String, userRequested: String, startDate: Date, endDate: Date}
 ```
 
 ---
