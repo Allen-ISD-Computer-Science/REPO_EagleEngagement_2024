@@ -84,6 +84,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    // update point counter at top of the page
     private fun setPoints(jwt: String) {
         var url = resources.getString(R.string.api_link)
         val retrofit = Retrofit.Builder()
