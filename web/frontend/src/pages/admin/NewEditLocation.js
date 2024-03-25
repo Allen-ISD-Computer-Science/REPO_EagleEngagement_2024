@@ -212,6 +212,7 @@ function NewEditLocationPage(props) {
                 placeholder="Description"
                 name="description"
                 maxLength={255}
+                multiline={true}
                 value={locationInfo?.description}
                 onChange={(e) => {
                   setLocationInfo({
