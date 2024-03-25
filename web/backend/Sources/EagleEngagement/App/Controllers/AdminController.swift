@@ -9,6 +9,7 @@ struct AdminController : RouteCollection {
         let sessionRoutes = adminRoutes.grouped([User.sessionAuthenticator(), UserAuthenticator()])
         let adminProtectedRoutes = sessionRoutes.grouped(AdminMiddleware());
 
+        // React Pages are "GET" requests
         adminProtectedRoutes.get("users", use: serveIndex);
         
         adminProtectedRoutes.get("events", use: serveIndex);
@@ -44,10 +45,12 @@ struct AdminController : RouteCollection {
         apiRoutes.post("user", ":id", "modifyPoints", use: modifyUser);
     }
 
+    // Serves the react page
     func serveIndex(_ req: Request) async throws -> View {
         return try await req.view.render("index.html")
     }
 
+    // Returns event types without duplicates (using Set).
     func fetchEventTypes(_ req: Request) async throws -> [String] {
         let eventTypes = try await Events.query(on: req.db)
           .field(\.$eventType)
@@ -224,6 +227,7 @@ struct AdminController : RouteCollection {
               .sort(Events.self, \.$startDate)
               .all()
               .map { ev in
+                  // fetch data and cast it into the EventInfo struct to make it more easily readable and returnable
                   return EventInfo.init(id: ev.id!, name: ev.name, eventType: ev.eventType, locationID: ev.location.id!, locationName: ev.location.locationName, pointsWorth: ev.pointsWorth, startDate: ev.startDate, endDate: ev.endDate)
               };
 
@@ -235,6 +239,7 @@ struct AdminController : RouteCollection {
                                      $0.name.lowercased().contains(eventsQuery.filterByName!.lowercased());
                                  });
         } else {
+            // fetch events that only occurred after the current date
             let currentDate = Date()
 
             let events = try await Events.query(on: req.db).with(\.$location)
@@ -269,7 +274,7 @@ struct AdminController : RouteCollection {
         var customImagePath: String;
     }
 
-    func fetchEvent(_ req: Request) async throws -> FullEventInfo { // /admin/api/events/
+    func fetchEvent(_ req: Request) async throws -> FullEventInfo { // /admin/api/event/:id
         guard let eventID = req.parameters.get("id", as: Int.self) else {
             throw Abort(.badRequest)
         }
