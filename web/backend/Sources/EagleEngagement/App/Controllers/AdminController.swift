@@ -20,6 +20,10 @@ struct AdminController : RouteCollection {
         adminProtectedRoutes.get("locations", "new", use: serveIndex);
         adminProtectedRoutes.get("locations", "edit", ":id", use:serveIndex);
         
+        adminProtectedRoutes.get("rewards", use: serveIndex);
+        adminProtectedRoutes.get("rewards", "new", use: serveIndex);
+        adminProtectedRoutes.get("rewards", "edit", ":id", use:serveIndex);
+
         adminProtectedRoutes.get("event-requests", use: serveIndex);
         adminProtectedRoutes.get("review-checkins", use: serveIndex);
         adminProtectedRoutes.get("review-missing-points", use: serveIndex);
