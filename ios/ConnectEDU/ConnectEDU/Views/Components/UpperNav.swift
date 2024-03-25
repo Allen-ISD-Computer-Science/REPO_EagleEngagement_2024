@@ -31,7 +31,7 @@ struct UpperNav: View {
                         .font(.subheadline)
                 }
                 .foregroundColor(navigationManager.currentPage == .missingPoints ? .txtPrimary : .txtSecondary)
-                .offset(y: -10)
+//                .offset(y: -10)
                 .padding(.leading, 40)
             }
             
@@ -41,7 +41,7 @@ struct UpperNav: View {
             Text("\(userProfile?.points ?? 999)")
                 .font(.system(size: size.height / 4))
                 .bold()
-                .offset(y: 20)
+//                .offset(y: 20)
             
             Spacer()
             
@@ -56,16 +56,15 @@ struct UpperNav: View {
                         .font(.subheadline)
                 }
                 .foregroundColor(navigationManager.currentPage == .profile ? .txtPrimary : .txtSecondary)
-                .offset(y: -10)
+//                .offset(y: -10)
                 .padding(.trailing, 40)
             }
             
         }
         .frame(width: size.width, height: size.height)
-        .background(.indigoPrimary)
         .foregroundColor(.txtPrimary)
-        .cornerRadius(44)
         .shadow(color: .black, radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+        .colorInvert()
         
     }
 }

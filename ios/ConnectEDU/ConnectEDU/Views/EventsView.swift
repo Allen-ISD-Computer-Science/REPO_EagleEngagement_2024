@@ -41,11 +41,12 @@ struct EventsView: View {
                 
                 // Nav group
                 VStack {
-                    UpperNav(size: CGSize(width: geometry.size.width, height: geometry.size.height * 0.15), userProfile: viewModel.userProfile ?? Profile(name: "Error", studentID: 999999, points: 0, grade: 13, house: 900))
+                    UpperNav(size: CGSize(width: geometry.size.width, height: geometry.size.height * 0.125), userProfile: viewModel.userProfile ?? Profile(name: "Error", studentID: 999999, points: 0, grade: 13, house: 900))
+                        .padding(.top, 20)
                     
                     Spacer()
                     
-                    LowerNav(size: CGSize(width: geometry.size.width, height: geometry.size.height * 0.15))
+                    LowerNav(size: CGSize(width: geometry.size.width, height: geometry.size.height * 0.125))
                 }
                 .onAppear {
                     viewModel.getProfile()

@@ -38,7 +38,7 @@ struct EventView: View {
                                         
                                         HStack {
                                             Button {
-                                                navigationManager.back()
+                                                navigationManager.navigate(to: .events)
                                             } label: {
                                                 Image(systemName: "chevron.backward")
                                                     .font(.title)
