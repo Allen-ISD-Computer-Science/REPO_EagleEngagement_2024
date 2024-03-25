@@ -26,15 +26,17 @@
 		786B07382B922A86000E425D /* ConnectEDUTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786B07372B922A86000E425D /* ConnectEDUTests.swift */; };
 		786B07422B922A86000E425D /* ConnectEDUUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786B07412B922A86000E425D /* ConnectEDUUITests.swift */; };
 		786B07442B922A86000E425D /* ConnectEDUUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786B07432B922A86000E425D /* ConnectEDUUITestsLaunchTests.swift */; };
+		786B2A572BB1C93C003132E4 /* ClubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786B2A562BB1C93C003132E4 /* ClubView.swift */; };
+		786B2A592BB1E691003132E4 /* ClubViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786B2A582BB1E691003132E4 /* ClubViewModel.swift */; };
 		78AC93692B9B70C900DFB57B /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AC93682B9B70C900DFB57B /* ForgotPasswordView.swift */; };
 		78AC936D2B9B756600DFB57B /* ForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AC936C2B9B756600DFB57B /* ForgotPasswordViewModel.swift */; };
 		78AC936F2B9B9DF900DFB57B /* AuthLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AC936E2B9B9DF900DFB57B /* AuthLogo.swift */; };
 		78AC93712B9BAE4D00DFB57B /* EventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B7BDB82B94F19E00F36936 /* EventsView.swift */; };
-		78AC93732B9BC6FF00DFB57B /* EventFull.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AC93722B9BC6FF00DFB57B /* EventFull.swift */; };
+		78AC93732B9BC6FF00DFB57B /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AC93722B9BC6FF00DFB57B /* Event.swift */; };
 		78B7BDA72B94E8C300F36936 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B7BDA62B94E8C300F36936 /* User.swift */; };
 		78B7BDA92B94E9E700F36936 /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B7BDA82B94E9E700F36936 /* Endpoints.swift */; };
 		78B7BDAB2B94EA5C00F36936 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B7BDAA2B94EA5C00F36936 /* APIClient.swift */; };
-		78B7BDAF2B94EB2100F36936 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B7BDAE2B94EB2100F36936 /* Event.swift */; };
+		78B7BDAF2B94EB2100F36936 /* EventListObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B7BDAE2B94EB2100F36936 /* EventListObject.swift */; };
 		78B7BDB12B94EB3200F36936 /* Club.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B7BDB02B94EB3200F36936 /* Club.swift */; };
 		78B7BDB32B94EB4200F36936 /* Reward.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B7BDB22B94EB4200F36936 /* Reward.swift */; };
 		78B7BDB52B94EB9500F36936 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B7BDB42B94EB9500F36936 /* LoginViewModel.swift */; };
@@ -49,6 +51,9 @@
 		78E46DF22B97E2F500E7D7F4 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E46DF12B97E2F500E7D7F4 /* ViewExtension.swift */; };
 		78E46DF42B97EBD400E7D7F4 /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E46DF32B97EBD400E7D7F4 /* NavigationManager.swift */; };
 		78F3E06C2BA87D34008E040B /* EventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F3E06B2BA87D34008E040B /* EventViewModel.swift */; };
+		78F3E06E2BA9DA70008E040B /* ClubsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F3E06D2BA9DA70008E040B /* ClubsViewModel.swift */; };
+		78F3E0702BA9DB41008E040B /* ClubCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F3E06F2BA9DB41008E040B /* ClubCard.swift */; };
+		78F3E0722BA9DCBD008E040B /* ClubListObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F3E0712BA9DCBD008E040B /* ClubListObject.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,14 +96,16 @@
 		786B073D2B922A86000E425D /* ConnectEDUUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConnectEDUUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		786B07412B922A86000E425D /* ConnectEDUUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectEDUUITests.swift; sourceTree = "<group>"; };
 		786B07432B922A86000E425D /* ConnectEDUUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectEDUUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		786B2A562BB1C93C003132E4 /* ClubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubView.swift; sourceTree = "<group>"; };
+		786B2A582BB1E691003132E4 /* ClubViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubViewModel.swift; sourceTree = "<group>"; };
 		78AC93682B9B70C900DFB57B /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		78AC936C2B9B756600DFB57B /* ForgotPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModel.swift; sourceTree = "<group>"; };
 		78AC936E2B9B9DF900DFB57B /* AuthLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthLogo.swift; sourceTree = "<group>"; };
-		78AC93722B9BC6FF00DFB57B /* EventFull.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventFull.swift; sourceTree = "<group>"; };
+		78AC93722B9BC6FF00DFB57B /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		78B7BDA62B94E8C300F36936 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		78B7BDA82B94E9E700F36936 /* Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoints.swift; sourceTree = "<group>"; };
 		78B7BDAA2B94EA5C00F36936 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
-		78B7BDAE2B94EB2100F36936 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		78B7BDAE2B94EB2100F36936 /* EventListObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListObject.swift; sourceTree = "<group>"; };
 		78B7BDB02B94EB3200F36936 /* Club.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Club.swift; sourceTree = "<group>"; };
 		78B7BDB22B94EB4200F36936 /* Reward.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reward.swift; sourceTree = "<group>"; };
 		78B7BDB42B94EB9500F36936 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -115,6 +122,9 @@
 		78E46DF12B97E2F500E7D7F4 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		78E46DF32B97EBD400E7D7F4 /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 		78F3E06B2BA87D34008E040B /* EventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewModel.swift; sourceTree = "<group>"; };
+		78F3E06D2BA9DA70008E040B /* ClubsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubsViewModel.swift; sourceTree = "<group>"; };
+		78F3E06F2BA9DB41008E040B /* ClubCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubCard.swift; sourceTree = "<group>"; };
+		78F3E0712BA9DCBD008E040B /* ClubListObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubListObject.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -239,11 +249,12 @@
 			isa = PBXGroup;
 			children = (
 				78B7BDA62B94E8C300F36936 /* User.swift */,
-				78B7BDAE2B94EB2100F36936 /* Event.swift */,
-				78AC93722B9BC6FF00DFB57B /* EventFull.swift */,
+				78B7BDAE2B94EB2100F36936 /* EventListObject.swift */,
+				78AC93722B9BC6FF00DFB57B /* Event.swift */,
 				78B7BDB02B94EB3200F36936 /* Club.swift */,
 				78B7BDB22B94EB4200F36936 /* Reward.swift */,
 				782155502B9A19050090DB7A /* Profile.swift */,
+				78F3E0712BA9DCBD008E040B /* ClubListObject.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -259,6 +270,7 @@
 				783528482B98CD3F0027D26A /* MissingPointsView.swift */,
 				7821554E2B9A16BE0090DB7A /* ProfileView.swift */,
 				782155482B9A11910090DB7A /* ClubsView.swift */,
+				786B2A562BB1C93C003132E4 /* ClubView.swift */,
 				7821554A2B9A119C0090DB7A /* RewardsView.swift */,
 			);
 			path = Views;
@@ -270,6 +282,8 @@
 				78AC936B2B9B754E00DFB57B /* Authentication */,
 				78E46DE02B9634EF00E7D7F4 /* EventsViewModel.swift */,
 				78F3E06B2BA87D34008E040B /* EventViewModel.swift */,
+				78F3E06D2BA9DA70008E040B /* ClubsViewModel.swift */,
+				786B2A582BB1E691003132E4 /* ClubViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -318,6 +332,7 @@
 				782155442B9A0FB30090DB7A /* UpperNav.swift */,
 				78E46DE32B96435300E7D7F4 /* EventCard.swift */,
 				782155462B9A11620090DB7A /* LowerNav.swift */,
+				78F3E06F2BA9DB41008E040B /* ClubCard.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -474,6 +489,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				786B2A572BB1C93C003132E4 /* ClubView.swift in Sources */,
 				782155452B9A0FB30090DB7A /* UpperNav.swift in Sources */,
 				78AC93712B9BAE4D00DFB57B /* EventsView.swift in Sources */,
 				7821554B2B9A119C0090DB7A /* RewardsView.swift in Sources */,
@@ -490,9 +506,10 @@
 				786B07272B922A85000E425D /* ConnectEDUApp.swift in Sources */,
 				78B7BDB12B94EB3200F36936 /* Club.swift in Sources */,
 				783528492B98CD3F0027D26A /* MissingPointsView.swift in Sources */,
+				78F3E0722BA9DCBD008E040B /* ClubListObject.swift in Sources */,
 				78E46DE42B96435300E7D7F4 /* EventCard.swift in Sources */,
 				78E46DEC2B9768E700E7D7F4 /* SignupView.swift in Sources */,
-				78AC93732B9BC6FF00DFB57B /* EventFull.swift in Sources */,
+				78AC93732B9BC6FF00DFB57B /* Event.swift in Sources */,
 				782155432B9A0EE70090DB7A /* AuthBackground.swift in Sources */,
 				78B7BDA92B94E9E700F36936 /* Endpoints.swift in Sources */,
 				7821554F2B9A16BE0090DB7A /* ProfileView.swift in Sources */,
@@ -502,12 +519,15 @@
 				78B7BDBB2B94F30300F36936 /* KeychainService.swift in Sources */,
 				78CDC3152B98E60900F8AAB3 /* EventView.swift in Sources */,
 				78B7BDC02B9546E000F36936 /* StringExtension.swift in Sources */,
+				786B2A592BB1E691003132E4 /* ClubViewModel.swift in Sources */,
 				78E46DE82B967F8900E7D7F4 /* DateExtension.swift in Sources */,
-				78B7BDAF2B94EB2100F36936 /* Event.swift in Sources */,
+				78B7BDAF2B94EB2100F36936 /* EventListObject.swift in Sources */,
+				78F3E0702BA9DB41008E040B /* ClubCard.swift in Sources */,
 				782155512B9A19050090DB7A /* Profile.swift in Sources */,
 				782155412B9966970090DB7A /* DevView.swift in Sources */,
 				78E46DF22B97E2F500E7D7F4 /* ViewExtension.swift in Sources */,
 				78E46DE12B9634EF00E7D7F4 /* EventsViewModel.swift in Sources */,
+				78F3E06E2BA9DA70008E040B /* ClubsViewModel.swift in Sources */,
 				78AC936D2B9B756600DFB57B /* ForgotPasswordViewModel.swift in Sources */,
 				78B7BDB52B94EB9500F36936 /* LoginViewModel.swift in Sources */,
 				78B7BDA72B94E8C300F36936 /* User.swift in Sources */,

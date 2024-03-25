@@ -28,41 +28,6 @@ struct APIService {
         task.resume()
     }
     
-    //    static let loginURLString = Endpoints.login
-    //
-    //    static func login(email: String, password: String, completion: @escaping (Bool, String?) -> Void) {
-    //        let url = URL(string: loginURLString)!
-    //        var request = URLRequest(url: url)
-    //        request.httpMethod = "POST"
-    //        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-    //
-    //        let body: [String: Any] = [
-    //            "email": email,
-    //            "password": password.base64Encode(),
-    //        ]
-    //
-    //        request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
-    //
-    //        let task = URLSession.shared.dataTask(with: request) { data, _, error in
-    //            guard let data = data, error == nil else {
-    //                completion(false, nil)
-    //                return
-    //            }
-    //
-    //            do {
-    //                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any], let success = json["success"] as? Bool, let msg = json["msg"] as? String {
-    //                    completion(success, msg)
-    //                } else {
-    //                    completion(false, nil)
-    //                }
-    //            } catch {
-    //                completion(false, nil)
-    //            }
-    //        }
-    //
-    //        task.resume()
-    //    }
-    
     // FORGOT PASSWORD
     static let forgotPasswordURLString = Endpoints.forgotPassword
     
@@ -84,61 +49,31 @@ struct APIService {
         task.resume()
     }
     
-    
     // SIGN UP
     
-    static let signupURLString = Endpoints.signup
-    
     static func signup(firstName: String, lastName: String, email: String, studentID: String, completion: @escaping (Bool, String?) -> Void) {
-        let url = URL(string: signupURLString)!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.addValue("appalication/json", forHTTPHeaderField: "Content-Type")
-        
-        
         let body: [String: Any] = [
             "firstName": firstName,
             "lastName": lastName,
             "email": email,
-            // TODO: THIS IS A VERY WRONG WAY TO DO IT AND NEEDS FIX
-            "studentID": Int(studentID)!,
+            "studentID": Int(studentID)! // TODO: Fix this
         ]
         
-        request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
+        guard let request = createRequest(urlString: Endpoints.signup, httpMethod: "POST", body: body) else {
+            completion(false, "Invalid URL")
+            return
+        }
         
         let task = URLSession.shared.dataTask(with: request) { data, _, error in
-            guard let data = data, error == nil else {
-                completion(false, nil)
-                return
-            }
-            
-            do {
-                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any], let success = json["success"] as? Bool, let msg = json["msg"] as? String {
-                    completion(success, msg)
-                } else {
-                    completion(false, nil)
-                }
-            } catch {
-                completion(false, nil)
-            }
+            handleResponse(data: data, error: error, completion: completion)
         }
         
         task.resume()
     }
     
     // VERIFY
-    static let verifyURLString = Endpoints.verify
     
     static func verify(email: String, token: String, password: String, passwordConfirm: String, completion: @escaping (Bool, String?) -> Void) {
-        guard let url = URL(string: verifyURLString) else {
-            completion(false, "Invalid URL")
-            return
-        }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        
         let body: [String: Any] = [
             "email": email,
             "token": token,
@@ -146,53 +81,26 @@ struct APIService {
             "passwordConfirm": passwordConfirm
         ]
         
-        request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
+        guard let request = createRequest(urlString: Endpoints.verify, httpMethod: "POST", body: body) else {
+            completion(false, "Invalid URL")
+            return
+        }
         
         let task = URLSession.shared.dataTask(with: request) { data, _, error in
-            guard let data = data, error == nil else {
-                completion(false, "Network error")
-                return
-            }
-            
-            do {
-                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any], let success = json["success"] as? Bool {
-                    let msg = json["msg"] as? String
-                    completion(success, msg)
-                } else {
-                    completion(false, "Failed to parse JSON")
-                }
-            } catch {
-                completion(false, "JSON parsing error")
-            }
+            handleResponse(data: data, error: error, completion: completion)
         }
         
         task.resume()
     }
     
-    
     // PROFILE
     
-    static let profileURLString = Endpoints.events
-    
     static func getProfile(completion: @escaping (Profile?, String?) -> Void) {
-        guard let url = URL(string: Endpoints.profile) else {
-            completion(nil, "Invalid URL")
+        guard let token = KeychainService.shared.retrieveToken(),
+              let request = createRequest(urlString: Endpoints.profile, httpMethod: "POST", token: token) else {
+            completion(nil, "Invalid URL or Authorization token not found")
             return
         }
-        
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        
-        // Retrieve the token from Keychain
-        if let token = KeychainService.shared.retrieveToken() {
-            request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        } else {
-            completion(nil, "Authorization token not found")
-            return
-        }
-        
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil else {
@@ -215,12 +123,90 @@ struct APIService {
         task.resume()
     }
     
+    // CLUBS
+    
+    static func getClubs(completion: @escaping ([ClubListObject]?, String?) -> Void) {
+        guard let token = KeychainService.shared.retrieveToken(),
+              let request = createRequest(urlString: Endpoints.clubs, httpMethod: "POST", token: token) else {
+            completion(nil, "Invalid URL or Authorization token not found")
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            guard let data = data, error == nil else {
+                completion(nil, "Network error or no data")
+                return
+            }
+            
+            do {
+                let clubs = try JSONDecoder().decode([ClubListObject].self, from: data)
+                DispatchQueue.main.async {
+                    completion(clubs, nil)
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    completion(nil, "Failed to parse JSON")
+                }
+            }
+        }
+        
+        task.resume()
+    }
+    
+    // Club
+    static func getClub(clubId: Int, completion: @escaping (Club?, String?) -> Void) {
+        let clubURLString = "\(Endpoints.club)/\(clubId)"
+        
+        guard var request = createRequest(urlString: clubURLString, httpMethod: "POST") else {
+            completion(nil, "Invalid URL")
+            return
+        }
+        
+        // Retrieve the token from Keychain
+        if let token = KeychainService.shared.retrieveToken() {
+            request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        } else {
+            completion(nil, "Authorization token not found")
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            guard let data = data, error == nil else {
+                completion(nil, "Network error")
+                return
+            }
+            
+            do {
+                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+                   let name = json["name"] as? String,
+                   let description = json["description"] as? String,
+                   let sponsors = json["sponsors"] as? String,
+                   let meetingTimes = json["meetingTimes"] as? String?,
+                   let locationName = json["locationName"] as? String?,
+                   let websiteLink = json["websiteLink"] as? String?,
+                   let instagramLink = json["instagramLink"] as? String?,
+                   let twitterLink = json["twitterLink"] as? String?,
+                   let youtubeLink = json["youtubeLink"] as? String? {
+                    
+                    let club = Club(name: name, description: description, sponsors: sponsors, meetingTimes: meetingTimes, locationName: locationName, websiteLink: websiteLink, instagramLink: instagramLink, twitterLink: twitterLink, youtubeLink: youtubeLink)
+                    completion(club, nil)
+                } else {
+                    completion(nil, "Failed to parse JSON")
+                }
+            } catch {
+                completion(nil, "JSON parsing error")
+            }
+        }
+        
+        task.resume()
+    }
+    
     
     // EVENTS
     
     static let eventsURLString = Endpoints.events
     
-    static func getEvents(completion: @escaping ([Event]?, String?) -> Void) {
+    static func getEvents(completion: @escaping ([EventListObject]?, String?) -> Void) {
         let url = URL(string: eventsURLString)!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -242,7 +228,7 @@ struct APIService {
             
             do {
                 if let jsonArray = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] {
-                    var events = [Event]()
+                    var events = [EventListObject]()
                     
                     for json in jsonArray {
                         if let id = json["id"] as? Int,
@@ -260,7 +246,7 @@ struct APIService {
                             let startDate = formatter.date(from: startDateStr)
                             let endDate = formatter.date(from: endDateStr)
                             
-                            let event = Event(id: id, name: name /* , description: description */, eventType: eventType, locationName: locationName, pointsWorth: pointsWorth, startDate: startDate!, endDate: endDate!)
+                            let event = EventListObject(id: id, name: name /* , description: description */, eventType: eventType, locationName: locationName, pointsWorth: pointsWorth, startDate: startDate!, endDate: endDate!)
                             events.append(event)
                         }
                     }
@@ -285,14 +271,14 @@ struct APIService {
     // Event
     
     // Event
-    static func getEvent(eventId: Int, completion: @escaping (EventFull?, String?) -> Void) {
+    static func getEvent(eventId: Int, completion: @escaping (Event?, String?) -> Void) {
         let eventURLString = "\(Endpoints.event)/\(eventId)"
-
+        
         guard var request = createRequest(urlString: eventURLString, httpMethod: "POST") else {
             completion(nil, "Invalid URL")
             return
         }
-
+        
         // Retrieve the token from Keychain
         if let token = KeychainService.shared.retrieveToken() {
             request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
@@ -300,13 +286,13 @@ struct APIService {
             completion(nil, "Authorization token not found")
             return
         }
-
+        
         let task = URLSession.shared.dataTask(with: request) { data, _, error in
             guard let data = data, error == nil else {
                 completion(nil, "Network error")
                 return
             }
-
+            
             do {
                 if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
                    let id = json["id"] as? Int,
@@ -318,15 +304,15 @@ struct APIService {
                    let pointsWorth = json["pointsWorth"] as? Int,
                    let startDateStr = json["startDate"] as? String,
                    let endDateStr = json["endDate"] as? String {
-
+                    
                     let formatter = DateFormatter()
                     formatter.locale = Locale(identifier: "en_US_POSIX")
                     formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
                     let startDate = formatter.date(from: startDateStr)
                     let endDate = formatter.date(from: endDateStr)
-
-                    let eventFull = EventFull(id: id, name: name, eventType: eventType, description: description, locationName: locationName, address: address, pointsWorth: pointsWorth, startDate: startDate!, endDate: endDate!)
-                    completion(eventFull, nil)
+                    
+                    let event = Event(id: id, name: name, eventType: eventType, description: description, locationName: locationName, address: address, pointsWorth: pointsWorth, startDate: startDate!, endDate: endDate!)
+                    completion(event, nil)
                 } else {
                     completion(nil, "Failed to parse JSON")
                 }
@@ -334,10 +320,9 @@ struct APIService {
                 completion(nil, "JSON parsing error")
             }
         }
-
+        
         task.resume()
     }
-
     
     // API Methods
     

@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct EventCard: View {
-    var event: Event
+    var event: EventListObject
 
     var body: some View {
         VStack {
@@ -84,7 +84,7 @@ struct EventCard_Previews: PreviewProvider {
     static var previews: some View {
         // Sample event data
         let sampleEvent =
-            Event(
+            EventListObject(
                 id: 1,
                 name: "Coding Workshop",
                 //                description: "Learn the basics of Swift programming.",

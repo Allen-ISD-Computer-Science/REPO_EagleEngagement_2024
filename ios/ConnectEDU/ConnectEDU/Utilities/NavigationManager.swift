@@ -12,6 +12,7 @@ class NavigationManager: ObservableObject {
     //    static let shared = NavigationManager()
     
     @Published var currentEventID: Int?
+    @Published var currentClubID: Int?
     
     @Published var currentPage: Page = KeychainService.shared.retrieveToken() != nil ? .events : .login
     private var pageStack: [Page] = [KeychainService.shared.retrieveToken() != nil ? .events : .login]
@@ -36,6 +37,7 @@ class NavigationManager: ObservableObject {
         case missingPoints
         case profile
         case clubs
+        case clubDetail
         case events
         case rewards
         case eventDetail
@@ -50,12 +52,17 @@ class NavigationManager: ObservableObject {
         forceUpdate.toggle()
         forceUpdate.toggle()
         // Additional logic if needed
-        print("Navigated to \nPage: \(page) \nCurrent Stack: \(pageStack)")
+//        print("Navigated to \nPage: \(page) \nCurrent Stack: \(pageStack)")
     }
     
     func goToEventDetail(with eventID: Int) {
         currentEventID = eventID // Store the current event ID
         navigate(to: .eventDetail)
+    }
+    
+    func goToClubDetail(with clubID: Int) {
+        currentClubID = clubID // Store the current club ID
+        navigate(to: .clubDetail)
     }
     
     func dump() -> String {

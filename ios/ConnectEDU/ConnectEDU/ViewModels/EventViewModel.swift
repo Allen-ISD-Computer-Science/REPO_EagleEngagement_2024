@@ -9,7 +9,7 @@ import Foundation
 
 class EventViewModel: ObservableObject {
     var event_id: Int
-    @Published var eventFull: EventFull?
+    @Published var eventFull: Event?
 
     init(event_id: Int) {
         self.event_id = event_id

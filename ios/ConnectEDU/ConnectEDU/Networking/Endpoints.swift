@@ -24,5 +24,9 @@ enum Endpoints {
     static let events = "\(baseAPIURL)/events/"
     static let event = "\(baseAPIURL)/event/"
     
+    // Clubs
+    static let clubs = "\(baseAPIURL)/clubs/"
+    static let club = "\(baseAPIURL)/club/"
+    
     // Other endpoints...
 }

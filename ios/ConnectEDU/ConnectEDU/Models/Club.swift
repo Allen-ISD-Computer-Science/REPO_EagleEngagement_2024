@@ -8,7 +8,6 @@
 import Foundation
 
 struct Club: Codable {
-    var id: Int
     var name: String
     var description: String
     var sponsors: String?
@@ -19,3 +18,7 @@ struct Club: Codable {
     var twitterLink: String?
     var youtubeLink: String?
 }
+
+//POST /api/club/:id
+//
+//Returns { name: String, description: String, sponsors: String, meetingTimes: String?, locationName: String?, websiteLink: String?, instagramLink: String?, twitterLink: String?, youtubeLink: String? }

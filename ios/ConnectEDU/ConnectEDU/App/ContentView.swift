@@ -35,10 +35,12 @@ struct ContentView: View {
                 RewardsView()
             case .eventDetail:
                 EventView(event_id: navigationManager.currentEventID ?? 0)
+            case .clubDetail:
+                ClubView(club_id: navigationManager.currentClubID ?? 0)
                 // Add other cases as needed
             }
         }
-        .onTapGesture(count: 4) {
+        .onTapGesture(count: 3) {
             navigationManager.currentPage == .dev ? navigationManager.back() : navigationManager.navigate(to: .dev)
         }
     }

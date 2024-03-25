@@ -8,7 +8,7 @@
 import Foundation
 
 class EventsViewModel: ObservableObject {
-    @Published var events: [Event] = .init()
+    @Published var events: [EventListObject] = .init()
     @Published var userProfile: Profile?
 
     func getEvents() {
