@@ -528,6 +528,8 @@ struct AdminController : RouteCollection {
         var id: Int;
         var name: String;
         var description: String;
+        var cost: Int;
+        var allowedGrades: Int;
     }
 
     func fetchRewards(_ req: Request) async throws -> [RewardInfo] {
@@ -535,8 +537,8 @@ struct AdminController : RouteCollection {
         
         let rewards = try await Reward.query(on: req.db)
           .all()
-          .map { loc in
-              RewardInfo.init(id: loc.id!, name: loc.locationName, description: loc.description);
+          .map { rew in
+              RewardInfo.init(id: rew.id!, name: rew.name, description: rew.description, cost: rew.cost, allowedGrades: rew.allowedGrades);
           };
         
         if (rewardQuery.filterByName == nil || rewardQuery.filterByName!.isEmpty) {
@@ -572,7 +574,7 @@ struct AdminController : RouteCollection {
     func newReward(_ req: Request) async throws -> Msg {
         let args = try req.content.decode(ManageRewardInfo.self);
 
-        let reward = Reward(name: args.locationName, description: args.description, cost: args.pointsCost, allowedGrades: args.allowedGrades);
+        let reward = Reward(name: args.name, description: args.description, cost: args.pointsCost, allowedGrades: args.allowedGrades);
         
         try await reward.save(on: req.db);
 
