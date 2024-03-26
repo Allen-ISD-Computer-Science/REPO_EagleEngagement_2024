@@ -32,9 +32,10 @@ struct EventView: View {
                                         .scaledToFill()
                                         .blur(radius: 1.5)
                                         .brightness(-0.1)
-                                        .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+                                        
                                     
                                     VStack {
+                                        Spacer()
                                         
                                         HStack {
                                             Button {
@@ -62,7 +63,7 @@ struct EventView: View {
                                             .foregroundStyle(.whitePrimary)
                                         
                                     }
-                                    .padding()
+                                    .padding(.bottom, 40)
                                 }
                                 
                                 Divider()
@@ -187,6 +188,7 @@ struct EventView: View {
                 viewModel.getEvent()
             }
         }
+        .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
     }
 }
 
