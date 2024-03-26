@@ -30,6 +30,12 @@ struct AdminController : RouteCollection {
 
         let apiRoutes = adminProtectedRoutes.grouped("api"); // /admin/api
         apiRoutes.post("eventTypes", use: fetchEventTypes);
+
+        apiRoutes.post("users", use: fetchUsers);
+        apiRoutes.post("users", "modify", use: modifyUsers);
+        apiRoutes.post("users", "estimateCount", use: estimateCount);
+        apiRoutes.post("user", ":id", "modifyPoints", use: modifyUser);
+
         apiRoutes.post("events", use: fetchEvents);
         apiRoutes.post("event", ":id", use: fetchEvent);
         apiRoutes.post("event", ":id", "edit", use: editEvent);
@@ -44,10 +50,10 @@ struct AdminController : RouteCollection {
         apiRoutes.post("location", ":id", "edit", use: editLocation);
         apiRoutes.post("locations", "new", use: newLocation);
 
-        apiRoutes.post("users", use: fetchUsers);
-        apiRoutes.post("users", "modify", use: modifyUsers);
-        apiRoutes.post("users", "estimateCount", use: estimateCount);
-        apiRoutes.post("user", ":id", "modifyPoints", use: modifyUser);
+        apiRoutes.post("rewards", use: fetchRewards);
+        apiRoutes.post("reward", ":id", use: fetchReward);
+        apiRoutes.post("reward", ":id", "edit", use: editReward);
+        apiRoutes.post("rewards", "new", use: newReward);
     }
 
     // Serves the react page
@@ -512,6 +518,88 @@ struct AdminController : RouteCollection {
         try await location.save(on: req.db);
 
         return Msg(success: true, msg: "Updated Locations!");
+    }
+
+    struct RewardQuery : Content {
+        var filterByName: String?;
+    }
+
+    struct RewardInfo : Content {
+        var id: Int;
+        var name: String;
+        var description: String;
+    }
+
+    func fetchRewards(_ req: Request) async throws -> [RewardInfo] {
+        let rewardQuery = try req.content.decode(RewardQuery.self);
+        
+        let rewards = try await Reward.query(on: req.db)
+          .all()
+          .map { loc in
+              RewardInfo.init(id: loc.id!, name: loc.locationName, description: loc.description);
+          };
+        
+        if (rewardQuery.filterByName == nil || rewardQuery.filterByName!.isEmpty) {
+            return rewards;
+        }
+        
+        return rewards.filter({
+                                    $0.name.lowercased().contains(rewardQuery.filterByName!.lowercased());
+                             });
+    }
+
+    func fetchReward(_ req: Request) async throws -> Reward {
+        guard let rewardID = req.parameters.get("id", as: Int.self) else {
+            throw Abort(.badRequest)
+        }
+ 
+        guard let reward = try await Reward.query(on: req.db)
+          .filter(\.$id == rewardID)
+          .first() else {
+            throw Abort(.badRequest, reason: "Could not find reward.")
+        }
+
+        return reward;
+    }
+
+    struct ManageRewardInfo : Content {
+        var name: String;
+        var description: String;
+        var pointsCost: Int;
+        var allowedGrades: Int;
+    }
+    
+    func newReward(_ req: Request) async throws -> Msg {
+        let args = try req.content.decode(ManageRewardInfo.self);
+
+        let reward = Reward(name: args.locationName, description: args.description, cost: args.pointsCost, allowedGrades: args.allowedGrades);
+        
+        try await reward.save(on: req.db);
+
+        return Msg(success: true, msg: "Created Reward!");
+    }
+
+    func editReward(_ req: Request) async throws -> Msg {
+        guard let rewardID = req.parameters.get("id", as: Int.self) else {
+            throw Abort(.badRequest)
+        }
+
+        let args = try req.content.decode(ManageRewardInfo.self);
+ 
+        guard let reward = try await Reward.query(on: req.db)
+          .filter(\.$id == rewardID)
+          .first() else {
+            throw Abort(.badRequest, reason: "Could not find reward.")
+        }
+
+        reward.name = args.name;
+        reward.description = args.description;
+        reward.cost = args.pointsCost;
+        reward.allowedGrades = args.allowedGrades;
+        
+        try await reward.save(on: req.db);
+
+        return Msg(success: true, msg: "Updated Reward!");
     }
     
 }
