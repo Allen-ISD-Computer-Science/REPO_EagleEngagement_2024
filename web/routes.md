@@ -226,6 +226,13 @@ POST /admin/api/eventRequest/:id
 Returns {name: String, description: String eventType: String, location: String, userRequested: String, startDate: Date, endDate: Date}
 ```
 
+```
+POST /admin/api/eventRequest/:id/delete
+
+Returns { success: Bool, msg: String }
+```
+
+
 ---
 
 ```
@@ -324,6 +331,18 @@ eventType: String
 location: String
 startDate: Date
 endDate: Date
+
+Returns { success: Bool, msg: String }
+```
+
+```
+POST /faculty/api/requestEvent
+name: String;
+eventType: String;
+description: String;
+location: String;
+startDate: Date;
+endDate: Date;
 
 Returns { success: Bool, msg: String }
 ```

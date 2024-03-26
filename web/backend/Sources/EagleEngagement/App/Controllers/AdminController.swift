@@ -37,6 +37,7 @@ struct AdminController : RouteCollection {
 
         apiRoutes.post("eventRequests", use: fetchEventRequests);
         apiRoutes.post("eventRequest", ":id", use: fetchEventRequest);
+        apiRoutes.post("eventRequest", ":id", "delete", use: removeEventRequest)
 
         apiRoutes.post("locations", use: fetchLocations);
         apiRoutes.post("location", ":id", use: fetchLocation);
