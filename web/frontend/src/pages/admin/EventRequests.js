@@ -27,6 +27,7 @@ function EventRequestsPage(props) {
   }
 
   React.useEffect(() => {
+    console.log(updateCount);
     const getRequests = async () => {
       setRequests((prev) => prev + 1);
 
@@ -75,7 +76,7 @@ function EventRequestsPage(props) {
             setRequests((prev) => prev + 1);
 
             try {
-              const res = await fetch(`${process.env.PUBLIC_URL}/admin/api/eventRequests/${selectedRequest.id}/delete`, {
+              const res = await fetch(`${process.env.PUBLIC_URL}/admin/api/eventRequest/${selectedRequest.id}/delete`, {
                 headers: {
                   Accept: "application/json",
                 }, method: "POST"
