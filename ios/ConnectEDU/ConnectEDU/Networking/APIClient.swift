@@ -29,6 +29,7 @@ struct APIService {
     }
     
     // FORGOT PASSWORD
+    
     static let forgotPasswordURLString = Endpoints.forgotPassword
     
     static func forgotPassword(email: String, studentID: String, completion: @escaping (Bool, String?) -> Void) {
@@ -77,8 +78,8 @@ struct APIService {
         let body: [String: Any] = [
             "email": email,
             "token": token,
-            "password": password,
-            "passwordConfirm": passwordConfirm
+            "password": password.base64Encode(),
+            "passwordConfirm": passwordConfirm.base64Encode()
         ]
         
         guard let request = createRequest(urlString: Endpoints.verify, httpMethod: "POST", body: body) else {
@@ -324,6 +325,53 @@ struct APIService {
         task.resume()
     }
     
+    // REWARDS
+
+    static func getRewards(completion: @escaping ([RewardListObject]?, String?) -> Void) {
+        guard let token = KeychainService.shared.retrieveToken(),
+              let request = createRequest(urlString: Endpoints.rewards, httpMethod: "POST", token: token) else {
+            completion(nil, "Invalid URL or Authorization token not found")
+            return
+        }
+
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            guard let data = data, error == nil else {
+                completion(nil, "Network error or no data")
+                return
+            }
+
+            do {
+                if let jsonArray = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] {
+                    var rewards = [RewardListObject]()
+
+                    for json in jsonArray {
+                        if let id = json["id"] as? Int,
+                           let name = json["name"] as? String,
+                           let description = json["description"] as? String,
+                           let cost = json["cost"] as? Int {
+                            let reward = RewardListObject(id: id, name: name, description: description, cost: cost)
+                            rewards.append(reward)
+                        }
+                    }
+                    DispatchQueue.main.async {
+                        completion(rewards, nil)
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        completion(nil, "Failed to parse JSON")
+                    }
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    completion(nil, "JSON parsing error")
+                }
+            }
+        }
+
+        task.resume()
+    }
+
+    
     // API Methods
     
     // Creates a URLRequest
@@ -368,6 +416,7 @@ struct APIService {
     private func base64Encode(_ input: String) -> String {
         let inputData = input.data(using: .utf8)
         let encodedData = inputData?.base64EncodedString()
+        print(encodedData ?? "")
         return encodedData ?? ""
     }
 }
