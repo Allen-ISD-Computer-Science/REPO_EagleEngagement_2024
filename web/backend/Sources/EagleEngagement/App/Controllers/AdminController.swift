@@ -567,14 +567,14 @@ struct AdminController : RouteCollection {
     struct ManageRewardInfo : Content {
         var name: String;
         var description: String;
-        var pointsCost: Int;
+        var cost: Int;
         var allowedGrades: Int;
     }
     
     func newReward(_ req: Request) async throws -> Msg {
         let args = try req.content.decode(ManageRewardInfo.self);
 
-        let reward = Reward(name: args.name, description: args.description, cost: args.pointsCost, allowedGrades: args.allowedGrades);
+        let reward = Reward(name: args.name, description: args.description, cost: args.cost, allowedGrades: args.allowedGrades);
         
         try await reward.save(on: req.db);
 
@@ -596,7 +596,7 @@ struct AdminController : RouteCollection {
 
         reward.name = args.name;
         reward.description = args.description;
-        reward.cost = args.pointsCost;
+        reward.cost = args.cost;
         reward.allowedGrades = args.allowedGrades;
         
         try await reward.save(on: req.db);
