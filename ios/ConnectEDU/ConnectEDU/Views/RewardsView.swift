@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RewardsView: View {
-    @EnvironmentObject var navigationManager: NavigationManager
+    @ObservedObject var navigationManager = NavigationManager.shared
     @StateObject var viewModel = RewardsViewModel()
     
     var body: some View {

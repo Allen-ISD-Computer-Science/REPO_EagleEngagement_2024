@@ -9,7 +9,7 @@ import Foundation
 
 class NavigationManager: ObservableObject {
     // Old way of using shared object (Didnt work for built in swift reactivity)
-    //    static let shared = NavigationManager()
+        static let shared = NavigationManager()
     
     @Published var currentEventID: Int?
     @Published var currentClubID: Int?
@@ -41,12 +41,15 @@ class NavigationManager: ObservableObject {
         case events
         case rewards
         case eventDetail
+        case editProfile
+        case pointsHistory
         // Add other pages as needed
     }
     
     @Published var forceUpdate: Bool = false
     
     func navigate(to page: Page) {
+        print("Should have navigated")
         pageStack.append(page)
         currentPage = page
         forceUpdate.toggle()

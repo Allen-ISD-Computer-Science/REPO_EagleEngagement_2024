@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct UpperNav: View {
-    @EnvironmentObject var navigationManager: NavigationManager
+    @ObservedObject var navigationManager = NavigationManager.shared
     
     var userProfile: Profile?
     var size: CGSize

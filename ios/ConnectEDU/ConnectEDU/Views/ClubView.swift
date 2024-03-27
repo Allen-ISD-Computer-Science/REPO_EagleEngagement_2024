@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ClubView: View {
-    @EnvironmentObject var navigationManager: NavigationManager
+    @ObservedObject var navigationManager = NavigationManager.shared
     
     var club_id: Int
     @StateObject var viewModel: ClubViewModel

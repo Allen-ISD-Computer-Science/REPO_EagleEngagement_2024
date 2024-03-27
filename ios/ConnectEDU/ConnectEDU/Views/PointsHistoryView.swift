@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PointsHistoryView: View {
-    @EnvironmentObject var navigationManager: NavigationManager
+    @ObservedObject var navigationManager = NavigationManager.shared
     
     var body: some View {
         // TODO: Implement Points History page and API Support

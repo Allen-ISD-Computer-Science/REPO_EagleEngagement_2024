@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct EditProfileView: View {
-    @EnvironmentObject var navigationManager: NavigationManager
+    @ObservedObject var navigationManager = NavigationManager.shared
     
     var body: some View {
         VStack {
