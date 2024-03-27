@@ -15,33 +15,142 @@ struct ProfileView: View {
         GeometryReader { geometry in
             ZStack {
                 VStack {
-                    Text("Student: \(viewModel.userProfile.name)")
+                    Spacer()
                     
-                    Divider()
+                    // Profile
+                    VStack {
+                        Image(systemName: "person.circle")
+                            .font(.system(size: geometry.size.height * 0.1))
+                        
+                        
+                        // Page Title
+                        Text("Profile")
+                            .font(.largeTitle)
+                            .bold()
+                            .foregroundColor(.indigoPrimary)
+                    }
+                    .foregroundColor(.indigoPrimary)
                     
-                    Text(verbatim: "ID: \(viewModel.userProfile.studentID)")
+                    Spacer()
                     
-                    Divider()
+                    VStack {
+                        VStack {
+                            // Points
+                            HStack {
+                                Text("Points:")
+                                Button {
+                                    navigationManager.navigate(to: .pointsHistory)
+                                } label: {
+                                    Image(systemName: "clock.arrow.circlepath")
+                                        .padding(5)
+                                        .background(.indigoPrimary)
+                                        .cornerRadius(90)
+                                        .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+                                }
+                                
+                                Spacer()
+                                
+                                Text("\(viewModel.userProfile.points)")
+                                    .padding(5)
+                                    .background(.indigoPrimary)
+                                    .cornerRadius(5)
+                                    .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+                            }
+                            
+                            Divider()
+                                .overlay(.white)
+                            
+                            // Student ID
+                            HStack {
+                                Text("Student ID:")
+                                Spacer()
+                                Text(verbatim: "\(viewModel.userProfile.studentID)")
+                                    .padding(5)
+                                    .background(.indigoPrimary)
+                                    .cornerRadius(5)
+                            }
+                        }
+                        .padding()
+                        .background(.indigoSecondary)
+                        .cornerRadius(11)
+                        
+                        Spacer()
+                        
+                        VStack {
+                            // Name
+                            HStack {
+                                Text("Name:")
+                                Spacer()
+                                Text("\(viewModel.userProfile.name)")
+                                    .padding(5)
+                                    .background(.indigoPrimary)
+                                    .cornerRadius(5)
+                            }
+                            
+                            Divider()
+                                .overlay(.white)
+                            
+                            // Grade
+                            HStack {
+                                Text("Grade:")
+                                Spacer()
+                                Text("\(viewModel.userProfile.grade)")
+                                    .padding(5)
+                                    .background(.indigoPrimary)
+                                    .cornerRadius(5)
+                            }
+                            
+                            Divider()
+                                .overlay(.white)
+                            
+                            // House
+                            HStack {
+                                Text("House:")
+                                Spacer()
+                                Text("\(viewModel.userProfile.house)")
+                                    .padding(5)
+                                    .background(.indigoPrimary)
+                                    .cornerRadius(5)
+                            }
+                        }
+                        .padding()
+                        .background(.indigoSecondary)
+                        .cornerRadius(11)
+                    }
+                    .font(.title2)
+                    .bold()
+                    .foregroundColor(.txtPrimary)
+                    .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+                    .frame(width: geometry.size.width * 0.75, height: geometry.size.height * 0.4)
                     
-                    Text("\(viewModel.userProfile.points)")
                     
-                    Divider()
+                    Spacer()
                     
-                    Text("\(viewModel.userProfile.grade)")
-                    
-                    Divider()
-                    
-                    Text("\(viewModel.userProfile.house)")
+                    // Edit Profile
+                    HStack {
+                        Spacer()
+                        
+                        Button {
+                            navigationManager.navigate(to: .editProfile)
+                        } label: {
+                            Image(systemName: "square.and.pencil")
+                                .font(.title)
+                                .bold()
+                                .foregroundColor(.txtPrimary)
+                                .padding(10)
+                                .background(.indigoSecondary)
+                                .cornerRadius(11)
+                        }
+                    }
+                    .padding()
                 }
-                .font(.title2)
-                .bold()
                 .padding()
-                .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.7)
-                .foregroundColor(.txtPrimary)
-                .background(.indigoSecondary)
-                .cornerRadius(11)
+                .border(.red)
+                .offset(y: -1 * geometry.size.height * 0.035)
+                .frame(width: geometry.size.width, height: geometry.size.height * 0.825)
                 
                 VStack {
+                    
                     Spacer()
                     
                     LowerNav(size: CGSize(width: geometry.size.width, height: geometry.size.height * 0.125))

@@ -35,7 +35,6 @@ struct EventView: View {
                                         
                                     
                                     VStack {
-                                        Spacer()
                                         
                                         HStack {
                                             Button {
@@ -63,7 +62,7 @@ struct EventView: View {
                                             .foregroundStyle(.whitePrimary)
                                         
                                     }
-                                    .padding(.bottom, 40)
+                                    .padding()
                                 }
                                 
                                 Divider()
@@ -188,7 +187,8 @@ struct EventView: View {
                 viewModel.getEvent()
             }
         }
-        .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+        // TODO: Fix placement so it doesnt go off screen so that stuff can be sized properly
+//        .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
     }
 }
 

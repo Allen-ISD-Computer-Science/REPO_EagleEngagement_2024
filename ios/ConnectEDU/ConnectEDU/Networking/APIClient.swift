@@ -8,6 +8,7 @@
 import Foundation
 
 struct APIService {
+    
     // LOGIN
     
     static func login(email: String, password: String, completion: @escaping (Bool, String?) -> Void) {
@@ -234,7 +235,6 @@ struct APIService {
                     for json in jsonArray {
                         if let id = json["id"] as? Int,
                            let name = json["name"] as? String,
-                           //                           let description = json["description"] as? String,
                            let eventType = json["eventType"] as? String,
                            let locationName = json["locationName"] as? String,
                            let pointsWorth = json["pointsWorth"] as? Int,
@@ -268,8 +268,6 @@ struct APIService {
         
         task.resume()
     }
-    
-    // Event
     
     // Event
     static func getEvent(eventId: Int, completion: @escaping (Event?, String?) -> Void) {
@@ -392,6 +390,8 @@ struct APIService {
         
         return request
     }
+    
+    // TODO: Create method to remove user token and send them to the Login screen in case of failed token retrievaltodo
     
     // Handles the response
     private static func handleResponse(data: Data?, error: Error?, completion: @escaping (Bool, String?) -> Void) {
